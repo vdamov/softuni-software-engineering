@@ -1,4 +1,4 @@
-	# <a href="https://softuni.bg/trainings/1772/programming-basics-with-java-october-2017" rel="Programming-Basics"><p align="center"> Programming-Basics with Java <p></a>
+# <a href="https://softuni.bg/trainings/1772/programming-basics-with-java-october-2017" rel="Programming-Basics-With-Java"><p align="center"> Programming-Basics-With-Java <p></a>
 
 ## Exercises
 - <a href="#" > Advanced Loops - Exercises </a>
