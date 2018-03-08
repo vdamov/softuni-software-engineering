@@ -10,13 +10,13 @@
 
 2. Създайте нов конзолен проект: [Create New Project].
 
-![image alt text](image_0.png)
+![image alt text](images\images\image_0.png)
 
 3. Изберете от диалоговия прозорец [Java] → [Windows] → [Console Application] и дайте подходящо име на проекта, например "**HelloSoftuni**":
 
-![image alt text](image_1.png)
+![image alt text](images\images\image_1.png)
 
-![image alt text](image_2.png)
+![image alt text](images\image_2.png)
 
 4. Намерете секцията **main(String[] args)**. В нея се пише програмен код (команди) на езика Java.
 
@@ -24,7 +24,7 @@
 
 6. Натиснете **[Enter]** след отварящата скоба **{**.
 
-![image alt text](image_3.png)
+![image alt text](images\image_3.png)
 
 7. Напишете следния програмен код (команда за печатане на текста **"Hello SoftUni"**):
 
@@ -37,19 +37,19 @@
 
 Кодът на програмата се пише отместен навътре с една табулация спрямо отварящата скоба **{**.
 
-![image alt text](image_4.png)
+![image alt text](images\image_4.png)
 
 8. **Стартирайте** програмата с натискане на **[Ctrl+Shift+F10]**. Трябва да получите следния резултат:
 
-![image alt text](image_5.png)
+![image alt text](images\image_5.png)
 
 9. **Тествайте** решението на тази задача в онлайн judge системата на СофтУни. За целта първо отворете [https://judge.softuni.bg/Contests/Practice/Index/150#0](https://judge.softuni.bg/Contests/Practice/Index/150#0). Влезте с вашето потребителско име в СофтУни. Ще се появи прозорец за изпращане на решения за задача "**Hello SoftUni**". Копирайте сорс кода от IntelliJ и го поставете в полето за изпращане на решения:
 
-![image alt text](image_6.png)
+![image alt text](images\image_6.png)
 
 10. **Изпратете решението** за оценяване с бутона [Submit]. Ще получите резултата след няколко секунди в таблицата с изпратени решения в judge системата:
 
-![image alt text](image_7.png)
+![image alt text](images\image_7.png)
 
 2. Конзолна програма "Expression"
 
@@ -66,13 +66,13 @@
 
 1. Направете нов Java клас с име "**Expression**" (**десен бутон** върху папката „**src**”):
 
-![image alt text](image_8.png)
+![image alt text](images\image_8.png)
 
-![image alt text](image_9.png)
+![image alt text](images\image_9.png)
 
 2. Направете си **main метод** в класа, за да има от къде да тръгне вашата програма  и влезте в неговото тяло между **{** и **}**:
 
-![image alt text](image_10.png)
+![image alt text](images\image_10.png)
 
 <table>
   <tr>
@@ -85,15 +85,15 @@
 
 3. Сега трябва да напишете кода, който да изчисли горния числен израз и да отпечата на конзолата стойността му. Подайте горния числен израз в скобите на командата **System.out.println()**:
 
-![image alt text](image_11.png)
+![image alt text](images\image_11.png)
 
 4. Стартирайте програмата с [Ctrl+Shift+F10] и проверете дали вашият резултат прилича на нашия:
 
-![image alt text](image_12.png)
+![image alt text](images\image_12.png)
 
 5. Тествайте вашата програма в judge системата: [https://judge.softuni.bg/Contests/Practice/Index/150#1](https://judge.softuni.bg/Contests/Practice/Index/150#1).
 
-![image alt text](image_13.png)
+![image alt text](images\image_13.png)
 
 3. Числата от 1 до 20
 
@@ -101,13 +101,13 @@
 
 1. Създайте нов Java клас със име "**Nums1To20**“ (десен бутон върху “**src**"папката ➔ New ➔ Java Class):
 
-![image alt text](image_14.png)
+![image alt text](images\image_14.png)
 
 2. Направете си **main** метод 
 
 3. Напишете 20 команди **System.out.println(); **една след друга, за да отпечатате числата от 1 до 20:
 
-![image alt text](image_15.png)
+![image alt text](images\image_15.png)
 
 4. **Тествайте** вашето решение на задачата в judge системата: [https://judge.softuni.bg/Contests/Practice/Index/150#2](https://judge.softuni.bg/Contests/Practice/Index/150#2)
 
@@ -238,4 +238,4 @@
 
 2. Допишете програмата по-горе, за да отпечатва квадрат, съставен от звездички. Може да се наложи да използвате **for-цикли**. Потърсете информация в Интернет.
 
-3. Тествайте решението си в judge системата: [https://judge.softuni.bg/Contests/Practice/Index/150#5](https://judge.softuni.bg/Contests/Practice/Index/150#5).
+3. Тествайте решението си в judge системата: [https://judge.softuni.bg/Contests/Practice/Index/150#5](https://judge.softuni.bg/Contests/Practice/Index/150#5).ima
