@@ -1,0 +1,36 @@
+<div class="container body-content span=8 offset=2">
+    <div class="well">
+        <legend>{{user.fullName}}'s Profile</legend>
+        <div class="row">
+            {{#if user.profilePic}}
+                <div class="col-sm-6 col-md-4">
+                    <img src="{{user.profilePic}}" alt="" class="img-rounded img-responsive"/>
+                </div>
+            {{/if}}
+            {{#unless user.profilePic}}
+                <div class="col-sm-6 col-md-4">
+                    <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive"/>
+                </div>
+            {{/unless}}
+            <div class="col-sm-6 col-md-8">
+                <h4>{{user.fullName}}</h4>
+                <small>{{user.city}}, {{this.user.country}}</small>
+                <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-ios7-location-128.png" width="16"
+                     height="16">
+
+                <p>
+                    <img src="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-email-128.png" width="16"
+                         height="16"> {{user.email}}
+                    <br/>
+                    <img src="https://image.flaticon.com/icons/png/128/12/12195.png" width="16" height="16"> <a
+                        href="http://{{user.website}}">{{user.website}}</a>
+                    <br/>
+                    <img src="http://www.iconsplace.com/icons/preview/black/date-to-256.png" alt="" width="16"
+                         height="16"> {{user.birthDate}}</p>
+                <a class="btn btn-facebook" href="http://{{user.facebook}}">
+                    Find Me on Facebook
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

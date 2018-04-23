@@ -1,0 +1,28 @@
+<div class="container body-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="thumbnail">
+                <article  style="min-height:300px">
+                    <header>
+                        <h2>{{title}}</h2>
+                    </header>
+                    <div class="col-md-4">
+                        <img src={{this.image}} alt="" width=100% class="img-thumbnail">
+                    </div>
+                    <p>
+                        {{content}}
+                    </p>
+
+                    <small class="author">
+                        {{this.User.fullName}}
+                    </small>
+                    <footer>
+                        <div class="text-right">
+                            <a class="btn btn-primary btn-xs" href="/">Back &raquo;</a>
+                        </div>
+                    </footer>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
