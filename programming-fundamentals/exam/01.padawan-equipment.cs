@@ -1,8 +1,8 @@
 using System;
 
-namespace PadawanEquipment
+namespace Exam
 {
-    class PadawanEquipment
+    class Program
     {
         static void Main(string[] args)
         {
@@ -12,20 +12,20 @@ namespace PadawanEquipment
             double pricePerRobe = double.Parse(Console.ReadLine());
             double pricePerBelt = double.Parse(Console.ReadLine());
 
-            double totalLightsabersPrice = Math.Ceiling(studentsCount  1.1)  pricePerLightsaber;
-            int freeBelts = studentsCount  6;
+            double totalLightsabersPrice = Math.Ceiling(studentsCount * 1.1) * pricePerLightsaber;
+            int freeBelts = studentsCount / 6;
 
-            double totalMoneyNeeded = ((studentsCount - freeBelts)  pricePerBelt) + (studentsCount  pricePerRobe) +
+            double totalMoneyNeeded = ((studentsCount - freeBelts) * pricePerBelt) + (studentsCount * pricePerRobe) +
                                       totalLightsabersPrice;
 
-            if (totalMoneyNeeded = moneyAmount)
+            if (totalMoneyNeeded <= moneyAmount)
             {
-                Console.WriteLine($The money is enough - it would cost {totalMoneyNeededf2}lv.);
+                Console.WriteLine($"The money is enough - it would cost {totalMoneyNeeded:f2}lv.");
             }
             else
             {
                 double diff = Math.Abs(moneyAmount - totalMoneyNeeded);
-                Console.WriteLine($Ivan Cho will need {difff2}lv more.);
+                Console.WriteLine($"Ivan Cho will need {diff:f2}lv more.");
             }
         }
     }
