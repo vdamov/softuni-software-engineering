@@ -36,8 +36,6 @@ function onlineShop(selector) {
         priceSum += +price.val();
         $('ul.display')
             .append($('<li>').text(`Product: ${product.val()} Price: ${price.val()} Quantity: ${quantity.val()}`));
-        capacity.val(capacitySum);
-
         if (capacitySum >= 150) {
 
 
