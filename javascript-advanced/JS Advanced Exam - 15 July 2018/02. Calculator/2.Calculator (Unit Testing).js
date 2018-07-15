@@ -20,7 +20,7 @@ describe('Calculator class Unit Testing', function () {
         calc.add({asd: 1});
         expect(calc.expenses).to.have.lengthOf(4);
     });
-    it('Testing if Calculator.divideNums works with positive, negative and floating numbers.Testing if can divide by zero.', function () {
+    it('Testing if Calculator.divideNums works with positive, negative and floating-point numbers.Testing if can divide by zero.', function () {
         calc.add(6);
         calc.add(-2.5);
         expect(calc.divideNums()).to.equals(-2.4);
