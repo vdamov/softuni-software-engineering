@@ -1,4 +1,4 @@
-describe('Calculator class Unit Testing', function () {
+describe('Calculator class Unit testing', function () {
     let calc;
     beforeEach(function () {
         calc = new Calculator();
@@ -20,7 +20,7 @@ describe('Calculator class Unit Testing', function () {
         calc.add({asd: 1});
         expect(calc.expenses).to.have.lengthOf(4);
     });
-    it('Testing if Calculator.divideNums works with positive, negative and floating-point numbers.Testing if can divide by zero.', function () {
+    it('Testing if Calculator.divideNums works with positive, negative and floating numbers.Testing if can divide by zero.', function () {
         calc.add(6);
         calc.add(-2.5);
         expect(calc.divideNums()).to.equals(-2.4);
@@ -29,7 +29,6 @@ describe('Calculator class Unit Testing', function () {
 
     });
     it('Testing if Calculator.devideNums throw errors currectly.', function () {
-        calc.add('asd');
         expect(() => calc.divideNums()).to.throw('There are no numbers in the array!');
         calc.add({a:1});
         calc.add('asd');
@@ -59,4 +58,4 @@ describe('Calculator class Unit Testing', function () {
         expect(calc.orderBy()).to.equals('-1, 1,2,3, 2, 2.13, 3.14, [object Object], asd');
     });
 
-});
+})
