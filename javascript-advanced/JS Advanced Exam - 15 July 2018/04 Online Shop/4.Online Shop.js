@@ -37,8 +37,6 @@ function onlineShop(selector) {
         $('ul.display')
             .append($('<li>').text(`Product: ${product.val()} Price: ${price.val()} Quantity: ${quantity.val()}`));
         if (capacitySum >= 150) {
-
-
             totalPrice.val(priceSum);
             capacity.val('full').addClass('fullCapacity');
             product.attr('disabled', '');
