@@ -75,7 +75,7 @@ $(() => {
 
             }).then(function () {
                 this.partial('./templates/pages/login.hbs')
-            }).catch(notify.handleError)
+            })
 
 
         })
