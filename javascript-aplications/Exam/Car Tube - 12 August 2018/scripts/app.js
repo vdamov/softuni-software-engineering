@@ -216,6 +216,11 @@ $(() => {
             const carId = ctx.params.id;
 
             carsService.getCarById(carId).then(function (car) {
+                if (car.seller !== ctx.username) {
+                    notify.showError('Unauthorized action!')
+                    ctx.redirect('#/home')
+                    return;
+                }
                 ctx.car = car;
                 ctx.loadPartials({
                     header: './templates/common/header.hbs',
@@ -289,7 +294,7 @@ $(() => {
                     }).catch(notify.handleError)
                 } else {
                     notify.showError('Unauthorized action!')
-                    ctx.redirect('#/listing')
+                    ctx.redirect('#/home')
                 }
             }).catch(notify.handleError)
 
