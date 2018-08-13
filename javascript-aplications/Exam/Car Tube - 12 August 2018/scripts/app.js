@@ -216,7 +216,7 @@ $(() => {
             const carId = ctx.params.id;
 
             carsService.getCarById(carId).then(function (car) {
-                if (car.seller !== ctx.username) {
+                if (car._acl.creator !== sessionStorage.getItem('userId')) {
                     notify.showError('Unauthorized action!')
                     ctx.redirect('#/home')
                     return;
@@ -331,7 +331,7 @@ $(() => {
             ctx.isAuth = auth.isAuth();
             const carId = ctx.params.id;
             carsService.getCarById(carId).then(function (car) {
-                ctx.isAuthor = car.seller === ctx.username;
+                ctx.isAuthor = car._acl.creator === sessionStorage.getItem('userId');
                 ctx.car = car;
 
                 ctx.loadPartials({
