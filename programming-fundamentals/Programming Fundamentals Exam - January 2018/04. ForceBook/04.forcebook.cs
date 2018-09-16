@@ -9,62 +9,65 @@ namespace ForceBook
     {
         static void Main(string[] args)
         {
-            Dictionary<string, string> forceUsers = new Dictionary<string, string>();
-            Dictionary<string, int> forceSides = new Dictionary<string, int>();
-            while (true)
+            var db = new Dictionary<string, List<string>>();
+
+            var input = Console.ReadLine();
+
+            while (input != "Lumpawaroo")
             {
-                string input = Console.ReadLine();
-                if (input == "Lumpawaroo") break;
-                string[] inputArray = new string[3];
+                var tokens = input.Split(new string[] { "|", "->" }, StringSplitOptions.RemoveEmptyEntries);
+
                 if (input.Contains(" | "))
                 {
-                    inputArray = input.Split(" | ");
-                    if (forceUsers.ContainsKey(inputArray[1]) == false)
+                    var side = tokens[0].Trim();
+                    var user = tokens[1].Trim();
+
+                    if (!db.ContainsKey(side))
                     {
-                        forceUsers.Add(inputArray[1], inputArray[0]);
-                        if (forceSides.ContainsKey(inputArray[0]) == false)
-                        {
-                            forceSides.Add(inputArray[0], 0);
-                        }
-                        forceSides[inputArray[0]]++;
+                        db.Add(side, new List<string>());
+                    }
+                    if (!db.Values.Any(x => x.Contains(user)))
+                    {
+                        db[side].Add(user);
                     }
                 }
                 else if (input.Contains(" -> "))
                 {
-                    inputArray = input.Split(" -> ");
-                    if (forceUsers.ContainsKey(inputArray[0]) == false)
-                    {
-                        forceUsers.Add(inputArray[0], inputArray[1]);
-                        if (forceSides.ContainsKey(inputArray[1]) == false)
-                        {
-                            forceSides.Add(inputArray[1], 0);
-                        }
-                        forceSides[inputArray[1]]++;
-                    }
-                    else
-                    {
-                        forceSides[forceUsers[inputArray[0]]]--;
-                        if (forceSides.ContainsKey(inputArray[1]) == false)
-                        {
-                            forceSides.Add(inputArray[1], 0);
-                        }
-                        forceSides[inputArray[1]]++;
+                    var side = tokens[1].Trim();
+                    var user = tokens[0].Trim();
 
-                        forceUsers[inputArray[0]] = inputArray[1];
+                    foreach (var kvp in db)
+                    {
+                        if (kvp.Value.Contains(user) && kvp.Key != side)
+                        {
+                            kvp.Value.Remove(user);
+                        }
                     }
 
-                    Console.WriteLine($"{inputArray[0]} joins the {inputArray[1]} side!");
+                    if (!db.ContainsKey(side))
+                    {
+                        db.Add(side, new List<string>());
+                    }
+                    if (!db.Values.Any(x => x.Contains(user)))
+                    {
+                        db[side].Add(user);
+                        Console.WriteLine($"{user} joins the {side} side!");
+                    }
+
+
                 }
+
+                input = Console.ReadLine();
             }
 
-            foreach (var forceSide in forceSides.OrderByDescending(x => x.Value).ThenBy(x => x.Key))
+            foreach (var kvp in db.OrderByDescending(x => x.Value.Count).ThenBy(y => y.Key))
             {
-                if (forceSide.Value > 0)
+                if (kvp.Value.Count != 0)
                 {
-                    Console.WriteLine($"Side: {forceSide.Key}, Members: {forceSide.Value}");
-                    foreach (var forceUser in forceUsers.Where(x => x.Value == forceSide.Key).OrderBy(x => x.Key))
+                    Console.WriteLine($"Side: {kvp.Key}, Members: {kvp.Value.Count}");
+                    foreach (var user in kvp.Value.OrderBy(x => x))
                     {
-                        Console.WriteLine($"! {forceUser.Key}");
+                        Console.WriteLine($"! {user}");
                     }
                 }
             }
