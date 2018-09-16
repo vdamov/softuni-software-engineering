@@ -17,4 +17,4 @@
 |<a href="https://softuni.bg/trainings/1787/software-technologies-march-2018" target="_blank" > Software Technologies  </a> | <a href="https://softuni.bg/certificates/details/54186/f2bcd1ea" target="_blank" > Link</a> |
 |<a href="https://softuni.bg/trainings/1968/js-fundamentals-may-2018" target="_blank" > JavaScript Fundamentals  </a> | <a href="https://softuni.bg/certificates/details/55003/049bb9ff" target="_blank" > Link</a> |
 |<a href="https://softuni.bg/trainings/1969/js-advanced-june-2018" target="_blank" > JavaScript Advanced  </a> | <a href="https://softuni.bg/certificates/details/56100/81cbc158" target="_blank" > Link</a> |
-|<a href="https://softuni.bg/trainings/1970/js-applications-july-2018" target="_blank" > JavaScript Aplications  </a> | <a https://softuni.bg/certificates/details/57251/b3927969" target="_blank" > Link</a> |
+|<a href="https://softuni.bg/trainings/1970/js-applications-july-2018" target="_blank" > JavaScript Aplications  </a> | <a href="https://softuni.bg/certificates/details/57251/b3927969" target="_blank" > Link</a> |
