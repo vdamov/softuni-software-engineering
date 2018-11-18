@@ -1,11 +1,9 @@
 ﻿using AnimalCentre.Entities;
 using AnimalCentre.Entities.Animals;
 using AnimalCentre.Entities.Procedures;
-using AnimalCentre.Models.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace AnimalCentre.Core
 {
@@ -18,7 +16,6 @@ namespace AnimalCentre.Core
         private NailTrim nailTrim;
         private Play play;
         private Vaccinate vaccinate;
-
         private Dictionary<string, List<string>> adopted;
         public IReadOnlyDictionary<string, List<string>> Adopted { get; }
 
@@ -144,7 +141,7 @@ namespace AnimalCentre.Core
                 adopted.Add(owner, new List<string>());
             }
             hotel.Adopt(animalName, owner);
-            Adopted[owner].Add(animal.Name);
+            adopted[owner].Add(animal.Name);
             if (animal.IsChipped)
             {
                 return $"{owner} adopted animal with chip";
