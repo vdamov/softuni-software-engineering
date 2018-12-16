@@ -73,7 +73,7 @@
                 var method = vehicles[vehicleModel].GetType()
                      .GetMethods().FirstOrDefault(m => m.Name == "Add" + partType + "Part");
 
-                method.Invoke(vehicles[vehicleModel], new object[] { part });
+                method?.Invoke(vehicles[vehicleModel], new object[] { part });
 
             }
 

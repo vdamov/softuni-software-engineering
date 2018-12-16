@@ -149,9 +149,6 @@
             Assert.AreEqual(expectedAfter, actualAfter);
             //checks Parts list count after adding vehicle parts
             Assert.AreEqual(vanguard.Parts.Count(), 3);
-
-
-
         }
     }
 }
