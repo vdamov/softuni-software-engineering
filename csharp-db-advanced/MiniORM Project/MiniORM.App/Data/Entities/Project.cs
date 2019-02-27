@@ -1,5 +1,4 @@
-﻿
-namespace MiniORM.App.Data.Entities
+﻿namespace MiniORM.App.Data.Entities
 {
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
@@ -8,8 +7,10 @@ namespace MiniORM.App.Data.Entities
     {
         [Key]
         public int Id { get; set; }
+
         [Required]
         public string Name { get; set; }
-        public ICollection<EmployeesProjects> EmployeeProjects { get; }
+
+        public ICollection<EmployeeProject> EmployeeProjects { get; }
     }
 }

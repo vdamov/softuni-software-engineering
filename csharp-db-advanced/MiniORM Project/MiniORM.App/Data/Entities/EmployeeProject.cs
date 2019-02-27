@@ -1,10 +1,9 @@
-﻿
-
-namespace MiniORM.App.Data.Entities
+﻿namespace MiniORM.App.Data.Entities
 {
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-    public class EmployeesProjects
+
+    public class EmployeeProject
     {
         [Key]
         [ForeignKey(nameof(Employee))]
@@ -16,6 +15,5 @@ namespace MiniORM.App.Data.Entities
 
         public Employee Employee { get; set; }
         public Project Project { get; set; }
-
     }
 }
