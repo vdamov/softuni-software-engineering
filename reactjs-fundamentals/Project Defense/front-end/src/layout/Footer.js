@@ -1,8 +1,8 @@
 import React from 'react';
 
-const Footer = (props) => {
+const Footer = () => {
     return (
-        <div className="footer py-4">
+        <div className="footer py-4 border-top">
             <div className="container-fluid text-center">
                 <p>
                     Copyright &copy; 2019
