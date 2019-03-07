@@ -291,4 +291,7 @@ jQuery(document).ready(function($) {
 	}
 	swiperSetting();
 
+	$(document).ready(function(){
+		$('#lightgallery').lightGallery();
+	});
 });
