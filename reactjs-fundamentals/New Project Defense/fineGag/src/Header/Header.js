@@ -1,24 +1,39 @@
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
-import React from "react";
+import React, {Component} from "react";
 
 
-const Header = (props) => {
-    return (
-        <Navbar color="faded" light>
-            <NavbarBrand href="/" className="mr-lg-auto">reactstrap</NavbarBrand>
-            <NavbarToggler onClick={props.toggleNavbar} className="mr-2"/>
-            <Collapse isOpen={!props.collapsed} navbar>
-                <Nav navbar>
-                    <NavItem>
-                        <NavLink >Login</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink>Register</NavLink>
-                    </NavItem>
-                </Nav>
-            </Collapse>
-        </Navbar>
-    )
-};
+class Header extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isOpen: false
+        }
+    }
+
+    toggle = () => {
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    };
+
+    render() {
+        return (
+            <Navbar color="light" light expand="md" fixed="top">
+                <NavbarBrand href="/">fineGAG</NavbarBrand>
+                <NavbarToggler onClick={this.toggle}/>
+                <Collapse isOpen={this.state.isOpen} navbar>
+                    <Nav className="ml-auto" navbar>
+                        <NavItem>
+                            <NavLink href="#">Login</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink href="#">Register</NavLink>
+                        </NavItem>
+                    </Nav>
+                </Collapse>
+            </Navbar>
+        );
+    }
+}
 
 export default Header;

@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {FormGroup, Form, Input, Col, Label, FormFeedback, FormText, Button, Container} from "reactstrap";
+import {Button, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label} from "reactstrap";
 
 class RegisterForm extends Component {
     constructor(props) {
@@ -14,7 +14,6 @@ class RegisterForm extends Component {
                 confirmPasswordState: '',
             },
         };
-        this.handleChange = this.handleChange.bind(this);
     }
 
     validateEmail(e) {
@@ -42,7 +41,7 @@ class RegisterForm extends Component {
     validateConfirmPassword(e) {
         const {validate} = this.state;
         const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9]).{6,}$/;
-        if (passwordRegex.test(e.target.value) && this.state.password === e.target.value) {
+        if (passwordRegex.test(e.target.value) && e.target.value === this.state.password) {
             validate.confirmPasswordState = 'has-success'
         } else {
             validate.confirmPasswordState = 'has-danger'
@@ -52,11 +51,12 @@ class RegisterForm extends Component {
     }
 
 
-    handleChange = async (event) => {
+    handleChange = (event) => {
         const {target} = event;
         const value = target.value;
         const {name} = target;
-        await this.setState({
+
+        this.setState({
             [name]: value,
         });
     };
@@ -82,9 +82,9 @@ class RegisterForm extends Component {
                                 value={email}
                                 valid={this.state.validate.emailState === 'has-success'}
                                 invalid={this.state.validate.emailState === 'has-danger'}
-                                onChange={(e) => {
+                                onChange={async (e) => {
+                                    await this.handleChange(e);
                                     this.validateEmail(e);
-                                    this.handleChange(e)
                                 }}
                             />
                             <FormFeedback valid>
@@ -108,7 +108,8 @@ class RegisterForm extends Component {
                                 invalid={this.state.validate.passwordState === 'has-danger'}
                                 onChange={(e) => {
                                     this.validatePassword(e);
-                                    this.handleChange(e)
+                                    this.validateConfirmPassword(e);
+                                    this.handleChange(e);
                                 }}
                             />
                             <FormFeedback valid>
@@ -131,7 +132,7 @@ class RegisterForm extends Component {
                                 invalid={this.state.validate.confirmPasswordState === 'has-danger'}
                                 onChange={(e) => {
                                     this.validateConfirmPassword(e);
-                                    this.handleChange(e)
+                                    this.handleChange(e);
                                 }}
                             />
                             <FormFeedback valid>

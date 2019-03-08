@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {FormGroup, Form, Input, Col, Label, FormFeedback, FormText, Button, Container} from "reactstrap";
+import {Button, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label} from "reactstrap";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -37,11 +37,11 @@ class LoginForm extends Component {
         this.setState({validate})
     }
 
-    handleChange = async (event) => {
+    handleChange = (event) => {
         const {target} = event;
-        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const value = target.value;
         const {name} = target;
-        await this.setState({
+        this.setState({
             [name]: value,
         });
     };
@@ -91,12 +91,11 @@ class LoginForm extends Component {
                                 id="examplePassword"
                                 placeholder="********"
                                 value={password}
-                                pattern={/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[0-9]).{6,}$/}
                                 valid={this.state.validate.passwordState === 'has-success'}
                                 invalid={this.state.validate.passwordState === 'has-danger'}
                                 onChange={(e) => {
                                     this.validatePassword(e);
-                                    this.handleChange(e)
+                                    this.handleChange(e);
                                 }}
                             />
                             <FormFeedback valid>
