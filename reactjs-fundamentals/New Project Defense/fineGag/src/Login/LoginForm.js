@@ -1,18 +1,19 @@
 import React, {Component} from "react";
-import {Button, Col, Container, Form, FormFeedback, FormGroup, FormText, Input, Label} from "reactstrap";
+import {Button, Col, Form, FormFeedback, FormGroup, FormText, Input, Label} from "reactstrap";
 
 class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            'email': '',
-            'password': '',
+            isAdmin: false,
+            username: null,
+            email: '',
+            password: '',
             validate: {
                 emailState: '',
                 passwordState: '',
             },
-        };
-        this.handleChange = this.handleChange.bind(this);
+        }
     }
 
     validateEmail(e) {
@@ -46,71 +47,67 @@ class LoginForm extends Component {
         });
     };
 
-    submitForm(e) {
-        e.preventDefault();
-        console.log(`Email: ${this.state.email} Password: ${this.state.password}`)
-    }
 
     render() {
         const {email, password} = this.state;
         return (
-            <Container>
-                <h2>Login</h2>
-                <Form className="wrapper" onSubmit={(e) => this.submitForm(e)}>
-                    <Col>
-                        <FormGroup>
-                            <Label>Email</Label>
-                            <Input
-                                type="email"
-                                name="email"
-                                id="exampleEmail"
-                                placeholder="example@email.com"
-                                value={email}
-                                valid={this.state.validate.emailState === 'has-success'}
-                                invalid={this.state.validate.emailState === 'has-danger'}
-                                onChange={(e) => {
-                                    this.validateEmail(e);
-                                    this.handleChange(e)
-                                }}
-                            />
-                            <FormFeedback valid>
-                                That's a tasty looking email you've got there.
-                            </FormFeedback>
-                            <FormFeedback>
-                                Uh oh! Looks like there is an issue with your email. Please input a correct email.
-                            </FormFeedback>
-                            <FormText>Please enter a valid email address.</FormText>
-                        </FormGroup>
-                    </Col>
-                    <Col>
-                        <FormGroup>
-                            <Label for="examplePassword">Password</Label>
-                            <Input
-                                type="password"
-                                name="password"
-                                id="examplePassword"
-                                placeholder="********"
-                                value={password}
-                                valid={this.state.validate.passwordState === 'has-success'}
-                                invalid={this.state.validate.passwordState === 'has-danger'}
-                                onChange={(e) => {
-                                    this.validatePassword(e);
-                                    this.handleChange(e);
-                                }}
-                            />
-                            <FormFeedback valid>
-                                That's a great looking password you've got there.
-                            </FormFeedback>
-                            <FormFeedback>
-                                Uh oh! Looks like there is an issue with your password. Please input a correct password.
-                            </FormFeedback>
-                            <FormText>The password must contains 1 lower and 1 upper case character. The minimum
-                                password length is 6 characters.</FormText>
-                        </FormGroup>
-                    </Col>
-                    <Button className="float-lg-right">Submit</Button>
-                </Form>
-            </Container>
+            <Form className="form-control-lg" onSubmit={(e) => {
+                e.validate = this.state.validate;
+                this.props.loginFormSubmit(e);
+            }}>
+                <Col sm="12" md={{size: 6, offset: 3}}>
+                    <FormGroup>
+                        <Label>Email</Label>
+                        <Input
+                            type="email"
+                            name="email"
+                            id="exampleEmail"
+                            placeholder="name@email.com"
+                            value={email}
+                            valid={this.state.validate.emailState === 'has-success'}
+                            invalid={this.state.validate.emailState === 'has-danger'}
+                            onChange={(e) => {
+                                this.validateEmail(e);
+                                this.handleChange(e)
+                            }}
+                            required/>
+                        <FormFeedback valid>
+                            That's a tasty looking email you've got there.
+                        </FormFeedback>
+                        <FormFeedback>
+                            Uh oh! Looks like there is an issue with your email. Please input a correct email.
+                        </FormFeedback>
+                        <FormText>Please enter a valid email address.</FormText>
+                    </FormGroup>
+                </Col>
+                <Col sm="12" md={{size: 6, offset: 3}}>
+                    <FormGroup>
+                        <Label for="examplePassword">Password</Label>
+                        <Input
+                            type="password"
+                            name="password"
+                            id="examplePassword"
+                            placeholder="********"
+                            value={password}
+                            valid={this.state.validate.passwordState === 'has-success'}
+                            invalid={this.state.validate.passwordState === 'has-danger'}
+                            onChange={(e) => {
+                                this.validatePassword(e);
+                                this.handleChange(e);
+                            }}
+                            required/>
+                        <FormFeedback valid>
+                            That's a great looking password you've got there.
+                        </FormFeedback>
+                        <FormFeedback>
+                            Uh oh! Looks like there is an issue with your password. Please input a correct password.
+                        </FormFeedback>
+                        <FormText>The password must contains 1 lower and 1 upper case character. The minimum
+                            password length is 6 characters.</FormText>
+                    </FormGroup>
+                </Col>
+                <Button color="secondary" className=" offset-sm-8">Login</Button>
+            </Form>
         );
     }
 }

@@ -1,5 +1,6 @@
-import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
-import React, {Component} from "react";
+import {Collapse, Nav, Navbar, NavbarToggler, NavItem} from "reactstrap";
+import React, {Component, Fragment} from "react";
+import {Link, NavLink} from "react-router-dom";
 
 
 class Header extends Component {
@@ -19,16 +20,31 @@ class Header extends Component {
     render() {
         return (
             <Navbar color="light" light expand="md" fixed="top">
-                <NavbarBrand href="/">fineGAG</NavbarBrand>
+                <Link to="/" className="navbar-brand">fineGAG</Link>
                 <NavbarToggler onClick={this.toggle}/>
                 <Collapse isOpen={this.state.isOpen} navbar>
                     <Nav className="ml-auto" navbar>
-                        <NavItem>
-                            <NavLink href="#">Login</NavLink>
-                        </NavItem>
-                        <NavItem>
-                            <NavLink href="#">Register</NavLink>
-                        </NavItem>
+                        {
+                            this.props.user.username ?
+                                <Fragment>
+                                    <NavItem>
+                                        <NavLink to="/upload" className="nav-link">Upload</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink to="/" onClick={this.props.logout}
+                                                 className="nav-link">Logout</NavLink>
+                                    </NavItem>
+                                </Fragment>
+                                :
+                                <Fragment>
+                                    <NavItem>
+                                        <NavLink to="/login" className="nav-link">Login</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                        <NavLink to="/register" className="nav-link">Register</NavLink>
+                                    </NavItem>
+                                </Fragment>
+                        }
                     </Nav>
                 </Collapse>
             </Navbar>
