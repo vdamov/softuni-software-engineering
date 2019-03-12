@@ -1,0 +1,181 @@
+.detailBox {
+    width: 100%;
+    border: 1px solid #bbb;
+}
+
+.titleBox {
+    background-color: #fdfdfd;
+    padding: 10px;
+}
+
+.titleBox label {
+    color: #444;
+    margin: 0;
+    display: inline-block;
+}
+
+.commentBox {
+    padding: 10px;
+    border-top: 1px dotted #bbb;
+}
+
+.commentBox .form-group:first-child, .actionBox .form-group:first-child {
+    width: 80%;
+}
+
+.commentBox .form-group:nth-child(2), .actionBox .form-group:nth-child(2) {
+    width: 18%;
+}
+
+.actionBox .form-group * {
+    width: 100%;
+}
+
+.taskDescription {
+    margin-top: 10px;
+}
+
+.commentList {
+    padding: 0;
+    list-style: none;
+    max-height: 200px;
+    overflow: auto;
+}
+
+.commentList li {
+    margin: 0;
+    margin-top: 10px;
+}
+
+.commentList li > div {
+    display: table-cell;
+}
+
+.commenterImage {
+    width: 30px;
+    margin-right: 5px;
+    height: 100%;
+    float: left;
+}
+
+.commenterImage img {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.commentText p {
+    margin: 0;
+}
+
+.sub-text {
+    color: #aaa;
+    font-family: verdana;
+    font-size: 11px;
+}
+
+.actionBox {
+    padding: 10px;
+}
+
+a {
+    color: #09f;
+    text-decoration: none;
+}
+
+.left {
+    float: left !important;
+}
+
+.btn-vote a:hover {
+    border-color: #999;
+}
+
+.btn-vote {
+    overflow: hidden;
+}
+
+.btn-vote a {
+
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    width: 44px;
+    height: 34px;
+    display: block;
+    text-indent: -999px;
+    position: relative;
+
+}
+
+.btn-vote li {
+    margin: 0 8px 0 0;
+    float: left;
+    list-style: none;
+}
+
+.btn-vote .up.active::after {
+
+    background: url(/sprite.png) -120px -90px no-repeat;
+    background-size: 510px 120px;
+
+}
+
+.btn-vote .down.active::after {
+
+    background: url(/sprite.png) -150px -90px no-repeat;
+    background-size: 510px 120px;
+
+}
+
+.btn-vote .comment.active::after {
+
+    background: url(/sprite.png) -180px -90px no-repeat;
+    background-size: 510px 120px;
+
+}
+
+.btn-vote .down::after, .btn-vote .up::after {
+
+    position: absolute;
+    content: " ";
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+
+}
+
+.btn-vote .up::after {
+
+    background: url(/sprite.png) -120px 0 no-repeat;
+    background-size: 510px 120px;
+
+}
+
+.btn-vote .down::after {
+    background: url(/sprite.png) -150px 0 no-repeat;
+    background-size: 510px 120px;
+}
+
+.btn-vote .comment::after {
+
+    background: url(/sprite.png) -180px 0 no-repeat;
+    background-size: 510px 120px;
+
+}
+
+.btn-vote .comment::after {
+
+    position: absolute;
+    content: " ";
+    width: 30px;
+    height: 30px;
+    left: 50%;
+    top: 50%;
+    margin-top: -15px;
+    margin-left: -15px;
+
+}
+

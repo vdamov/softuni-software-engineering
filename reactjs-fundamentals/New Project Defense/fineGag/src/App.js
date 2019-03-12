@@ -26,6 +26,7 @@ class App extends Component {
 
     loginFormSubmit = (e) => {
         e.preventDefault();
+        console.log(e);
         const {emailState, passwordState} = e.validate;
         const {email, password} = e.target;
         const loginUrl = 'http://localhost:9999/auth/signin';
@@ -99,7 +100,11 @@ class App extends Component {
                                    (<Redirect to="/"/>) :
                                    (<RegisterForm registerFormSubmit={this.registerFormSubmit}/>)
                            )}/>
-                    <Route path="/upload" exact component={Upload}/>
+                    <Route path="/upload" exact render={() => (
+                        this.state.username ?
+                            (<Upload user={this.state.username}/>) :
+                            (<Redirect to="/"/>)
+                    )}/>
                     <Route path="/login" exact
                            render={() => (
                                this.state.username ?
