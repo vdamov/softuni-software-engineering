@@ -13,15 +13,18 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAdmin: false,
-            username: null,
+            user: {
+                isAdmin: false,
+                username: null,
+                userId: null
+            }
         };
 
     }
 
     logout = () => {
         localStorage.removeItem('token');
-        this.setState({isAdmin: false, username: null})
+        this.setState({user: {isAdmin: false, username: null, userId: null}})
     };
 
     loginFormSubmit = (e) => {
@@ -47,9 +50,18 @@ class App extends Component {
                         console.log(body.message);
                     } else {
                         if (body.isAdmin) {
-                            this.setState({isAdmin: true})
+                            this.setState({
+                                user: {
+                                    isAdmin: true
+                                }
+                            })
                         }
-                        this.setState({username: body.username});
+                        this.setState({
+                            user: {
+                                username: body.username,
+                                userId: body.userId
+                            }
+                        });
                         localStorage.setItem('token', body.token);
                     }
                 })
@@ -78,9 +90,14 @@ class App extends Component {
                         console.log(body.message);
                     } else {
                         if (body.isAdmin) {
-                            this.setState({isAdmin: true})
+                            this.setState({user: {isAdmin: true}})
                         }
-                        this.setState({username: body.username});
+                        this.setState({
+                            user: {
+                                username: body.username,
+                                userId: body.userId
+                            }
+                        });
                         localStorage.setItem('token', body.token);
 
                     }
@@ -93,25 +110,26 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="container pt-5">
-                    <Header user={this.state} logout={this.logout}/>
+                    <Header user={this.state.user} logout={this.logout}/>
                     <Route path="/register" exact
                            render={() => (
-                               this.state.username ?
+                               this.state.user.username ?
                                    (<Redirect to="/"/>) :
                                    (<RegisterForm registerFormSubmit={this.registerFormSubmit}/>)
                            )}/>
                     <Route path="/upload" exact render={() => (
-                        this.state.username ?
-                            (<Upload user={this.state.username}/>) :
+                        this.state.user.username ?
+                            (<Upload user={this.state.user}/>) :
                             (<Redirect to="/"/>)
                     )}/>
                     <Route path="/login" exact
                            render={() => (
-                               this.state.username ?
+                               this.state.user.username ?
                                    (<Redirect to="/"/>) :
                                    (<LoginForm loginFormSubmit={this.loginFormSubmit}/>)
                            )}/>
-                    <Route path="/" exact component={Home}/>
+                    <Route path="/" exact
+                           component={() => <Home user={this.state.user}/>}/>
                 </div>
             </BrowserRouter>
         );

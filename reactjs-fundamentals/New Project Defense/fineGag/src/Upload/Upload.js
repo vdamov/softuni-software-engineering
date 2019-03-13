@@ -40,7 +40,7 @@ class Upload extends Component {
             formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
 
         });
-        formData.append('author', this.props.user);
+        formData.append('author', this.props.user.username);
         axios.post(`http://localhost:9999/feed/add-meme`, formData)
             .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
             .catch(err => window.alert('Error uploading files :('))
