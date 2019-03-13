@@ -22,6 +22,28 @@ class App extends Component {
 
     }
 
+    componentDidMount() {
+        if (!this.state.user.username && localStorage.getItem('token')) {
+            fetch('http://localhost:9999/auth/is-auth', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    token: localStorage.getItem('token')
+                })
+
+            }).then(response => response.json())
+                .then(data => {
+                    this.setState({
+                        user: {
+                            username: data.username,
+                            userId: data.userId,
+                            isAdmin: data.isAdmin
+                        }
+                    })
+                })
+        }
+    }
+
     logout = () => {
         localStorage.removeItem('token');
         this.setState({user: {isAdmin: false, username: null, userId: null}})
@@ -45,7 +67,6 @@ class App extends Component {
             })
                 .then(response => response.json())
                 .then((body) => {
-                    console.log(body);
                     if (!body.token) {
                         console.log(body.message);
                     } else {

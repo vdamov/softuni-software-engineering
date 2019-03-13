@@ -1,3 +1,6 @@
+body {
+    line-height: 1;
+}
 .detailBox {
     width: 100%;
     border: 1px solid #bbb;
@@ -65,12 +68,18 @@
 
 .commentText p {
     margin: 0;
+    line-height: 1;
+}
+
+.commentText span {
+    margin: 0;
 }
 
 .sub-text {
     color: #aaa;
     font-family: verdana;
     font-size: 11px;
+    margin-top: 0;
 }
 
 .actionBox {

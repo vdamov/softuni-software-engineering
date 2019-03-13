@@ -2,7 +2,7 @@ import axios from 'axios'
 import Blob from 'blob'
 import FormData from 'form-data'
 import React, {Component} from 'react'
-import {Card, CardBody, CardImg, CardText, CardTitle} from "reactstrap";
+import {Card, CardImg} from "reactstrap";
 import Files from "./Files";
 
 class Upload extends Component {
@@ -35,22 +35,26 @@ class Upload extends Component {
 
     filesUpload = () => {
         const formData = new FormData();
+        formData.append('userId', this.props.user.userId);
         Object.keys(this.state.files).forEach((key) => {
+            debugger;
             const file = this.state.files[key];
-            formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
 
+            formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
         });
-        formData.append('author', this.props.user.username);
-        axios.post(`http://localhost:9999/feed/add-meme`, formData)
-            .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
-            .catch(err => window.alert('Error uploading files :('))
+        if (this.state.files.length > 0) {
+            axios.post(`http://localhost:9999/feed/add-meme`, formData)
+                .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
+                .catch(err => window.alert('Error uploading files :('))
+
+        }
     };
 
     render() {
         return (
             <div>
                 <div className="offset-4 pb-5">
-                    <h1>Example 1 - List</h1>
+                    <h1>Upload Memes</h1>
                     <Files
                         ref='files'
                         style={{height: '100px'}}
@@ -58,7 +62,7 @@ class Upload extends Component {
                         onError={this.onFilesError}
                         accepts={['.png', '.jpg', '.jpeg', '.gif']}
                         multiple
-                        maxFiles={10}
+                        maxFiles={3}
                         maxFileSize={10000000}
                         minFileSize={0}
                         clickable
@@ -76,15 +80,6 @@ class Upload extends Component {
                                 <CardImg top width="100%"
                                          src={file.preview.url}
                                          alt="Card image cap"/>
-                                <CardBody>
-                                    <CardTitle>Card Title</CardTitle>
-                                    <CardText>This is a wider card with supporting text below as a natural lead-in to
-                                        additional
-                                        content. This content is a little bit longer.</CardText>
-                                    <CardText>
-                                        <small className="text-muted">Last updated 3 mins ago</small>
-                                    </CardText>
-                                </CardBody>
                             </Card>
                         </div>))
                         : null

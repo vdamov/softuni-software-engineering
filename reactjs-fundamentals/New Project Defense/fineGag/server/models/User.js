@@ -13,7 +13,8 @@ const userSchema = new Schema({
     },
     username: {
         type: Schema.Types.String,
-        required: true
+        required: true,
+        unique: true
     },
     salt: {
         type: Schema.Types.String,
