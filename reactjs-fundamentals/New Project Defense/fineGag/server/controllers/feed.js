@@ -31,7 +31,7 @@ module.exports = {
                 if (!error.statusCode) {
                     error.statusCode = 500;
                 }
-                res.status(error.statusCode).json({error});
+                next(error);
             });
     },
     addComment: async (req, res) => {
@@ -48,61 +48,11 @@ module.exports = {
             meme.comments.push(comment._id);
             meme.save();
             res.status(201).json({message: 'Comment created.', comment})
-        } catch (error) {
-            if (!error.statusCode) {
-                error.statusCode = 500;
-            }
-            res.status(error.statusCode).json({error});
-
+        } catch (e) {
+            console.log(e);
         }
 
     },
-    deleteComment: async (req, res) => {
-        try {
-            const memeId = req.body.memeId;
-            const commentId = req.body.commentId;
-
-            const meme = await Meme.findOne({_id: memeId});
-
-            await meme.updateOne({$pull: {comments: commentId}});
-            await Comment.deleteOne({_id: commentId});
-
-            res.status(200).json({message: 'The comment was deleted.'});
-
-
-        } catch (error) {
-            if (!error.statusCode) {
-                error.statusCode = 500;
-            }
-            res.status(error.statusCode).json({error});
-
-        }
-
-    },
-    deleteMeme: async (req, res) => {
-        try {
-            const memeId = req.body.memeId;
-
-            const meme = await Meme.findOne({_id: memeId});
-
-            await Vote.deleteOne({meme: memeId});
-            await Comment.deleteMany({_id: {$in: meme.comments}});
-            await Meme.deleteOne({_id: memeId});
-
-
-            res.status(200).json({message: 'The meme was deleted.'});
-
-
-        } catch (error) {
-            if (!error.statusCode) {
-                error.statusCode = 500;
-            }
-            res.status(error.statusCode).json({error});
-
-        }
-
-    },
-
     addMeme: async (req, res) => {
         try {
             for (let i = 0; i < Object.keys(req.files).length; i++) {
@@ -125,11 +75,12 @@ module.exports = {
                 });
 
 
-        } catch (error) {
-            if (!error.statusCode) {
-                error.statusCode = 500;
+        } catch (e) {
+            if (!e.statusCode) {
+                e.statusCode = 500;
             }
-            res.status(error.statusCode).json({error});
+            console.log(e);
+
         }
     },
     addVote: async (req, res) => {
