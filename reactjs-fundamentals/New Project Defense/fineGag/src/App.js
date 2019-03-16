@@ -13,6 +13,7 @@ class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            isOpen: false,
             user: {
                 isAdmin: false,
                 username: null,
@@ -21,6 +22,7 @@ class App extends Component {
         };
 
     }
+
 
     componentDidMount() {
         if (!this.state.user.username && localStorage.getItem('token')) {
@@ -51,7 +53,6 @@ class App extends Component {
 
     loginFormSubmit = (e) => {
         e.preventDefault();
-        console.log(e);
         const {emailState, passwordState} = e.validate;
         const {email, password} = e.target;
         const loginUrl = 'http://localhost:9999/auth/signin';
@@ -73,16 +74,21 @@ class App extends Component {
                         if (body.isAdmin) {
                             this.setState({
                                 user: {
-                                    isAdmin: true
+                                    isAdmin: true,
+                                    username: body.username,
+                                    userId: body.userId
                                 }
                             })
+                        } else {
+                            this.setState({
+                                user: {
+                                    username: body.username,
+                                    userId: body.userId,
+                                    isAdmin: false
+                                }
+                            });
+
                         }
-                        this.setState({
-                            user: {
-                                username: body.username,
-                                userId: body.userId
-                            }
-                        });
                         localStorage.setItem('token', body.token);
                     }
                 })
@@ -110,9 +116,6 @@ class App extends Component {
                     if (!body.token) {
                         console.log(body.message);
                     } else {
-                        if (body.isAdmin) {
-                            this.setState({user: {isAdmin: true}})
-                        }
                         this.setState({
                             user: {
                                 username: body.username,
@@ -131,7 +134,10 @@ class App extends Component {
         return (
             <BrowserRouter>
                 <div className="container pt-5">
-                    <Header user={this.state.user} logout={this.logout}/>
+                    <Header user={this.state.user}
+                            logout={this.logout}
+                            toggle={this.toggle}
+                            isOpen={this.state.isOpen}/>
                     <Route path="/register" exact
                            render={() => (
                                this.state.user.username ?
