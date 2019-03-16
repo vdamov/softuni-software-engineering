@@ -2,13 +2,13 @@ import {Collapse, Nav, Navbar, NavbarToggler, NavItem} from "reactstrap";
 import React, {Component, Fragment} from "react";
 import {Link, NavLink} from "react-router-dom";
 
-
 class Header extends Component {
     constructor(props) {
         super(props);
         this.state = {
             isOpen: false
         }
+
     }
 
     toggle = () => {
@@ -50,6 +50,7 @@ class Header extends Component {
             </Navbar>
         );
     }
+
 }
 
 export default Header;

@@ -37,7 +37,6 @@ class Upload extends Component {
         const formData = new FormData();
         formData.append('userId', this.props.user.userId);
         Object.keys(this.state.files).forEach((key) => {
-            debugger;
             const file = this.state.files[key];
 
             formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
