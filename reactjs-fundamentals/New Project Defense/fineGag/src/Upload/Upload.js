@@ -2,8 +2,10 @@ import axios from 'axios'
 import Blob from 'blob'
 import FormData from 'form-data'
 import React, {Component} from 'react'
-import {Card, CardImg} from "reactstrap";
+import {Button, Card, CardImg} from "reactstrap";
 import Files from "./Files";
+import FormText from "reactstrap/es/FormText";
+import './Upload.css';
 
 class Upload extends Component {
     constructor(props) {
@@ -16,17 +18,11 @@ class Upload extends Component {
     onFilesChange = (files) => {
         this.setState({
             files
-        }, () => {
-            console.log(this.state.files)
         })
     };
 
-    onFilesError = (error, file) => {
+    onFilesError = (error) => {
         console.log('error code ' + error.code + ': ' + error.message)
-    };
-
-    filesRemoveOne = (file) => {
-        this.refs.files.removeFile(file)
     };
 
     filesRemoveAll = () => {
@@ -52,25 +48,31 @@ class Upload extends Component {
     render() {
         return (
             <div>
-                <div className="offset-4 pb-5">
-                    <h1>Upload Memes</h1>
+                <div className="pb-5 offset-3">
                     <Files
                         ref='files'
-                        style={{height: '100px'}}
                         onChange={this.onFilesChange}
                         onError={this.onFilesError}
                         accepts={['.png', '.jpg', '.jpeg', '.gif']}
                         multiple
                         maxFiles={3}
-                        maxFileSize={10000000}
+                        maxFileSize={2000000}
                         minFileSize={0}
                         clickable
 
                     >
-                        Drop files here or click to upload
+                        <p className="drop">Drop images here or click to upload</p>
                     </Files>
-                    <button onClick={this.filesRemoveAll}>Remove All Files</button>
-                    <button onClick={this.filesUpload}>Upload</button>
+                    <div className="mt-2">
+                        <FormText>You can upload up to 3 images at once.</FormText>
+                        <FormText>Allowed images formats: .jpg, .jpeg, .png, .gif</FormText>
+                        <FormText>The maximum allowed images size is 2MB.</FormText>
+                    </div>
+                    <div className="offset-4">
+                        <Button className="drop-button" onClick={this.filesRemoveAll} color="secondary">Remove All
+                            Files</Button>
+                        <Button className="drop-button" onClick={this.filesUpload} color="secondary">Upload</Button>
+                    </div>
                 </div>
                 {
                     this.state.files.length > 0

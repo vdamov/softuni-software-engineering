@@ -1,6 +1,7 @@
 const Meme = require('../models/Meme');
 const Vote = require('../models/Vote');
 const Comment = require('../models/Comment');
+const fs = require('fs');
 
 module.exports = {
     getMemes: (req, res) => {
@@ -84,7 +85,7 @@ module.exports = {
             const memeId = req.body.memeId;
 
             const meme = await Meme.findOne({_id: memeId});
-
+            await fs.unlinkSync('./public' + meme.url);
             await Vote.deleteOne({meme: memeId});
             await Comment.deleteMany({_id: {$in: meme.comments}});
             await Meme.deleteOne({_id: memeId});

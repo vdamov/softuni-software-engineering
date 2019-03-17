@@ -30,7 +30,7 @@ class Home extends Component {
     }
 
 
-    toggle = (index) => {
+    toggleComments = (index) => {
         let arr = this.state.isOpen;
         arr[index] = !arr[index];
         this.setState({
@@ -219,7 +219,7 @@ class Home extends Component {
                                                className={this.downVoteClass(index)}><span>DOWN</span></a></li>
                                         <li><a onClick={(e) => {
                                             e.preventDefault();
-                                            this.toggle(index);
+                                            this.toggleComments(index);
                                         }}
                                                className={this.commentClass(index)}>
                                             Comment

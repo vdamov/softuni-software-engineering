@@ -80,19 +80,17 @@ class Files extends React.Component {
         })
     }
 
-    onDragOver(event) {
+    static onDragOver(event) {
         event.preventDefault();
         event.stopPropagation()
     }
 
-    onDragEnter(event) {
-        let el = this.dropzone;
-        el.className += ' ' + this.props.dropActiveClassName
+    static mimeTypeLeft(mime) {
+        return mime.split('/')[0]
     }
 
-    onDragLeave(event) {
-        let el = this.dropzone;
-        this.dropzone.className = el.className.replace(' ' + this.props.dropActiveClassName, '')
+    static mimeTypeRight(mime) {
+        return mime.split('/')[1]
     }
 
     openFileChooser() {
@@ -155,15 +153,7 @@ class Files extends React.Component {
         }
     }
 
-    mimeTypeLeft(mime) {
-        return mime.split('/')[0]
-    }
-
-    mimeTypeRight(mime) {
-        return mime.split('/')[1]
-    }
-
-    fileExtension(file) {
+    static fileExtension(file) {
         let extensionSplit = file.name.split('.');
         if (extensionSplit.length > 1) {
             return extensionSplit[extensionSplit.length - 1]
@@ -172,7 +162,7 @@ class Files extends React.Component {
         }
     }
 
-    fileSizeReadable(size) {
+    static fileSizeReadable(size) {
         if (size >= 1000000000) {
             return Math.ceil(size / 1000000000) + 'GB'
         } else if (size >= 1000000) {
@@ -182,6 +172,16 @@ class Files extends React.Component {
         } else {
             return Math.ceil(size) + 'B'
         }
+    }
+
+    onDragEnter() {
+        let el = this.dropzone;
+        el.className += ' ' + this.props.dropActiveClassName
+    }
+
+    onDragLeave() {
+        let el = this.dropzone;
+        this.dropzone.className = el.className.replace(' ' + this.props.dropActiveClassName, '')
     }
 
     onError(error, file) {
@@ -268,7 +268,7 @@ Files.defaultProps = {
     onChange: function (files) {
         console.log(files)
     },
-    onError: function (error, file) {
+    onError: function (error) {
         console.log('error code ' + error.code + ': ' + error.message)
     },
     className: 'files-dropzone',
