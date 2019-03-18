@@ -1,68 +1,40 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**fineGAG**
 
-## Available Scripts
+**fineGAG** is web application for programming jokes/memes where users are able to upload memes, comment under each meme and vote for the memes they like/dislike. 
 
-In the project directory, you can run:
+For front-end I’ve used **React** with **Reactstrap**. 
 
-### `npm start`
+Additional modules:
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+* **JavaScript Time Ago** - International highly customizable relative date/time formatter (both for past and future dates).
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+* **React Toastify**** **-** **allow you to add notification to your app with ease.
 
-### `npm test`
+* **React Router DOM** - a collection of navigational components that compose declaratively with your application.
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* **React Infinite Scroll - **A component to make all your infinite scrolling woes go away with just 4.15 kB! An infinite-scroll that actually works and super-simple to integrate!
 
-### `npm run build`
+For back-end I’ve used **NodeJS** with **ExpressJS**.
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Additional modules:
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
+* **Express Fileupload **-** **Simple express middleware for uploading files.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+* **JSON Web Token **-** **An open standard (RFC 7519) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object.
 
-### `npm run eject`
+* **Body Parser** - Parse incoming request bodies in a middleware before your handlers, available under the req.body property.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* **CORS** - node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+For database I’ve used **MongoDB** with **Mongoose**.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Additional modules:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* **Mongoose Paginate v2** - A cursor based custom pagination library for Mongoose with customizable labels.
 
-## Learn More
+* Admin privileges- Can view all memes.- Can view all comments.- Can comment under a meme.- Can vote for a meme with like/dislike.- Can upload multiple memes.- Can delete memes.- Can delete comments.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* User privileges- Can view all memes.- Can view all comments.- Can comment under a meme.- Can vote for a meme with like/dislike.- Can upload multiple memes.- Can delete only his own memes.- Can delete only his own comments.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* Guest privileges- Can view all memes.- Can view all comments.- Can Login/Register.
 
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
