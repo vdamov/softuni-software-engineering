@@ -4,6 +4,8 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import JavascriptTimeAgo from 'javascript-time-ago'
 import en from 'javascript-time-ago/locale/en'
 import ReactTimeAgo from 'react-time-ago'
+import {toast} from 'react-toastify';
+
 
 import './Home.css';
 import Comment from "./Comment";
@@ -68,7 +70,10 @@ class Home extends Component {
         if (e.target.comment.value !== '') {
             fetch('http://localhost:9999/feed/add-comment', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     value: e.target.comment.value,
                     userId: this.props.user.userId,
@@ -82,6 +87,7 @@ class Home extends Component {
                     const comments = this.state.comments;
                     comments[memeIndex].push(data.comment);
                     this.setState({comments: comments});
+                    toast(data.message)
 
                 })
 
@@ -91,7 +97,10 @@ class Home extends Component {
     deleteComment = (commentId, memeId, memeIndex) => {
         fetch('http://localhost:9999/feed/delete-comment', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + localStorage.getItem('token')
+            },
             body: JSON.stringify({
                 commentId,
                 memeId
@@ -102,14 +111,18 @@ class Home extends Component {
                 let comment = this.state.comments[memeIndex].find((c) => c._id === commentId);
                 let comments = this.state.comments;
                 comments[memeIndex].splice(comments[memeIndex].indexOf(comment), 1);
-                this.setState({comments: comments})
+                this.setState({comments: comments});
+                toast(data.message)
             })
     };
 
     deleteMeme = (memeId, memeIndex) => {
         fetch('http://localhost:9999/feed/delete-meme', {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Basic ' + localStorage.getItem('token')
+            },
             body: JSON.stringify({
                 memeId
             })
@@ -126,6 +139,7 @@ class Home extends Component {
                 comments.splice(memeIndex, 1);
                 ratings.splice(memeIndex, 1);
                 this.setState({memes, votes, comments, ratings});
+                toast(data.message)
             })
     };
 
@@ -134,14 +148,19 @@ class Home extends Component {
         if (this.props.user.username) {
             fetch('http://localhost:9999/feed/add-vote', {
                 method: 'POST',
-                headers: {'Content-Type': 'application/json'},
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Basic ' + localStorage.getItem('token')
+                },
                 body: JSON.stringify({
                     userId: this.props.user.userId,
                     voteType: type,
                     memeId: memeId
                 })
             })
-                .then(response => {
+                .then(response => response.json())
+                .then(data => {
+                    toast(data.message);
                     let arr = this.state.ratings;
                     let hasVoted = this.state.votes;
                     if (type === 'up') {
@@ -159,6 +178,8 @@ class Home extends Component {
                         this.setState({ratings: arr, votes: hasVoted})
                     }
                 });
+        } else {
+            toast.warn('You must be logged in to vote.')
         }
     };
 
@@ -168,9 +189,7 @@ class Home extends Component {
 
 
     render() {
-        console.log(this.state.memes);
-        console.log(this.state.votes);
-        console.log(this.state.comments);
+
         return (
             <div>
                 <InfiniteScroll

@@ -1,0 +1,19 @@
+.files-dropzone {
+    width: 500px;
+    height: 200px;
+    border: 4px dashed #000000
+}
+
+.drop-button {
+    margin-top: 20px;
+    margin-right: 10px;
+}
+
+.drop {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    line-height: 170px;
+    color: rgb(0, 0, 0);
+    font-family: Arial;
+}

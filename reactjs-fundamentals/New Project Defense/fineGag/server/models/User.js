@@ -5,7 +5,9 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
     email: {
         type: Schema.Types.String,
-        required: true
+        required: true,
+        lowercase: true,
+        trim: true
     },
     hashedPassword: {
         type: Schema.Types.String,
@@ -14,7 +16,9 @@ const userSchema = new Schema({
     username: {
         type: Schema.Types.String,
         required: true,
-        unique: true
+        unique: true,
+        lowercase: true,
+        trim: true
     },
     salt: {
         type: Schema.Types.String,

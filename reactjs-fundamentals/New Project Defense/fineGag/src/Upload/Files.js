@@ -80,16 +80,16 @@ class Files extends React.Component {
         })
     }
 
-    static onDragOver(event) {
+    onDragOver(event) {
         event.preventDefault();
         event.stopPropagation()
     }
 
-    static mimeTypeLeft(mime) {
+    mimeTypeLeft(mime) {
         return mime.split('/')[0]
     }
 
-    static mimeTypeRight(mime) {
+    mimeTypeRight(mime) {
         return mime.split('/')[1]
     }
 
@@ -153,7 +153,7 @@ class Files extends React.Component {
         }
     }
 
-    static fileExtension(file) {
+    fileExtension(file) {
         let extensionSplit = file.name.split('.');
         if (extensionSplit.length > 1) {
             return extensionSplit[extensionSplit.length - 1]
@@ -162,7 +162,7 @@ class Files extends React.Component {
         }
     }
 
-    static fileSizeReadable(size) {
+    fileSizeReadable(size) {
         if (size >= 1000000000) {
             return Math.ceil(size / 1000000000) + 'GB'
         } else if (size >= 1000000) {

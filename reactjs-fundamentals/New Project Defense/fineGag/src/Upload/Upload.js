@@ -1,4 +1,3 @@
-import axios from 'axios'
 import Blob from 'blob'
 import FormData from 'form-data'
 import React, {Component} from 'react'
@@ -38,9 +37,18 @@ class Upload extends Component {
             formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
         });
         if (this.state.files.length > 0) {
-            axios.post(`http://localhost:9999/feed/add-meme`, formData)
-                .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
-                .catch(err => window.alert('Error uploading files :('))
+            fetch('http://localhost:9999/feed/add-meme', {
+                method: 'POST',
+                headers: {'Authorization': 'Basic ' + localStorage.getItem('token')},
+                body: formData
+            }).then(() => {
+                if (this.state.files.length === 1) {
+                    window.alert(`${this.state.files.length} file uploaded succesfully!`)
+                } else {
+                    window.alert(`${this.state.files.length} files uploaded succesfully!`)
+                }
+            })
+                .catch(() => window.alert('Error uploading files :('))
 
         }
     };

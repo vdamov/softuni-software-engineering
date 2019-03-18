@@ -48,7 +48,7 @@ module.exports = {
             });
             meme.comments.push(comment._id);
             meme.save();
-            res.status(201).json({message: 'Comment created.', comment})
+            res.status(201).json({message: 'Your comment was created.', comment})
         } catch (error) {
             if (!error.statusCode) {
                 error.statusCode = 500;
@@ -91,7 +91,7 @@ module.exports = {
             await Meme.deleteOne({_id: memeId});
 
 
-            res.status(200).json({message: 'The meme was deleted.'});
+            res.status(200).json({message: 'The meme was deleted successfully.'});
 
 
         } catch (error) {
@@ -108,7 +108,7 @@ module.exports = {
         try {
             for (let i = 0; i < Object.keys(req.files).length; i++) {
                 let file = req.files[i];
-                let fileUrl = './public/images/' + file.md5 + file.name;
+                let fileUrl = './public/images/' + +new Date() + file.name;
 
                 file.mv(fileUrl);
                 fileUrl = fileUrl.substring(8);
@@ -149,7 +149,7 @@ module.exports = {
                     vote.rating -= 1;
                 }
                 vote.save();
-                res.status(200).json({message: 'Voted succesfully!'})
+                res.status(200).json({message: 'You voted succesfully!'})
             }
 
         } catch (error) {
