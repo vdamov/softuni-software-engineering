@@ -101,6 +101,7 @@ module.exports = {
     },
     isAuth: async (req, res) => {
         try {
+
             const token = req.body.token;
             const decoded = jwt.verify(token, 'somesupersecret');
             const user = await User.findOne({_id: decoded.userId});

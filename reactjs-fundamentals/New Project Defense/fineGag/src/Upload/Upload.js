@@ -5,13 +5,15 @@ import {Button, Card, CardImg} from "reactstrap";
 import Files from "./Files";
 import FormText from "reactstrap/es/FormText";
 import './Upload.css';
+import MemeService from "../Services/Meme-Service";
 
 class Upload extends Component {
     constructor(props) {
         super(props);
         this.state = {
             files: []
-        }
+        };
+        this.memeService = new MemeService();
     }
 
     onFilesChange = (files) => {
@@ -37,11 +39,7 @@ class Upload extends Component {
             formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
         });
         if (this.state.files.length > 0) {
-            fetch('http://localhost:9999/feed/add-meme', {
-                method: 'POST',
-                headers: {'Authorization': 'Basic ' + localStorage.getItem('token')},
-                body: formData
-            }).then(() => {
+            this.memeService.addMeme(formData).then(() => {
                 if (this.state.files.length === 1) {
                     window.alert(`${this.state.files.length} file uploaded succesfully!`)
                 } else {

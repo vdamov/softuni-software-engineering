@@ -9,6 +9,9 @@ import {toast} from 'react-toastify';
 
 import './Home.css';
 import Comment from "./Comment";
+import MemeService from "../Services/Meme-Service";
+import CommentService from "../Services/Comment-Service";
+import VoteService from "../Services/Vote-Service";
 
 
 JavascriptTimeAgo.addLocale(en);
@@ -28,7 +31,10 @@ class Home extends Component {
                 down: []
             }
         };
-        this.fetchMoreData();
+        this.memeService = new MemeService();
+        this.commentService = new CommentService();
+        this.voteService = new VoteService();
+        this.getMemes();
     }
 
 
@@ -41,12 +47,8 @@ class Home extends Component {
     };
 
 
-    fetchMoreData = () => {
-        fetch(`http://localhost:9999/feed/memes?nextPage=${this.state.nextPage}`, {
-            method: 'GET',
-            headers: {'Content-Type': 'application/json'}
-        })
-            .then(response => response.json())
+    getMemes = () => {
+        this.memeService.getMemes(this.state.nextPage)
             .then((memes) => {
 
                 this.setState({
@@ -66,68 +68,8 @@ class Home extends Component {
 
     };
 
-    addComment = (e, memeId, memeIndex) => {
-        if (e.target.comment.value !== '') {
-            fetch('http://localhost:9999/feed/add-comment', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + localStorage.getItem('token')
-                },
-                body: JSON.stringify({
-                    value: e.target.comment.value,
-                    userId: this.props.user.userId,
-                    memeId: memeId
-                })
-            })
-                .then(response => response.json())
-                .then(data => {
-                    data.comment.author = {username: this.props.user.username};
-
-                    const comments = this.state.comments;
-                    comments[memeIndex].push(data.comment);
-                    this.setState({comments: comments});
-                    toast(data.message)
-
-                })
-
-        }
-    };
-
-    deleteComment = (commentId, memeId, memeIndex) => {
-        fetch('http://localhost:9999/feed/delete-comment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + localStorage.getItem('token')
-            },
-            body: JSON.stringify({
-                commentId,
-                memeId
-            })
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                let comment = this.state.comments[memeIndex].find((c) => c._id === commentId);
-                let comments = this.state.comments;
-                comments[memeIndex].splice(comments[memeIndex].indexOf(comment), 1);
-                this.setState({comments: comments});
-                toast(data.message)
-            })
-    };
-
     deleteMeme = (memeId, memeIndex) => {
-        fetch('http://localhost:9999/feed/delete-meme', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Basic ' + localStorage.getItem('token')
-            },
-            body: JSON.stringify({
-                memeId
-            })
-        })
-            .then((response) => response.json())
+        this.memeService.deleteMeme({memeId})
             .then((data) => {
                 const memes = this.state.memes;
                 const comments = this.state.comments;
@@ -144,21 +86,48 @@ class Home extends Component {
     };
 
 
+    addComment = (e, memeId, memeIndex) => {
+        if (e.target.comment.value !== '') {
+            this.commentService.addComment({
+                value: e.target.comment.value,
+                userId: this.props.user.userId,
+                memeId: memeId
+            })
+                .then(data => {
+                    data.comment.author = {username: this.props.user.username};
+
+                    const comments = this.state.comments;
+                    comments[memeIndex].push(data.comment);
+                    this.setState({comments: comments});
+                    toast(data.message)
+
+                })
+
+        }
+    };
+
+    deleteComment = (commentId, memeId, memeIndex) => {
+        this.commentService.deleteComment({
+            commentId,
+            memeId
+        })
+            .then((data) => {
+                let comment = this.state.comments[memeIndex].find((c) => c._id === commentId);
+                let comments = this.state.comments;
+                comments[memeIndex].splice(comments[memeIndex].indexOf(comment), 1);
+                this.setState({comments: comments});
+                toast(data.message)
+            })
+    };
+
+
     vote = ({type, memeId, index}) => {
         if (this.props.user.username) {
-            fetch('http://localhost:9999/feed/add-vote', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Basic ' + localStorage.getItem('token')
-                },
-                body: JSON.stringify({
-                    userId: this.props.user.userId,
-                    voteType: type,
-                    memeId: memeId
-                })
+            this.voteService.addVote({
+                userId: this.props.user.userId,
+                voteType: type,
+                memeId: memeId
             })
-                .then(response => response.json())
                 .then(data => {
                     toast(data.message);
                     let arr = this.state.ratings;
@@ -194,7 +163,7 @@ class Home extends Component {
             <div>
                 <InfiniteScroll
                     dataLength={this.state.memes.length}
-                    next={this.fetchMoreData}
+                    next={this.getMemes}
                     hasMore={this.state.hasMore}
                     loader={<h4><Spinner color="dark"/>Loading...</h4>}
                 >

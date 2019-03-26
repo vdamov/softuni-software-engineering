@@ -10,6 +10,7 @@ import Home from "./Home/Home";
 import RegisterForm from "./Register/RegisterForm";
 import LoginForm from "./Login/LoginForm";
 import Upload from "./Upload/Upload";
+import UserService from "./Services/User-Service";
 
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
                 userId: null
             }
         };
+        this.userService = new UserService();
 
     }
 
@@ -90,15 +92,9 @@ class App extends Component {
     };
 
     componentDidMount() {
-        if (!this.state.user.username && localStorage.getItem('token')) {
-            fetch('http://localhost:9999/auth/is-auth', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    token: localStorage.getItem('token')
-                })
-
-            }).then(response => response.json())
+        const token = {token: localStorage.getItem('token')};
+        if (!this.state.user.username && token.token) {
+            this.userService.isAuth(token)
                 .then(data => {
                     this.setState({
                         user: {
@@ -120,19 +116,9 @@ class App extends Component {
     loginFormSubmit = (e) => {
         e.preventDefault();
         const {emailState, passwordState} = e.validate;
-        const {email, password} = e.target;
-        const loginUrl = 'http://localhost:9999/auth/signin';
+        const user = {email: e.target.email.value, password: e.target.password.value};
         if (emailState === 'has-success' && passwordState === 'has-success') {
-
-            fetch(loginUrl, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    email: email.value,
-                    password: password.value
-                })
-            })
-                .then(response => response.json())
+            this.userService.loginUser(user)
                 .then((body) => {
                     if (!body.token) {
                         toast.error(body.message)
@@ -162,24 +148,16 @@ class App extends Component {
     registerFormSubmit = (e) => {
         e.preventDefault();
         const {emailState, passwordState, confirmPasswordState} = e.validate;
-        const {username, email, password} = e.target;
-        const registerUrl = 'http://localhost:9999/auth/signup';
+        const user = {
+            username: e.target.username.value,
+            email: e.target.email.value,
+            password: e.target.password.value
+        };
         if (emailState === 'has-success' && passwordState === 'has-success' && confirmPasswordState === 'has-success') {
-
-            fetch(registerUrl, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    email: email.value,
-                    username: username.value,
-                    password: password.value
-                })
-            })
-                .then(response => response.json())
+            this.userService.registerUser(user)
                 .then((body) => {
                     if (!body.token) {
                         toast.error(body.message);
-
                     } else {
                         this.setState({
                             username: '',
