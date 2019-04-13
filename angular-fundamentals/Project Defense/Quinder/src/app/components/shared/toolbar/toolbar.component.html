@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <div fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
+    <mat-icon>favorite</mat-icon>
+    <div><a routerLink="/">quinder</a></div>
+  </div>
+  <div fxFlex
+       fxLayout
+       fxLayoutAlign="flex-end"
+  >
+    <button [routerLink]="['/login']" mat-stroked-button>Login</button>
+  </div>
+</mat-toolbar>

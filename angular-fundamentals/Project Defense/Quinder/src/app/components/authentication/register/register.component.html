@@ -1,0 +1,80 @@
+<form
+  (ngSubmit)="register()"
+  [formGroup]="registerForm"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="20px">
+  <pre>{{registerForm.value| json}}</pre>
+  <mat-form-field>
+    <input formControlName="email" matInput placeholder="Email" type="email">
+    <mat-hint>Enter a valid email address.</mat-hint>
+    <mat-error *ngIf="registerForm.get('email').hasError('required')">Email is required.</mat-error>
+    <mat-error *ngIf="registerForm.get('email').hasError('email')">Email is invalid.</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input formControlName="password" matInput placeholder="Password" type="password">
+    <mat-hint>Enter a valid password.</mat-hint>
+    <mat-error *ngIf="registerForm.get('password').hasError('required')">Password is required.</mat-error>
+    <mat-error *ngIf="registerForm.get('password').hasError('minlength')">Password must be at least 6 symbols.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input formControlName="name" matInput placeholder="Name" type="text">
+    <mat-hint>Enter your name.</mat-hint>
+    <mat-error *ngIf="registerForm.get('name').hasError('required')">Name is required.</mat-error>
+    <mat-error *ngIf="registerForm.get('name').hasError('pattern')">First and last name must start with capital
+      letter.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <input [matAutocomplete]="auto" formControlName="city" matInput placeholder="City" type="text">
+    <mat-autocomplete #auto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint>Enter your city.</mat-hint>
+    <mat-error *ngIf="registerForm.get('city').hasError('required')">City is required.</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input [matDatepicker]="picker" formControlName="birthDate" matInput placeholder="Birthday">
+    <mat-datepicker-toggle [for]="picker" matPrefix></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-hint>Birthday is required.</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Gender</mat-label>
+    <mat-select formControlName="gender">
+      <mat-option value="Male">
+        Male
+      </mat-option>
+      <mat-option value="Female">
+        Female
+      </mat-option>
+    </mat-select>
+    <mat-hint>Select your gender.</mat-hint>
+    <mat-error *ngIf="registerForm.get('gender').hasError('required')">Gender is required.</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Interested in</mat-label>
+    <mat-select formControlName="interested">
+      <mat-option value="Male">
+        Male
+      </mat-option>
+      <mat-option value="Female">
+        Female
+      </mat-option>
+    </mat-select>
+    <mat-hint>Select the gender you're interested in.</mat-hint>
+    <mat-error *ngIf="registerForm.get('interested').hasError('required')">The gender you're interested in is
+      required.
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <input formControlName="image" matInput placeholder="Image URL" type="text">
+    <mat-hint>Add Image URL in jpg/png format.</mat-hint>
+    <mat-error *ngIf="registerForm.get('image').hasError('required')">Image is required.</mat-error>
+    <mat-error *ngIf="registerForm.get('image').hasError('pattern')">Image must start with http or https.</mat-error>
+  </mat-form-field>
+  <button [disabled]="registerForm.invalid" color="primary" mat-raised-button type="submit">Sign Up</button>
+</form>
