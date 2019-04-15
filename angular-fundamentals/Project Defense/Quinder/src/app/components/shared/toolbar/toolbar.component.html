@@ -1,12 +1,17 @@
-<mat-toolbar color="primary">
+<mat-toolbar class="example-toolbar" color="primary">
   <div fxLayout fxLayoutAlign="start center" fxLayoutGap="5px">
     <mat-icon>favorite</mat-icon>
     <div><a routerLink="/">quinder</a></div>
   </div>
   <div fxFlex
        fxLayout
-       fxLayoutAlign="flex-end"
-  >
-    <button [routerLink]="['/login']" mat-stroked-button>Login</button>
+       fxLayoutAlign="flex-end">
+    <ng-template #menu>
+      <button (click)="toggleSidenav()" mat-icon-button>
+        <mat-icon>menu</mat-icon>
+      </button>
+    </ng-template>
+    <button *ngIf="!authService.isAuthenticated(); else menu" [routerLink]="['/login']" mat-stroked-button>Login
+    </button>
   </div>
 </mat-toolbar>

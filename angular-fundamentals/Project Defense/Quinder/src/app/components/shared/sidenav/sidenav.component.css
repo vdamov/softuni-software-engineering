@@ -1,0 +1,16 @@
+a {
+  text-decoration: none;
+  color: #3f51b5;
+}
+
+a:hover {
+  color: #3f51b5;
+}
+
+.logout-link {
+  cursor: pointer;
+}
+
+mat-icon {
+  margin-right: 10px;
+}

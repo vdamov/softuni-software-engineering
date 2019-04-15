@@ -1,4 +1,40 @@
-<div fxLayout="column" fxLayoutAlign="center center">
-  <h1 fxFlexOffset="20%"><span class="motto">Match. Chat. Date.</span></h1>
-  <button [routerLink]="['/register']" color="primary" mat-stroked-button>Sign Up</button>
-</div>
+<ng-template #notAuth>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <h1 fxFlexOffset="20%"><span class="motto">Match. Chat. Date.</span></h1>
+    <button [routerLink]="['/register']" color="primary" mat-stroked-button>Sign Up</button>
+  </div>
+</ng-template>
+<ng-template #Auth>
+  <div class="card-layout" fxLayout="column" fxLayoutAlign="center center">
+    <mat-card (@cardAnimator.done)="resetAnimationState()"
+              (swipeleft)="swipeLeft()"
+              (swiperight)="swipeRight()"
+              [@cardAnimator]="animationState"
+              class="example-card">
+      <img draggable="false"
+           mat-card-image src="{{match?.image}}">
+      <mat-card-content>
+        <div class="text" fxLayout="row" fxLayoutAlign="space-between start">
+          <span class="size"><strong>{{match?.username}} </strong>{{calculateAge(match?.birthDate)}}</span>
+          <span>{{match?.city}}, Bulgaria <mat-icon>location_on</mat-icon></span>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <div class="buttons" fxLayout="row" fxLayoutAlign="space-between center">
+          <button (click)="swipeLeft()" color="warn" mat-fab>
+            <mat-icon>close</mat-icon>
+          </button>
+          <button (click)="swipeRight()" color="primary" mat-fab>
+            <mat-icon>favorite</mat-icon>
+          </button>
+        </div>
+      </mat-card-actions>
+    </mat-card>
+  </div>
+</ng-template>
+<ng-template #loading>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <span class="motto" fxFlexOffset="20%">You're out of swipes for today.</span>
+  </div>
+</ng-template>
+<div *ngIf="authService.isAuthenticated() then Auth; else notAuth"></div>

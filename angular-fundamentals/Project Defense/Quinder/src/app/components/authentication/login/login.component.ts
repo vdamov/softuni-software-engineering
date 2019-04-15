@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -11,19 +13,22 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required]]
+      username: [null, [Validators.required, Validators.minLength(6)]],
+      password: [null, [Validators.required, Validators.minLength(6)]]
     });
   }
 
   login() {
-    const {email, password} = this.loginForm.value;
-
-    // todo
+    this.authService.login(this.loginForm.value).subscribe(() =>
+      this.router.navigate(['/'])
+    );
   }
+
 }

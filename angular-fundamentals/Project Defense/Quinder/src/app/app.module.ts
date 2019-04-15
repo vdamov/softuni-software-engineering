@@ -12,14 +12,15 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {
   MatAutocompleteModule,
-  MatButtonModule,
+  MatButtonModule, MatCardModule,
   MatDatepickerModule,
-  MatFormFieldModule,
-  MatInputModule,
+  MatFormFieldModule, MatIconModule,
+  MatInputModule, MatListModule,
   MatNativeDateModule,
-  MatRadioModule, MatSelectModule, MatSliderModule
+  MatRadioModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatToolbarModule
 } from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -32,12 +33,18 @@ import {ReactiveFormsModule} from '@angular/forms';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
+    MatSidenavModule,
+    MatListModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatCardModule,
     MatNativeDateModule,
     MatSelectModule,
     MatAutocompleteModule,

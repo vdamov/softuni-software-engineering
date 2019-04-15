@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
+import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
+
 
 @Component({
   selector: 'app-register',
@@ -11,7 +14,6 @@ import {map, startWith} from 'rxjs/operators';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   filteredOptions: Observable<string[]>;
-  private readonly fullNamePattern = /[A-Z][a-z]+ [A-Z][a-z]+/;
   private readonly imagePattern = /^(http:\/\/|https:\/\/).+(\.jpg|\.png)$/;
   private cities: string[] = [
     'Sofia',
@@ -38,6 +40,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router
   ) {
   }
 
@@ -48,7 +52,7 @@ export class RegisterComponent implements OnInit {
       birthDate: [null, Validators.required],
       gender: [null, Validators.required],
       interested: [null, Validators.required],
-      name: [null, [Validators.required, Validators.pattern(this.fullNamePattern)]],
+      username: [null, [Validators.required, Validators.minLength(6)]],
       city: [null, Validators.required],
       image: [null, [Validators.required, Validators.pattern(this.imagePattern)]]
     });
@@ -62,8 +66,9 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    const {email, password, birthDate} = this.registerForm.value;
-// todo
+    this.authService.signUp(this.registerForm.value).subscribe(() => {
+      this.router.navigate(['/login']);
+    });
   }
 
   private _filter(value: object): string[] {

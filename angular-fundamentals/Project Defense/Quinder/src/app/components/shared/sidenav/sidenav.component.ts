@@ -1,4 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {AuthService} from '../../../core/services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,11 +8,21 @@ import {Component, OnInit} from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  @Output() sidenavToggle = new EventEmitter<void>();
 
-  constructor() {
+  constructor(
+    private authService: AuthService,
+    private router: Router) {
   }
 
   ngOnInit() {
   }
 
+  logout() {
+    this.authService.logout().subscribe(() => {
+      this.router.navigate(['/']);
+      localStorage.clear();
+      this.sidenavToggle.emit();
+    });
+  }
 }

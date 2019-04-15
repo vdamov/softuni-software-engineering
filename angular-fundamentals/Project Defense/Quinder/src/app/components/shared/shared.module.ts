@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {SidenavComponent} from './sidenav/sidenav.component';
 import {ToolbarComponent} from './toolbar/toolbar.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatIconModule, MatListModule, MatToolbarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,10 +17,12 @@ import {MatButtonModule, MatIconModule, MatToolbarModule} from '@angular/materia
     FlexLayoutModule,
     MatToolbarModule,
     MatIconModule,
-    MatButtonModule
+    MatButtonModule,
+    MatListModule
   ],
   exports: [
-    ToolbarComponent
+    ToolbarComponent,
+    SidenavComponent
   ],
 })
 export class SharedModule {

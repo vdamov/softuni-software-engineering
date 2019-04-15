@@ -1,6 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './interceptors/auth.interceptor';
+import {TokenInterceptor} from './interceptors/token.interceptor';
 
 
 @NgModule({
@@ -9,22 +11,16 @@ import {HTTP_INTERCEPTORS} from '@angular/common/http';
     CommonModule
   ],
   providers: [
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: AuthInterceptor,
-    //   multi: true
-    // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: TokenInterceptor,
-    //   multi: true
-    // },
-    // {
-    //   provide: HTTP_INTERCEPTORS,
-    //   useClass: HandleErrorInterceptor,
-    //   multi: true
-    // },
-    // {provide: AuthGuardService}
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ]
 })
 export class CoreModule {

@@ -1,3 +1,20 @@
-<p>
-  sidenav works!
-</p>
+<mat-nav-list>
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <a href="#" mat-list-item>
+      <mat-icon>account_circle</mat-icon>
+      Profile</a>
+    <a href="#" mat-list-item>
+      <mat-icon>home</mat-icon>
+      Home</a>
+    <a href="#" mat-list-item>
+      <mat-icon>favorite</mat-icon>
+      Matches</a>
+    <a href="#" mat-list-item>
+      <mat-icon>settings</mat-icon>
+      Settings</a>
+    <a (click)="logout()" class="logout-link" mat-list-item>
+      <mat-icon>eject</mat-icon>
+      Logout
+    </a>
+  </div>
+</mat-nav-list>

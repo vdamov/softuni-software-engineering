@@ -3,3 +3,34 @@ span.motto {
   font-family: 'Satisfy', cursive;
   font-size: 250%;
 }
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.card-layout {
+  padding: 100px;
+}
+
+.buttons {
+  padding: 10px;
+}
+
+.text {
+  font-family: "Book Antiqua";
+  color: #9b9b9b;
+}
+
+.size {
+  color: #424242;
+  font-size: 25px;
+}
+
+img {
+  width: 400px;
+}
