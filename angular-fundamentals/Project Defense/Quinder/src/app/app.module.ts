@@ -10,24 +10,18 @@ import {RegisterComponent} from './components/authentication/register/register.c
 import {HomeComponent} from './components/home/home.component';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MatAutocompleteModule,
-  MatButtonModule, MatCardModule,
-  MatDatepickerModule,
-  MatFormFieldModule, MatIconModule,
-  MatInputModule, MatListModule,
-  MatNativeDateModule,
-  MatRadioModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatToolbarModule
-} from '@angular/material';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
+import {MatchModule} from './components/match/match.module';
+import {MaterialModule} from './material.module';
+import {MyDialogComponent} from './components/match/my-dialog/my-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -36,23 +30,16 @@ import {HttpClientModule} from '@angular/common/http';
     HttpClientModule,
     ReactiveFormsModule,
     FlexLayoutModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatSidenavModule,
-    MatListModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatCardModule,
-    MatNativeDateModule,
-    MatSelectModule,
-    MatAutocompleteModule,
+    MaterialModule,
     SharedModule,
     CoreModule,
+    MatchModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    MyDialogComponent
+  ]
 })
 export class AppModule {
 }

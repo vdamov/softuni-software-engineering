@@ -9,12 +9,12 @@ import {APP_KEY, APP_SECRET} from '../../kinvey.tokens';
 })
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {
+  constructor() {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
-    if (this.router.url.endsWith('login') || this.router.url.endsWith('register')) {
+    if (req.url.endsWith('login') || req.url.endsWith(APP_KEY)) {
       req = req.clone({
         setHeaders: {
           Authorization: `Basic ${btoa(`${APP_KEY}:${APP_SECRET}`)}`,

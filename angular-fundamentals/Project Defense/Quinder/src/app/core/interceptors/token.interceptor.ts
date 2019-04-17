@@ -17,7 +17,7 @@ export class TokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req.clone()).pipe(tap((success) => {
-      if (success instanceof HttpResponse && this.router.url.endsWith('login')) {
+      if (success instanceof HttpResponse && req.url.endsWith('login')) {
         this.authService.saveUserInfo(success.body);
       }
     }));
