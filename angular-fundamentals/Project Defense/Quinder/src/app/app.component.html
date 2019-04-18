@@ -4,7 +4,7 @@
                          class="example-sidenav-container">
     <mat-sidenav #sidenav [fixedInViewport]="mobileQuery.matches" [mode]="mobileQuery.matches ? 'over' : 'side'"
                  fixedTopGap="70" position="end">
-      <app-sidenav (sidenavToggle)="sidenav.toggle()"></app-sidenav>
+      <app-sidenav (sidenavToggle)="sidenav.toggle()" *ngIf="authService.isAuthenticated()"></app-sidenav>
     </mat-sidenav>
     <mat-sidenav-content>
       <router-outlet></router-outlet>

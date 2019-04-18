@@ -1,0 +1,28 @@
+
+.example-card {
+  max-width: 400px;
+}
+
+
+.card-layout {
+  padding: 100px;
+}
+
+.buttons {
+  padding: 10px;
+}
+
+.text {
+  font-family: "Book Antiqua";
+  color: #9b9b9b;
+}
+
+.size {
+  color: #424242;
+  font-size: 25px;
+}
+
+img {
+  width: 400px;
+  height: 350px;
+}

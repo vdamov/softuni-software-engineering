@@ -1,19 +1,21 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 import {AuthService} from '../../../core/services/auth.service';
-import {Router} from '@angular/router';
-
+import {ActivatedRoute, Router} from '@angular/router';
+import {map, startWith} from 'rxjs/operators';
+import {UserService} from '../../../core/services/user.service';
+import {IUser} from '../../shared/interfaces/user.interface';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  selector: 'app-edit-profile',
+  templateUrl: './edit-profile.component.html',
+  styleUrls: ['./edit-profile.component.css']
 })
-export class RegisterComponent implements OnInit {
-  registerForm: FormGroup;
+export class EditProfileComponent implements OnInit {
+  editForm: FormGroup;
   filteredOptions: Observable<string[]>;
+  private user: IUser;
   private readonly imagePattern = /^(http:\/\/|https:\/\/).+$/;
   private cities: string[] = [
     'Sofia',
@@ -41,14 +43,16 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private userService: UserService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+    this.user = this.route.snapshot.data.user;
   }
 
   ngOnInit() {
-    this.registerForm = this.fb.group({
+    this.editForm = this.fb.group({
       email: [null, [Validators.required, Validators.email]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
       birthDate: [null, Validators.required],
       gender: [null, Validators.required],
       interested: [null, Validators.required],
@@ -56,18 +60,27 @@ export class RegisterComponent implements OnInit {
       city: [null, Validators.required],
       image: [null, [Validators.required, Validators.pattern(this.imagePattern)]]
     });
+    this.editForm.get('username').setValue(this.user.username);
+    this.editForm.get('email').setValue(this.user.email);
+    this.editForm.get('city').setValue(this.user.city);
+    this.editForm.get('birthDate').setValue(this.user.birthDate);
+    this.editForm.get('gender').setValue(this.user.gender);
+    this.editForm.get('interested').setValue(this.user.interested);
+    this.editForm.get('image').setValue(this.user.image);
 
+    console.log(this.editForm);
 
-    this.filteredOptions = this.registerForm.valueChanges
+    this.filteredOptions = this.editForm.valueChanges
       .pipe(
         startWith(''),
         map(value => this._filter(value))
       );
   }
 
-  register() {
-    this.authService.signUp(this.registerForm.value).subscribe(() => {
-      this.router.navigate(['/login']);
+  edit() {
+    Object.assign(this.user, this.editForm.value);
+    this.userService.updateUser(this.user).subscribe(() => {
+      this.router.navigate([`/profile/${this.user._id}/view`]);
     });
   }
 

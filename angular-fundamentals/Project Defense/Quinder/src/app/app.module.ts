@@ -12,9 +12,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
-import {MatchModule} from './components/match/match.module';
 import {MaterialModule} from './material.module';
-import {MyDialogComponent} from './components/match/my-dialog/my-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,14 +30,10 @@ import {MyDialogComponent} from './components/match/my-dialog/my-dialog.componen
     FlexLayoutModule,
     MaterialModule,
     SharedModule,
-    CoreModule,
-    MatchModule
+    CoreModule
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  entryComponents: [
-    MyDialogComponent
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule {
 }

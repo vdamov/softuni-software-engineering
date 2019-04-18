@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {HomeComponent} from './components/home/home.component';
 import {LoginComponent} from './components/authentication/login/login.component';
 import {RegisterComponent} from './components/authentication/register/register.component';
-import {SingleUserResolver} from './core/resolvers/single-user.resolver';
-import {MatchBoxComponent} from './components/match/match-box/match-box.component';
-import {ConversationComponent} from './components/match/conversation/conversation.component';
+import {HomeGuard} from './core/guards/home.guard';
+import {AuthGuard} from './core/guards/auth.guard';
+import {UserGuard} from './core/guards/user.guard';
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'match', component: MatchBoxComponent, resolve: {user: SingleUserResolver}},
-  {path: 'match/:id/partner/:partnerId', component: ConversationComponent},
-  {path: 'login', component: LoginComponent},
-  {path: 'register', component: RegisterComponent},
+  {path: '', component: HomeComponent, canActivate: [HomeGuard]},
+  {path: 'login', component: LoginComponent, canActivate: [UserGuard]},
+  {path: 'register', component: RegisterComponent, canActivate: [UserGuard]},
+  {path: 'profile', loadChildren: './components/profile/profile.module#ProfileModule', canLoad: [AuthGuard]},
+  {path: 'match', loadChildren: './components/match/match.module#MatchModule', canLoad: [AuthGuard]}
 ];
 
 @NgModule({

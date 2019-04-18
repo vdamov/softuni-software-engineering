@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './interceptors/auth.interceptor';
 import {TokenInterceptor} from './interceptors/token.interceptor';
+import {HandleErrorInterceptor} from './interceptors/handle-error.interceptor';
 
 
 @NgModule({
@@ -19,6 +20,11 @@ import {TokenInterceptor} from './interceptors/token.interceptor';
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HandleErrorInterceptor,
       multi: true
     }
   ]

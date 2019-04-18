@@ -35,6 +35,10 @@ export class AuthService {
     return this.token !== null;
   }
 
+  isAdmin(): boolean {
+    return localStorage.getItem('isAdmin') === 'true';
+  }
+
   saveUserInfo(res: object) {
     // @ts-ignore
     localStorage.setItem('username', res.username);
@@ -42,5 +46,7 @@ export class AuthService {
     localStorage.setItem('token', res._kmd.authtoken);
     // @ts-ignore
     localStorage.setItem('userId', res._id);
+    // @ts-ignore
+    localStorage.setItem('isAdmin', !!res._kmd.roles);
   }
 }

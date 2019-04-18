@@ -1,0 +1,27 @@
+<div class="card-layout" fxLayout="column" fxLayoutAlign="center center">
+  <mat-card (@cardAnimator.done)="resetAnimationState()"
+            (swipeleft)="swipeLeft()"
+            (swiperight)="swipeRight()"
+            [@cardAnimator]="animationState"
+            class="example-card">
+    <img draggable="false"
+         height="100%" mat-card-image src="{{match?.image}}" width="100%">
+    <mat-card-content>
+      <div class="text" fxLayout="row" fxLayoutAlign="space-between start">
+        <span class="size"><strong>{{match?.username}} </strong><i>{{calculateAge(match?.birthDate)}}</i></span>
+        <span>{{match?.city}}
+          <mat-icon>location_on</mat-icon></span>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <div class="buttons" fxLayout="row" fxLayoutAlign="space-between center">
+        <button (click)="swipeLeft()" color="warn" mat-fab>
+          <mat-icon>close</mat-icon>
+        </button>
+        <button (click)="swipeRight()" color="primary" mat-fab>
+          <mat-icon>favorite</mat-icon>
+        </button>
+      </div>
+    </mat-card-actions>
+  </mat-card>
+</div>

@@ -37,4 +37,6 @@ export class VoteService {
     };
     return this.http.get<ILike[]>(this.LIKES_URL + `?query=${JSON.stringify(json)}`);
   }
+
+
 }

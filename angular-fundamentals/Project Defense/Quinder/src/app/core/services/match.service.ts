@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {APP_KEY} from '../../kinvey.tokens';
 import {HttpClient} from '@angular/common/http';
-import {IUser} from '../../components/shared/interfaces/user.interface';
 import {IMatch} from '../../components/shared/interfaces/match.interface';
+import {Subject} from 'rxjs';
+import {tap} from 'rxjs/internal/operators/tap';
 
 @Injectable({
   providedIn: 'root'
@@ -10,29 +11,30 @@ import {IMatch} from '../../components/shared/interfaces/match.interface';
 export class MatchService {
   private readonly BASE_URL = `https://baas.kinvey.com/appdata/${APP_KEY}`;
 
-  private readonly USER_URL = `https://baas.kinvey.com/user/${APP_KEY}`;
   private readonly MATCH_URL = this.BASE_URL + `/matches`;
-
   constructor(private http: HttpClient) {
+    this._refreshNeeded$ = new Subject<void>();
   }
 
-  getUserById(id: string) {
-    return this.http.get<IUser>(this.USER_URL + `/${id}`);
-  }
+  private _refreshNeeded$: Subject<void>;
 
-  getUsersOfInterest(username: string, gender: string, interest: string) {
-    const json = {
-      $and: [
-        {username: {$ne: username}},
-        {gender: interest},
-        {interested: gender}
-      ]
-    };
-    return this.http.get<IUser[]>(this.USER_URL + `?query=${JSON.stringify(json)}`);
+  get refreshNeeded$() {
+    return this._refreshNeeded$;
   }
 
   postMatch(users: string[]) {
-    return this.http.post<IMatch>(this.MATCH_URL, {users});
+    return this.http.post<IMatch>(this.MATCH_URL, {users})
+      .pipe(tap(() => {
+        this._refreshNeeded$.next();
+      }));
   }
+
+  getAllMatches(userId: string) {
+    const json = {
+      users: {$in: [userId]}
+    };
+    return this.http.get<IMatch[]>(this.MATCH_URL + `?query=${JSON.stringify(json)}`);
+  }
+
 
 }

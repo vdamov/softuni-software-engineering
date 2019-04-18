@@ -1,28 +1,21 @@
 <form
-  (ngSubmit)="register()"
-  [formGroup]="registerForm"
+  (ngSubmit)="edit()"
+  [formGroup]="editForm"
   fxLayout="column"
   fxLayoutAlign="center center"
   fxLayoutGap="20px">
   <mat-form-field>
     <input formControlName="username" matInput placeholder="Username" type="text">
     <mat-hint>Enter your name.</mat-hint>
-    <mat-error *ngIf="registerForm.get('username').hasError('required')">Username is required.</mat-error>
-    <mat-error *ngIf="registerForm.get('username').hasError('minlength')">Username must be at least 6 characters.
-    </mat-error>
-  </mat-form-field>
-  <mat-form-field>
-    <input formControlName="password" matInput placeholder="Password" type="password">
-    <mat-hint>Enter a valid password.</mat-hint>
-    <mat-error *ngIf="registerForm.get('password').hasError('required')">Password is required.</mat-error>
-    <mat-error *ngIf="registerForm.get('password').hasError('minlength')">Password must be at least 6 characters.
+    <mat-error *ngIf="editForm.get('username').hasError('required')">Username is required.</mat-error>
+    <mat-error *ngIf="editForm.get('username').hasError('minlength')">Username must be at least 6 characters.
     </mat-error>
   </mat-form-field>
   <mat-form-field>
     <input formControlName="email" matInput placeholder="Email" type="email">
     <mat-hint>Enter a valid email address.</mat-hint>
-    <mat-error *ngIf="registerForm.get('email').hasError('required')">Email is required.</mat-error>
-    <mat-error *ngIf="registerForm.get('email').hasError('email')">Email is invalid.</mat-error>
+    <mat-error *ngIf="editForm.get('email').hasError('required')">Email is required.</mat-error>
+    <mat-error *ngIf="editForm.get('email').hasError('email')">Email is invalid.</mat-error>
   </mat-form-field>
   <mat-form-field class="field-width">
     <input [matAutocomplete]="auto" formControlName="city" matInput placeholder="City" type="text">
@@ -32,10 +25,11 @@
       </mat-option>
     </mat-autocomplete>
     <mat-hint>Enter your city.</mat-hint>
-    <mat-error *ngIf="registerForm.get('city').hasError('required')">City is required.</mat-error>
+    <mat-error *ngIf="editForm.get('city').hasError('required')">City is required.</mat-error>
   </mat-form-field>
   <mat-form-field>
-    <input [matDatepicker]="picker" formControlName="birthDate" matInput placeholder="Birthday">
+    <input [matDatepicker]="picker" formControlName="birthDate" matInput placeholder="Birthday"
+    >
     <mat-datepicker-toggle [for]="picker" matPrefix></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <mat-hint>Birthday is required.</mat-hint>
@@ -51,7 +45,7 @@
       </mat-option>
     </mat-select>
     <mat-hint>Select your gender.</mat-hint>
-    <mat-error *ngIf="registerForm.get('gender').hasError('required')">Gender is required.</mat-error>
+    <mat-error *ngIf="editForm.get('gender').hasError('required')">Gender is required.</mat-error>
   </mat-form-field>
   <mat-form-field>
     <mat-label>Interested in</mat-label>
@@ -64,15 +58,15 @@
       </mat-option>
     </mat-select>
     <mat-hint>Select the gender you're interested in.</mat-hint>
-    <mat-error *ngIf="registerForm.get('interested').hasError('required')">The gender you're interested in is
+    <mat-error *ngIf="editForm.get('interested').hasError('required')">The gender you're interested in is
       required.
     </mat-error>
   </mat-form-field>
   <mat-form-field>
     <input formControlName="image" matInput placeholder="Image URL" type="text">
     <mat-hint>Add Image URL.</mat-hint>
-    <mat-error *ngIf="registerForm.get('image').hasError('required')">Image is required.</mat-error>
-    <mat-error *ngIf="registerForm.get('image').hasError('pattern')">Image must start with http or https.</mat-error>
+    <mat-error *ngIf="editForm.get('image').hasError('required')">Image is required.</mat-error>
+    <mat-error *ngIf="editForm.get('image').hasError('pattern')">Image must start with http or https.</mat-error>
   </mat-form-field>
-  <button [disabled]="registerForm.invalid" color="primary" mat-raised-button type="submit">Sign Up</button>
+  <button [disabled]="editForm.invalid" color="primary" mat-raised-button type="submit">Edit</button>
 </form>

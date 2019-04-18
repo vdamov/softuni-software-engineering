@@ -1,17 +1,27 @@
 <mat-nav-list>
-  <div fxLayout="column" fxLayoutAlign="center center">
-    <a href="#" mat-list-item>
+  <div>
+    <a mat-list-item routerLink="/profile/{{userId}}/view">
       <mat-icon>account_circle</mat-icon>
       Profile</a>
-    <a href="#" mat-list-item>
+    <a mat-list-item routerLink="/match">
       <mat-icon>home</mat-icon>
       Home</a>
-    <a href="#" mat-list-item>
-      <mat-icon>favorite</mat-icon>
-      Matches</a>
-    <a href="#" mat-list-item>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <mat-icon>favorite</mat-icon>
+            Matches
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <a *ngFor="let partner of partners" mat-list-item
+           routerLink="/match/{{matchId}}/partner/{{partner._id}}">
+          {{partner.username}}</a>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <a *ngIf="authService.isAdmin()" mat-list-item routerLink="/profile/list">
       <mat-icon>settings</mat-icon>
-      Settings</a>
+      Admin Panel</a>
     <a (click)="logout()" class="logout-link" mat-list-item>
       <mat-icon>eject</mat-icon>
       Logout

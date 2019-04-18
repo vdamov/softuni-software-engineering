@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
 
@@ -27,6 +27,7 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.authService.login(this.loginForm.value).subscribe((user) => {
+      console.log(user);
       this.router.navigate(['match']);
     });
   }

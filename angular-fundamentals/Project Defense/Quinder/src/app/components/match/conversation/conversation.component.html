@@ -1,0 +1,30 @@
+<div class="div-class" fxLayout="row" fxLayoutAlign="center center">
+  <mat-card class="example-card">
+    <div #scrollMe class="scrollable-div">
+      <mat-card-header *ngFor="let message of allMessages">
+        <mat-card-title *ngIf="message.userId === user?._id">{{user.username}}
+          <button (click)="deleteMessage(message._id)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-card-title>
+        <mat-card-title *ngIf="message.userId === partner?._id">{{partner.username}}</mat-card-title>
+        <mat-card-subtitle>
+          <p>{{message.content}}   </p>
+        </mat-card-subtitle>
+        <img *ngIf="message.userId === user?._id" mat-card-avatar src="{{user.image}}"/>
+        <img *ngIf="message.userId === partner?._id" mat-card-avatar src="{{partner.image}}"/>
+      </mat-card-header>
+    </div>
+
+    <mat-card-content>
+      <form (keydown.enter)="addMessage()" (ngSubmit)="addMessage()" [formGroup]="messageForm" class="example-form"
+            fxLayout="row"
+            fxLayoutAlign="space-around end">
+        <mat-form-field class="field-width">
+          <textarea formControlName="content" matInput placeholder="Enter message"></textarea>
+        </mat-form-field>
+        <button color="primary" mat-raised-button type="submit">Submit</button>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
