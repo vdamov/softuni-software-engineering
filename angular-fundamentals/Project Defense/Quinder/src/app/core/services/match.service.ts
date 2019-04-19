@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {APP_KEY} from '../../kinvey.tokens';
 import {HttpClient} from '@angular/common/http';
 import {IMatch} from '../../components/shared/interfaces/match.interface';
-import {Subject} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {tap} from 'rxjs/internal/operators/tap';
 
 @Injectable({
@@ -12,6 +12,7 @@ export class MatchService {
   private readonly BASE_URL = `https://baas.kinvey.com/appdata/${APP_KEY}`;
 
   private readonly MATCH_URL = this.BASE_URL + `/matches`;
+
   constructor(private http: HttpClient) {
     this._refreshNeeded$ = new Subject<void>();
   }
@@ -29,7 +30,7 @@ export class MatchService {
       }));
   }
 
-  getAllMatches(userId: string) {
+  getAllMatches(userId: string): Observable<IMatch[]> {
     const json = {
       users: {$in: [userId]}
     };

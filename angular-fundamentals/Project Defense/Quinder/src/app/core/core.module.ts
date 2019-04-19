@@ -26,7 +26,7 @@ import {HandleErrorInterceptor} from './interceptors/handle-error.interceptor';
       provide: HTTP_INTERCEPTORS,
       useClass: HandleErrorInterceptor,
       multi: true
-    }
+    },
   ]
 })
 export class CoreModule {

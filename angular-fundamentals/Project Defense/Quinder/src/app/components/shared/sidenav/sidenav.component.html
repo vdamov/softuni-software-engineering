@@ -14,8 +14,8 @@
             Matches
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <a *ngFor="let partner of partners" mat-list-item
-           routerLink="/match/{{matchId}}/partner/{{partner._id}}">
+        <a *ngFor="let partner of partners; let i = index" mat-list-item
+           routerLink="/match/{{matchesId[i]}}/partner/{{partner._id}}">
           {{partner.username}}</a>
       </mat-expansion-panel>
     </mat-accordion>

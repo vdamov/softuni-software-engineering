@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {map, startWith} from 'rxjs/operators';
 import {AuthService} from '../../../core/services/auth.service';
 import {Router} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 
 
 @Component({
@@ -11,9 +12,10 @@ import {Router} from '@angular/router';
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
   registerForm: FormGroup;
   filteredOptions: Observable<string[]>;
+  private subscription: Subscription = new Subscription();
   private readonly imagePattern = /^(http:\/\/|https:\/\/).+$/;
   private cities: string[] = [
     'Sofia',
@@ -41,7 +43,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
   }
 
@@ -66,9 +69,10 @@ export class RegisterComponent implements OnInit {
   }
 
   register() {
-    this.authService.signUp(this.registerForm.value).subscribe(() => {
+    this.subscription.add(this.authService.signUp(this.registerForm.value).subscribe(() => {
+      this.toastr.success(`You can login with your credentials.`, 'Successful registration');
       this.router.navigate(['/login']);
-    });
+    }));
   }
 
   private _filter(value: object): string[] {
@@ -76,6 +80,10 @@ export class RegisterComponent implements OnInit {
 
     const filterValue = value.city ? value.city.toLowerCase() : '';
     return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {AuthService} from '../../../core/services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {map, startWith} from 'rxjs/operators';
@@ -12,9 +12,10 @@ import {IUser} from '../../shared/interfaces/user.interface';
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, OnDestroy {
   editForm: FormGroup;
   filteredOptions: Observable<string[]>;
+  private subscription: Subscription = new Subscription();
   private user: IUser;
   private readonly imagePattern = /^(http:\/\/|https:\/\/).+$/;
   private cities: string[] = [
@@ -68,7 +69,6 @@ export class EditProfileComponent implements OnInit {
     this.editForm.get('interested').setValue(this.user.interested);
     this.editForm.get('image').setValue(this.user.image);
 
-    console.log(this.editForm);
 
     this.filteredOptions = this.editForm.valueChanges
       .pipe(
@@ -79,9 +79,9 @@ export class EditProfileComponent implements OnInit {
 
   edit() {
     Object.assign(this.user, this.editForm.value);
-    this.userService.updateUser(this.user).subscribe(() => {
+    this.subscription.add(this.userService.updateUser(this.user).subscribe(() => {
       this.router.navigate([`/profile/${this.user._id}/view`]);
-    });
+    }));
   }
 
   private _filter(value: object): string[] {
@@ -89,6 +89,10 @@ export class EditProfileComponent implements OnInit {
 
     const filterValue = value.city ? value.city.toLowerCase() : '';
     return this.cities.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
 }

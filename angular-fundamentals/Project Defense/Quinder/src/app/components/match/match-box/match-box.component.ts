@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {forkJoin, Observable} from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {forkJoin, Observable, Subscription} from 'rxjs';
 import {IUser} from '../../shared/interfaces/user.interface';
 import {ILike} from '../../shared/interfaces/like.interface';
 import {IDislike} from '../../shared/interfaces/dislike.interface';
@@ -24,14 +24,14 @@ import {UserService} from '../../../core/services/user.service';
       transition('* => slideOutRight', animate(750, keyframes(kf.slideOutRight))),
     ])]
 })
-export class MatchBoxComponent implements OnInit {
-  private animationState: string;
+export class MatchBoxComponent implements OnInit, OnDestroy {
+  public animationState: string;
   private userDetails: IUser;
   private userLikes$: Observable<ILike[]>;
   private userDislikes$: Observable<IDislike[]>;
   private usersOfInterest$: Observable<IUser[]>;
-  private fork$;
-  private match: IUser;
+  public match: IUser;
+  private subscription: Subscription = new Subscription();
 
   constructor(private authService: AuthService,
               private matchService: MatchService,
@@ -55,9 +55,9 @@ export class MatchBoxComponent implements OnInit {
 
     const dialogRef = this.dialog.open(MyDialogComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(result => {
+    this.subscription.add(dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-    });
+    }));
   }
 
   ngOnInit() {
@@ -72,10 +72,10 @@ export class MatchBoxComponent implements OnInit {
 
 
   getUser() {
-    this.fork$ = forkJoin(this.usersOfInterest$, this.userLikes$, this.userDislikes$).subscribe((arr) => {
+    this.subscription.add(forkJoin(this.usersOfInterest$, this.userLikes$, this.userDislikes$).subscribe((arr) => {
       const [usersOfInterest, userLikes, userDislikes] = arr;
       this.getMatch(usersOfInterest, userLikes, userDislikes);
-    });
+    }));
   }
 
   getMatch(usersOfInterest: IUser[], userLikes: ILike[], userDislikes: IDislike[]) {
@@ -103,9 +103,9 @@ export class MatchBoxComponent implements OnInit {
     this.startAnimation('slideOutLeft');
     const userId = this.userDetails._id;
     const dislikedId = this.match._id;
-    this.voteService.postDislike(userId, dislikedId).subscribe(() => {
+    this.subscription.add(this.voteService.postDislike(userId, dislikedId).subscribe(() => {
       this.getUser();
-    });
+    }));
   }
 
   swipeRight() {
@@ -113,10 +113,10 @@ export class MatchBoxComponent implements OnInit {
 
     const userId = this.userDetails._id;
     const likedId = this.match._id;
-    this.voteService.postLike(userId, likedId).subscribe(() => {
+    this.subscription.add(this.voteService.postLike(userId, likedId).subscribe(() => {
       this.checkForMatch(likedId, userId);
       this.getUser();
-    });
+    }));
 
   }
 
@@ -127,18 +127,22 @@ export class MatchBoxComponent implements OnInit {
   }
 
   checkForMatch(partnerId: string, userId: string) {
-    this.voteService.getUserLikes(partnerId).subscribe((likes) => {
+    this.subscription.add(this.voteService.getUserLikes(partnerId).subscribe((likes) => {
       if (likes.some(l => l.likedId === userId)) {
 
-        this.matchService.postMatch([partnerId, userId]).subscribe((match: IMatch) => {
+        this.subscription.add(this.matchService.postMatch([partnerId, userId]).subscribe((match: IMatch) => {
           this.openModal(match._id, partnerId);
-        });
+        }));
       }
-    });
+    }));
   }
 
 
   resetAnimationState() {
     this.animationState = '';
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }

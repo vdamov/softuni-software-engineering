@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class ViewProfileComponent implements OnInit {
 
-  private user: IUser;
+  public user: IUser;
 
   constructor(private matchService: MatchService,
               private route: ActivatedRoute) {

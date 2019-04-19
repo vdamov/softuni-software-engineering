@@ -10,10 +10,13 @@ import {AuthService} from './core/services/auth.service';
 export class AppComponent implements OnDestroy {
   title = 'Quinder';
   mobileQuery: MediaQueryList;
-
   private mobileQueryListener: () => void;
 
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, private authService: AuthService) {
+  constructor(
+    changeDetectorRef: ChangeDetectorRef,
+    media: MediaMatcher,
+    public authService: AuthService) {
+
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this.mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this.mobileQueryListener);
