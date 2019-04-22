@@ -39,7 +39,7 @@ class Upload extends Component {
             formData.append(key, new Blob([file], {type: file.type}), file.name || 'file')
         });
         if (this.state.files.length > 0) {
-            this.memeService.addMeme(formData).then(() => {
+            this.memeService.addMeme(formData, true).then(() => {
                 if (this.state.files.length === 1) {
                     window.alert(`${this.state.files.length} file uploaded succesfully!`)
                 } else {

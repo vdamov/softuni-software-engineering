@@ -1,16 +1,21 @@
 import React, {Component} from 'react';
-import {BrowserRouter, Redirect, Route} from "react-router-dom";
+import {BrowserRouter, Route} from "react-router-dom";
 import {toast, ToastContainer, Zoom} from 'react-toastify';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Header from "./Header/Header";
+import Header from "./Common/Header/Header";
 import Home from "./Home/Home";
 import RegisterForm from "./Register/RegisterForm";
 import LoginForm from "./Login/LoginForm";
 import Upload from "./Upload/Upload";
 import UserService from "./Services/User-Service";
+import UserRoute from "./Common/Routes/UserRoute";
+import GuestRoute from "./Common/Routes/GuestRoute";
+import Panel from "./AdminPanel/Panel";
+import EditUser from "./AdminPanel/EditUser";
+import AdminRoute from "./Common/Routes/AdminRoute";
 
 
 class App extends Component {
@@ -191,44 +196,35 @@ class App extends Component {
                             logout={this.logout}
                             toggle={this.toggle}
                             isOpen={this.state.isOpen}/>
-                    <Route path="/register" exact
-                           render={() => (
-                               this.state.user.username ?
-                                   (<Redirect to="/"/>) :
-                                   (<RegisterForm
-                                       registerFormSubmit={this.registerFormSubmit}
-                                       handleChange={(e) => this.handleChange(e)}
-                                       validateEmail={(e) => this.validateEmail(e)}
-                                       validateUsername={(e) => this.validateUsername(e)}
-                                       validatePassword={(e) => this.validatePassword(e)}
-                                       validateConfirmPassword={(e) => this.validateConfirmPassword(e)}
-                                       email={this.state.email}
-                                       password={this.state.password}
-                                       validate={this.state.validate}
-                                   />)
-                           )}/>
-                    <Route path="/upload" exact render={() => (
-                        this.state.user.username ?
-                            (<Upload user={this.state.user}/>) :
-                            (<Redirect to="/"/>)
-                    )}/>
-                    <Route path="/login" exact
-                           render={() => (
-                               this.state.user.username ?
-                                   (<Redirect to="/"/>) :
-                                   (<LoginForm
-                                       loginFormSubmit={this.loginFormSubmit}
-                                       handleChange={(e) => this.handleChange(e)}
-                                       validatePassword={(e) => this.validatePassword(e)}
-                                       validateEmail={(e) => this.validateEmail(e)}
-                                       username={this.state.username}
-                                       email={this.state.email}
-                                       password={this.state.password}
-                                       validate={this.state.validate}
-                                   />)
-                           )}/>
                     <Route path="/" exact
                            component={() => <Home user={this.state.user}/>}/>
+                    <GuestRoute path="/login" component={LoginForm}
+                                isAuth={!!this.state.user.username}
+                                loginFormSubmit={this.loginFormSubmit}
+                                handleChange={(e) => this.handleChange(e)}
+                                validatePassword={(e) => this.validatePassword(e)}
+                                validateEmail={(e) => this.validateEmail(e)}
+                                email={this.state.email}
+                                password={this.state.password}
+                                validate={this.state.validate}
+                    />
+                    <GuestRoute path="/register" component={RegisterForm}
+                                isAuth={!!this.state.user.username}
+                                registerFormSubmit={this.registerFormSubmit}
+                                handleChange={(e) => this.handleChange(e)}
+                                validateEmail={(e) => this.validateEmail(e)}
+                                validateUsername={(e) => this.validateUsername(e)}
+                                validatePassword={(e) => this.validatePassword(e)}
+                                validateConfirmPassword={(e) => this.validateConfirmPassword(e)}
+                                email={this.state.email}
+                                username={this.state.username}
+                                password={this.state.password}
+                                validate={this.state.validate}
+                    />
+                    <UserRoute path="/upload" user={this.state.user} isAuth={!!this.state.user.username}
+                               component={Upload}/>
+                    <AdminRoute path="/:username/edit" exact isAdmin={this.state.user.isAdmin} component={EditUser}/>
+                    <AdminRoute path="/admin" exact isAdmin={this.state.user.isAdmin} component={Panel}/>
                     <ToastContainer transition={Zoom} autoClose={2000} position="bottom-right"/>
                 </div>
             </BrowserRouter>

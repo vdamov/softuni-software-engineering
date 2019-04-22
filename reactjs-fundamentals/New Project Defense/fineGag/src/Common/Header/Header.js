@@ -27,6 +27,9 @@ class Header extends Component {
                         {
                             this.props.user.username ?
                                 <Fragment>
+                                    {this.props.user.isAdmin ? <NavItem>
+                                        <NavLink to="/admin" className="nav-link">Admin Panel</NavLink>
+                                    </NavItem> : null}
                                     <NavItem>
                                         <NavLink to="/upload" className="nav-link">Upload</NavLink>
                                     </NavItem>

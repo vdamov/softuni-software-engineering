@@ -22,7 +22,7 @@ const Comment = (props) => {
                                         props.deleteComment(comment._id, props.memeId, props.memeIndex);
                                     }}>
                                         <img className="float-right mr-3"
-                                             src="https://img.icons8.com/ios/16/000000/delete-message.png"/>
+                                             src="delete-message.png"/>
                                     </a>
                                     :
                                     null

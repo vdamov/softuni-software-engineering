@@ -35,6 +35,21 @@ module.exports = {
                 res.status(error.statusCode).json({error});
             });
     },
+    getUserMemes: async (req, res) => {
+        try {
+            const {userId} = req.params;
+            const memes = await Meme.findOne({author: userId});
+
+            res.status(200)
+                .json(memes);
+        } catch (error) {
+            if (!error.statusCode) {
+                error.statusCode = 500;
+            }
+            res.status(error.statusCode).json({error});
+
+        }
+    },
     addComment: async (req, res) => {
         try {
             const memeId = req.body.memeId;

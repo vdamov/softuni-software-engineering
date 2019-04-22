@@ -3,6 +3,7 @@ const feedController = require('../controllers/feed');
 const isAuth = require('../middleware/is-auth');
 
 router.get('/memes', feedController.getMemes);
+router.get('/memes/:userId', feedController.getUserMemes);
 router.post('/add-meme', isAuth, feedController.addMeme);
 router.post('/add-vote', isAuth, feedController.addVote);
 router.post('/add-comment', isAuth, feedController.addComment);

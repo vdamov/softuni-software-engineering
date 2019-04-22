@@ -33,6 +33,9 @@ Admin privileges
 - Can view all comments.
 - Can comment under a meme.
 - Can vote for a meme with like/dislike.
+- Can access the Admin Panel.
+- Can edit user's email and username.
+- Can delete user and all his data.
 - Can upload multiple memes.
 - Can delete memes.
 - Can delete comments.

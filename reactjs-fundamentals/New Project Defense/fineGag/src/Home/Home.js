@@ -50,7 +50,7 @@ class Home extends Component {
     getMemes = () => {
         this.memeService.getMemes(this.state.nextPage)
             .then((memes) => {
-
+                console.log(memes);
                 this.setState({
                     memes: this.state.memes.concat(memes.memes.docs),
                     isOpen: this.state.isOpen.concat(memes.memes.docs.map(e => false)),
@@ -99,8 +99,6 @@ class Home extends Component {
                     const comments = this.state.comments;
                     comments[memeIndex].push(data.comment);
                     this.setState({comments: comments});
-                    toast(data.message)
-
                 })
 
         }
@@ -111,12 +109,11 @@ class Home extends Component {
             commentId,
             memeId
         })
-            .then((data) => {
+            .then(() => {
                 let comment = this.state.comments[memeIndex].find((c) => c._id === commentId);
                 let comments = this.state.comments;
                 comments[memeIndex].splice(comments[memeIndex].indexOf(comment), 1);
                 this.setState({comments: comments});
-                toast(data.message)
             })
     };
 
@@ -128,8 +125,7 @@ class Home extends Component {
                 voteType: type,
                 memeId: memeId
             })
-                .then(data => {
-                    toast(data.message);
+                .then(() => {
                     let arr = this.state.ratings;
                     let hasVoted = this.state.votes;
                     if (type === 'up') {
