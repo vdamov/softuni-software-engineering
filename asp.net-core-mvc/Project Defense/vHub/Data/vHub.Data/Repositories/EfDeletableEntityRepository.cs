@@ -1,4 +1,6 @@
-﻿namespace vHub.Data.Repositories
+﻿#pragma warning disable SA1300 // Element should begin with upper-case letter
+namespace vHub.Data.Repositories
+#pragma warning restore SA1300 // Element should begin with upper-case letter
 {
     using System;
     using System.Linq;
