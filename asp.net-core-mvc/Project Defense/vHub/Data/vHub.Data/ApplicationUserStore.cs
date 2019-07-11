@@ -1,4 +1,4 @@
-﻿namespace vHub.Data
+﻿    namespace vHub.Data
 {
     using System.Security.Claims;
 

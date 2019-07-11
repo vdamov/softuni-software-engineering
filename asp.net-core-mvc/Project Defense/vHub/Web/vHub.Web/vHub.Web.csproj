@@ -28,7 +28,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\vHub.Data.Models\vHub.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\vHub.Data\vHub.Data.csproj" />
-    <ProjectReference Include="..\..\Services\vHub.Services.Messaging\vHub.Services.Messaging.csproj" />
     <ProjectReference Include="..\..\Services\vHub.Services\vHub.Services.csproj" />
     <ProjectReference Include="..\vHub.Web.Infrastructure\vHub.Web.Infrastructure.csproj" />
   </ItemGroup>

@@ -16,7 +16,6 @@
     using vHub.Data.Models;
     using vHub.Data.Repositories;
     using vHub.Data.Seeding;
-    using vHub.Services.Messaging;
     using vHub.Web.Infrastructure.Middlewares.Auth;
     using vHub.Web.ViewModels.TodoItems;
 
@@ -48,8 +47,7 @@
         public void ConfigureServices(IServiceCollection services)
         {
             // Framework services
-            // TODO: Add pooling when this bug is fixed: https://github.com/aspnet/EntityFrameworkCore/issues/9741
-            services.AddDbContext<ApplicationDbContext>(
+            services.AddDbContextPool<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(this.configuration["JwtTokenValidation:Secret"]));
@@ -93,7 +91,7 @@
                 .AddRoleStore<ApplicationRoleStore>()
                 .AddDefaultTokenProviders();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSingleton(this.configuration);
 
@@ -102,8 +100,6 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
-            services.AddTransient<ISmsSender, NullMessageSender>();
 
             // Identity stores
             services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();
