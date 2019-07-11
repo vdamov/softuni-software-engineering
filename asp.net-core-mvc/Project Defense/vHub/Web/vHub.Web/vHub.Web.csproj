@@ -31,5 +31,8 @@
     <ProjectReference Include="..\..\Services\vHub.Services\vHub.Services.csproj" />
     <ProjectReference Include="..\vHub.Web.Infrastructure\vHub.Web.Infrastructure.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ClientApp\" />
+  </ItemGroup>
   
 </Project>

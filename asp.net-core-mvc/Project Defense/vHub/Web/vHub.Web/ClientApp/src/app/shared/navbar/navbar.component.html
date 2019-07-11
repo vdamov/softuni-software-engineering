@@ -1,0 +1,38 @@
+<nav id="navbar-main"
+     class="navbar navbar-main navbar-expand-lg navbar-transparent navbar-light headroom headroom--top headroom--pinned">
+    <div class="container">
+        <a class="navbar-brand mr-lg-5" [routerLink]="['/home']">
+            <img src="./assets/img/brand/logo.png">
+        </a>
+        <div class="navbar-nav navbar-collapse row">
+            <div class="input-group input-group-sm col-sm-7 ">
+                <input class="form-control" placeholder="Search..." type="text">
+                <div class="input-group-append">
+                    <button type="submit"  class="btn btn-neutral btn-sm">
+                        <i class="fa fa-lg fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+            <li class="nav-item">
+                <a class="nav-link " routerLink="#">
+                    <i class="ni ni-ui-04 d-lg-none"></i>
+                    <span class="nav-link-inner--text">Upload</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " routerLink="#">
+                    <i class="ni ni-ui-04 d-lg-none"></i>
+                    <span class="nav-link-inner--text">Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link " routerLink="#">
+                    <i class="ni ni-ui-04 d-lg-none"></i>
+                    <span class="nav-link-inner--text">Logout</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</nav>

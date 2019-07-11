@@ -33,6 +33,7 @@
     using Microsoft.IdentityModel.Tokens;
 
     using Newtonsoft.Json;
+    using Microsoft.AspNetCore.SpaServices.AngularCli;
 
     public class Startup
     {
@@ -151,6 +152,18 @@
                 PrincipalResolver);
 
             app.UseMvc(routes => routes.MapRoute("default", "api/{controller}/{action}/{id?}"));
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
+
+                spa.Options.SourcePath = "ClientApp";
+
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
         }
 
         private static async Task<GenericPrincipal> PrincipalResolver(HttpContext context)
