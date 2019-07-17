@@ -34,5 +34,10 @@
   <ItemGroup>
     <Folder Include="ClientApp\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Update="package.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
   
 </Project>

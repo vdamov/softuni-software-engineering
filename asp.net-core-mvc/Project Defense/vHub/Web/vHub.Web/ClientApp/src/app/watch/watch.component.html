@@ -1,0 +1,92 @@
+<main class="profile-page">
+    <section class="section-profile-cover section-shaped my-0">
+        <!-- Circles background -->
+        <div class="shape shape-style-3 shape-dark">
+            <span class="span-150"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+        </div>
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew">
+            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg">
+                <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
+    </section>
+    <section class="section mt--150">
+        <div class="container-fluid mt--300">
+            <div class="row">
+                <div class="col-md-9">
+                    <div class="card ">
+                        <div class="card-img-top">
+                            <mat-video src="./assets/NASA.mp4" poster="assets/NASA.jpg"></mat-video>
+                        </div>
+                        <div class="card-body py-0">
+                            <div class="row">
+                                <h3 class="display-3 text-right mb-0">NASA Aircraft Launch</h3>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-9 px-0">
+                                    <p class="text-muted display-4 font-weight-normal mb-0">
+                                        <i class="fa fa-play-circle"></i> 123 views
+                                    </p>
+                                </div>
+                                <div class="col-md-3 px-0 text-right">
+                                    <button type="button" class="btn  btn-outline-primary">
+                                        <i class="fa far fa-thumbs-up"></i>
+                                        123
+                                    </button>
+                                    <button type="button" class="btn btn-outline-danger">
+                                        <i class="fa far fa-thumbs-down"></i>
+                                        123
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl-1 px-1">
+                                    <img src="assets/img/theme/team-3-800x800.jpg"
+                                         class="img-thumbnail shadow-lg mb-2 float-left" alt="">
+                                </div>
+                                <div class="col-xl-3">
+                                    <div class="row">
+
+                                        <p class="font-weight-bold text-dark mb-0">Uncensored</p>
+                                    </div>
+                                    <div class="row">
+                                        <p class="font-weight-light font-italic text-muted">Uploaded on 07.02.1995</p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-8 text-right pt-50">
+                                    <p class="font-weight-bold">Category: <span><a href="">Science</a></span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer bg-white">
+                            <app-comments-section></app-comments-section>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <app-thumbnail-section></app-thumbnail-section>
+                    </div>
+                    <div class="mb-3">
+                        <app-thumbnail-section></app-thumbnail-section>
+                    </div>
+                    <div class="mb-3">
+                        <app-thumbnail-section></app-thumbnail-section>
+                    </div>
+                    <div class="mb-3">
+                        <app-thumbnail-section></app-thumbnail-section>
+                    </div>
+                    <div class="mb-3">
+                        <app-thumbnail-section></app-thumbnail-section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+</main>
