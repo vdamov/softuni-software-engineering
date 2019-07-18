@@ -7,6 +7,8 @@ namespace vHub.Data.Models
     using vHub.Data.Common.Models;
 
     using Microsoft.AspNetCore.Identity;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.ComponentModel;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {
@@ -16,7 +18,20 @@ namespace vHub.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.Uploads = new HashSet<Video>();
         }
+        //custom columns
+        public string ImageUrl { get; set; }
+
+        [DisplayName("Username")]
+        public override string UserName
+        {
+            get => base.UserName;
+            set => base.UserName = value;
+        }
+
+        public virtual ICollection<Video> Uploads { get; set; }
+        public virtual ICollection<Rate> Ratings { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
@@ -33,5 +48,8 @@ namespace vHub.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+
+
     }
 }

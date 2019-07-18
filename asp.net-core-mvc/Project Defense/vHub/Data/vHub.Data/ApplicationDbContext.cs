@@ -24,7 +24,10 @@
         {
         }
 
-        public DbSet<TodoItem> TodoItems { get; set; }
+        public DbSet<Video> Videos { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<Rate> Rates { get; set; }
 
         public override int SaveChanges() => this.SaveChanges(true);
 
