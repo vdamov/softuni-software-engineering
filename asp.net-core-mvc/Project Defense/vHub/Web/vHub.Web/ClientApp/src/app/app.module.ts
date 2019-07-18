@@ -16,6 +16,7 @@ import {HomeModule} from './home/home.module';
 import {LoginComponent} from './login/login.component';
 import {WatchModule} from './watch/watch.module';
 import {ProfileModule} from './profile/profile.module';
+import { UploadComponent } from './upload/upload.component';
 
 @NgModule({
     declarations: [
@@ -25,6 +26,7 @@ import {ProfileModule} from './profile/profile.module';
         NavbarComponent,
         FooterComponent,
         LoginComponent,
+        UploadComponent,
     ],
     imports: [
         BrowserModule,
