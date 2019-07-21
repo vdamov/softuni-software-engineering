@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatVideoModule} from 'mat-video';
 import {WatchComponent} from './watch.component';
-import {SectionsModule} from '../sections/sections.module';
+import {SectionsModule} from '../../sections/sections.module';
 
 
 @NgModule({

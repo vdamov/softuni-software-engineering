@@ -8,4 +8,9 @@
     <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Data\vHub.Data.Common\vHub.Data.Common.csproj" />
+    <ProjectReference Include="..\..\Data\vHub.Data.Models\vHub.Data.Models.csproj" />
+  </ItemGroup>
+
 </Project>

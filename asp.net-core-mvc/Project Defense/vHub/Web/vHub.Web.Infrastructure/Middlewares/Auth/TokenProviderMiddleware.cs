@@ -18,6 +18,7 @@
 
     public class TokenProviderMiddleware
     {
+        private const string contentType = "application/json";
         private readonly RequestDelegate next;
         private readonly TokenProviderOptions options;
         private readonly Func<HttpContext, Task<GenericPrincipal>> principalResolver;
@@ -39,7 +40,7 @@
                 return this.next(context);
             }
 
-            if (context.Request.Method.Equals("POST") && context.Request.HasFormContentType)
+            if (context.Request.Method.Equals("POST") && context.Request.ContentType == contentType)
             {
                 return this.GenerateToken(context);
             }

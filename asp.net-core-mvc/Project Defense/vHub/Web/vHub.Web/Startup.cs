@@ -34,6 +34,7 @@
 
     using Newtonsoft.Json;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
+    using System.IO;
 
     public class Startup
     {
@@ -58,7 +59,7 @@
                 opts.Audience = this.configuration["JwtTokenValidation:Audience"];
                 opts.Issuer = this.configuration["JwtTokenValidation:Issuer"];
                 opts.Path = "/api/account/login";
-                opts.Expiration = TimeSpan.FromDays(15);
+                opts.Expiration = TimeSpan.FromDays(1);
                 opts.SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
             });
 
@@ -86,6 +87,8 @@
                     options.Password.RequireLowercase = false;
                     options.Password.RequireNonAlphanumeric = false;
                     options.Password.RequireUppercase = false;
+
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddUserStore<ApplicationUserStore>()
@@ -154,8 +157,6 @@
             app.UseMvc(routes => routes.MapRoute("default", "api/{controller}/{action}/{id?}"));
             app.UseSpa(spa =>
             {
-                // To learn more about options for serving an Angular SPA from ASP.NET Core,
-                // see https://go.microsoft.com/fwlink/?linkid=864501
 
                 spa.Options.SourcePath = "ClientApp";
 
@@ -168,18 +169,23 @@
 
         private static async Task<GenericPrincipal> PrincipalResolver(HttpContext context)
         {
-            var email = context.Request.Form["email"];
+            Credentials credentials;
+            using (var reader = new StreamReader(context.Request.Body))
+            {
+                var content = await reader.ReadToEndAsync();
+                credentials = JsonConvert.DeserializeObject<Credentials>(content);
+            }
 
             var userManager = context.RequestServices.GetRequiredService<UserManager<ApplicationUser>>();
-            var user = await userManager.FindByEmailAsync(email);
+            var user = await userManager.FindByNameAsync(credentials.Username);
+
             if (user == null || user.IsDeleted)
             {
                 return null;
             }
 
-            var password = context.Request.Form["password"];
 
-            var isValidPassword = await userManager.CheckPasswordAsync(user, password);
+            var isValidPassword = await userManager.CheckPasswordAsync(user, credentials.Password);
             if (!isValidPassword)
             {
                 return null;
@@ -187,10 +193,16 @@
 
             var roles = await userManager.GetRolesAsync(user);
 
-            var identity = new GenericIdentity(email, "Token");
+            var identity = new GenericIdentity(credentials.Username, "Token");
             identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.Id));
 
             return new GenericPrincipal(identity, roles.ToArray());
+        }
+        private class Credentials
+        {
+
+            public string Username { get; set; }
+            public string Password { get; set; }
         }
     }
 }

@@ -69,7 +69,7 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Already have an account? <a [routerLink]="['/login']">Login</a></small>
                             </div>
-                            <form role="form" [formGroup]="registerForm">
+                            <form [formGroup]="registerForm" (ngSubmit)="register()">
                                 <div class="form-group">
                                     <div class="input-group input-group-alternative mb-3">
                                         <div class="input-group-prepend">
@@ -137,7 +137,10 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button [disabled]="registerForm.invalid" class="btn btn-default mt-4">Create account</button>
+                                    <button [disabled]="registerForm.invalid" type="submit"
+                                            class="btn btn-default mt-4">Create
+                                        account
+                                    </button>
                                 </div>
 
                             </form>

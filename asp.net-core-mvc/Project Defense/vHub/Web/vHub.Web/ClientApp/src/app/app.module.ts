@@ -1,27 +1,28 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app.routing';
 
 import {AppComponent} from './app.component';
-import {SignupComponent} from './signup/signup.component';
-import {LandingComponent} from './landing/landing.component';
-import {ProfileComponent} from './profile/profile.component';
-import {NavbarComponent} from './shared/navbar/navbar.component';
-import {FooterComponent} from './shared/footer/footer.component';
+import {RegisterComponent} from './components/user/register/register.component';
+import {LandingComponent} from './components/landing/landing.component';
+import {NavbarComponent} from './components/shared/navbar/navbar.component';
+import {FooterComponent} from './components/shared/footer/footer.component';
 
-import {HomeModule} from './home/home.module';
-import {LoginComponent} from './login/login.component';
-import {WatchModule} from './watch/watch.module';
-import {ProfileModule} from './profile/profile.module';
-import { UploadComponent } from './upload/upload.component';
+import {HomeModule} from './components/home/home.module';
+import {LoginComponent} from './components/user/login/login.component';
+import {WatchModule} from './components/video/watch/watch.module';
+import {ProfileModule} from './components/user/profile/profile.module';
+import { UploadComponent } from './components/video/upload/upload.component';
+import {CoreModule} from './core/core.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
     declarations: [
         AppComponent,
-        SignupComponent,
+        RegisterComponent,
         LandingComponent,
         NavbarComponent,
         FooterComponent,
@@ -30,11 +31,13 @@ import { UploadComponent } from './upload/upload.component';
     ],
     imports: [
         BrowserModule,
-
         NgbModule.forRoot(),
+        HttpClientModule,
         FormsModule,
+        ReactiveFormsModule,
         RouterModule,
         AppRoutingModule,
+        CoreModule,
         HomeModule,
         WatchModule,
         ProfileModule

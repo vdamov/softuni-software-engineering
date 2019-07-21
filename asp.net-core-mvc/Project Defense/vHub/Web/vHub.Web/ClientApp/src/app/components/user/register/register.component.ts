@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {UserService} from '../../../core/services/user.service';
 
 @Component({
     selector: 'app-signup',
@@ -10,7 +12,7 @@ export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
 
 
-    constructor(private fb: FormBuilder) {
+    constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -22,22 +24,11 @@ export class RegisterComponent implements OnInit {
         });
     }
 
+    register() {
+        this.userService.register(this.registerForm.value)
+            .subscribe(() => {
+                this.router.navigate(['/user/login']);
+            });
+    }
 }
 
-function requiredFileTypes() {
-    return function (control: FormControl) {
-        const file = control.value;
-        if (file) {
-            const fileNameToLower = file.name.toLowerCase();
-            if (fileNameToLower.endsWith('.jpg') || fileNameToLower.endsWith('.jpeg') || fileNameToLower.endsWith('.png')) {
-                return {
-                    requiredFileType: true
-                };
-            }
-
-            return null;
-        }
-
-        return null;
-    };
-}
