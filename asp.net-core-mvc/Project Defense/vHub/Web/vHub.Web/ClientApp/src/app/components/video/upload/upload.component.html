@@ -25,51 +25,34 @@
                                 <div class="  mb-4">
                                     <h3 class="display-4 mb-0">Upload Video</h3>
                                 </div>
-                                <form role="form">
+                                <form [formGroup]="uploadForm" (ngSubmit)="submit()">
                                     <div class="form-group">
-                                        <div class="input-group input-group-alternative mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="ni ni-book-bookmark"></i></span>
-                                            </div>
-                                            <input class="form-control" placeholder="Title" type="text">
+                                        <label>Enter a short title</label>
+                                        <input type="text" class="form-control" formControlName="title"
+                                               placeholder="Title">
+                                        <div class="invalid-feedback" style="display: block">
+                                            <ng-container
+                                                    *ngIf="uploadForm.get('title').touched && uploadForm.get('title').hasError('required')">
+                                                Title is required!
+                                            </ng-container>
                                         </div>
                                     </div>
 
 
                                     <div class="form-group">
-                                        <div class="input-group input-group-alternative">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i
-                                                        class="ni ni-folder-17"></i></span>
-                                            </div>
-                                            <div class="custom-file">
-                                                <input type="file" class="custom-file-input pl-0" id="customFile">
-                                                <label class="custom-file-label pl-0" for="customFile">Choose
-                                                    Video</label>
-                                            </div>
+                                        <app-file-upload formControlName="video"
+                                                         [progress]="progress"></app-file-upload>
+                                        <div class="invalid-feedback" style="display: block">
+                                            <ng-container
+                                                    *ngIf="uploadForm.get('video').touched && uploadForm.get('video').hasError('required')">
+                                                This field is required
+                                            </ng-container>
+
                                         </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group input-group-alternative mb-3">
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="ni ni-books"></i></span>
-                                            </div>
-                                            <select class="custom-select pl-0">
-                                                <option class="form-opp" selected>Select Category</option>
-                                                <option value="1">One</option>
-                                                <option value="2">Two</option>
-                                                <option value="3">Three</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="text-muted text-center  font-italic">
-                                        <small>Allowed video formats: mp4, avi.
-                                        </small>
                                     </div>
 
-                                    <div class="text-center">
-                                        <button type="button" class="btn btn-default mt-4">Upload</button>
-                                    </div>
+                                    <button  [disabled]="uploadForm.invalid" type="submit" class="btn btn-default">Upload Video</button>
+
                                 </form>
                             </div>
                         </div>

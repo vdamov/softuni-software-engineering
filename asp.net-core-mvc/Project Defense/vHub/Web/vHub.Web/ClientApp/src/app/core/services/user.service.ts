@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {IUser} from '../../components/shared/interfaces/user.interface';
 import {shareReplay, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
+import {Form} from '@angular/forms';
 
 @Injectable({
     providedIn: 'root'
@@ -18,8 +19,8 @@ export class UserService {
         return this.http.post<IUser>(this.loginURL, body);
     }
 
-    register(body: IUser) {
-        return this.http.post<IUser>(this.registerURL, body);
+    register(formData: FormData) {
+        return this.http.post<IUser>(this.registerURL, formData);
     }
 
     logout() {

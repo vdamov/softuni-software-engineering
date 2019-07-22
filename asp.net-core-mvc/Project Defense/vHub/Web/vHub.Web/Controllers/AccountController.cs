@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.IO;
 using Microsoft.AspNetCore.Hosting;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Internal;
 
 namespace vHub.Web.Controllers
 {
@@ -26,14 +28,14 @@ namespace vHub.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromBody]UserRegisterBindingModel model)
+        public async Task<IActionResult> Register([FromForm]UserRegisterBindingModel model)
         {
-            var fileNameToLower = model.image.FileName.ToLower();
+            var fileNameToLower = model.Image.FileName.ToLower();
             var isCorrectExtension = fileNameToLower.EndsWith(".jpg")
                 || fileNameToLower.EndsWith(".jpeg")
                 || fileNameToLower.EndsWith(".png");
             var maxContentLength = 1024 * 512;
-            if (!ModelState.IsValid || model.image == null || model.image.Length > maxContentLength || !isCorrectExtension)
+            if (!ModelState.IsValid || model.Image == null || model.Image.Length > maxContentLength || !isCorrectExtension)
             {
                 return BadRequest(ModelState.GetFirstError());
             }
@@ -43,13 +45,13 @@ namespace vHub.Web.Controllers
             {
                 Directory.CreateDirectory(environment.WebRootPath + "\\profile-pictures\\");
             }
-            var imagePath = environment.WebRootPath + "\\profile-pictures\\" + user.Id + '.' + fileNameToLower.Split(".").Last();
-            using (FileStream filestream = System.IO.File.Create(imagePath))
+            var imagePath = "\\profile-pictures\\" + user.Id + '.' + fileNameToLower.Split(".").Last();
+            using (FileStream filestream = System.IO.File.Create(environment.WebRootPath + imagePath))
             {
-                await model.image.CopyToAsync(filestream);
+                await model.Image.CopyToAsync(filestream);
                 await filestream.FlushAsync();
             }
-            user.ImageUrl = "\\profile-pictures\\" + user.Id;
+            user.ImageUrl = imagePath;
 
             var result = await userManager.CreateAsync(user, model.Password);
 

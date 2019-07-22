@@ -1,8 +1,8 @@
-﻿namespace vHub.Web.ViewModels.Account
-{
-    using Microsoft.AspNetCore.Http;
-    using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
+namespace vHub.Web.ViewModels.Account
+{
     public class UserRegisterBindingModel
     {
         [Required]
@@ -20,7 +20,6 @@
         public string Password { get; set; }
 
         [Required]
-        [DataType(DataType.Upload)]
-        public IFormFile image { get; set; }
+        public IFormFile Image { get; set; }
     }
 }

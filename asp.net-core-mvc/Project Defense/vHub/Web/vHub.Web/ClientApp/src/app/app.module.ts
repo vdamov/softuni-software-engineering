@@ -18,6 +18,7 @@ import {ProfileModule} from './components/user/profile/profile.module';
 import { UploadComponent } from './components/video/upload/upload.component';
 import {CoreModule} from './core/core.module';
 import {HttpClientModule} from '@angular/common/http';
+import {SectionsModule} from './components/sections/sections.module';
 
 @NgModule({
     declarations: [
@@ -38,6 +39,7 @@ import {HttpClientModule} from '@angular/common/http';
         RouterModule,
         AppRoutingModule,
         CoreModule,
+        SectionsModule,
         HomeModule,
         WatchModule,
         ProfileModule

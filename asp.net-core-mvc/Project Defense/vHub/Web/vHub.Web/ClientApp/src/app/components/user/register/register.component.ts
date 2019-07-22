@@ -10,7 +10,7 @@ import {UserService} from '../../../core/services/user.service';
 })
 export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
-
+    private progress = 0;
 
     constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
     }
@@ -24,8 +24,15 @@ export class RegisterComponent implements OnInit {
         });
     }
 
+
+
     register() {
-        this.userService.register(this.registerForm.value)
+        const formData = new FormData();
+        formData.append('Image', this.registerForm.get('image').value);
+        formData.append('Username', this.registerForm.get('username').value);
+        formData.append('Email', this.registerForm.get('email').value);
+        formData.append('Password', this.registerForm.get('password').value);
+        this.userService.register(formData)
             .subscribe(() => {
                 this.router.navigate(['/user/login']);
             });

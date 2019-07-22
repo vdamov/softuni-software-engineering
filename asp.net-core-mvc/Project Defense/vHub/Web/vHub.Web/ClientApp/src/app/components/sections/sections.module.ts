@@ -21,6 +21,8 @@ import {NgbdModalComponent} from './modal/modal.component';
 import {NgbdModalContent} from './modal/modal.component';
 import {CommentsSectionComponent} from './comments-section/comments-section.component';
 import { ThumbnailSectionComponent } from './thumbnail-section/thumbnail-section.component';
+import { FileUploadComponent } from './file-upload/file-upload.component';
+import { ProgressComponent } from './progress/progress.component';
 
 @NgModule({
     declarations: [
@@ -38,7 +40,9 @@ import { ThumbnailSectionComponent } from './thumbnail-section/thumbnail-section
         NgbdModalComponent,
         NgbdModalContent,
         CommentsSectionComponent,
-        ThumbnailSectionComponent
+        ThumbnailSectionComponent,
+        FileUploadComponent,
+        ProgressComponent
     ],
     entryComponents: [NgbdModalContent],
     imports: [
@@ -49,7 +53,7 @@ import { ThumbnailSectionComponent } from './thumbnail-section/thumbnail-section
         NouisliderModule,
         JwBootstrapSwitchNg2Module
     ],
-    exports: [SectionsComponent, CommentsSectionComponent, ThumbnailSectionComponent]
+    exports: [SectionsComponent, CommentsSectionComponent, ThumbnailSectionComponent, FileUploadComponent]
 })
 export class SectionsModule {
 }

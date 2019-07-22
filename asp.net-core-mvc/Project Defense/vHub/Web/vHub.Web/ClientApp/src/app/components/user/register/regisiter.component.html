@@ -44,7 +44,7 @@
                             </ngb-alert>
                             <!--password-->
                             <ngb-alert
-                                    *ngIf="registerForm.touched && registerForm.get('password').hasError('minlength')"
+                                    *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('minlength')"
                                     type="danger"
                                     [dismissible]="false">
                                 <div class="alert-inner--icon">
@@ -75,7 +75,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                                         </div>
-                                        <input accept="application/image" formControlName="username"
+                                        <input  formControlName="username"
                                                class="form-control" placeholder="Username"
                                                type="text">
                                     </div>
@@ -105,10 +105,8 @@
                                             <span class="input-group-text"><i class="ni ni-cloud-upload-96"></i></span>
                                         </div>
                                         <div class="custom-file">
-                                            <input accept=".jpg, .jpeg, .png" formControlName="image" type="file"
-                                                   class="custom-file-input"
-                                                   id="customFile">
-                                            <label class="custom-file-label pl-0" for="customFile">Profile image</label>
+                                            <app-file-upload formControlName="image"
+                                                             [progress]="progress"></app-file-upload>
                                         </div>
                                     </div>
                                 </div>
