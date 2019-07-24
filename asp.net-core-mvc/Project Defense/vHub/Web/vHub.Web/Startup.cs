@@ -17,7 +17,6 @@
     using vHub.Data.Repositories;
     using vHub.Data.Seeding;
     using vHub.Web.Infrastructure.Middlewares.Auth;
-    using vHub.Web.ViewModels.TodoItems;
 
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Diagnostics;
@@ -35,6 +34,8 @@
     using Newtonsoft.Json;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using System.IO;
+    using vHub.Services;
+    using vHub.Web.ViewModels.Category;
 
     public class Startup
     {
@@ -104,6 +105,8 @@
             services.AddScoped(typeof(IRepository<>), typeof(EfRepository<>));
 
             // Application services
+            services.AddTransient<IVideoService, VideoService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             // Identity stores
             services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();
@@ -113,7 +116,7 @@
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            //AutoMapperConfig.RegisterMappings(typeof(TodoItemViewModel).GetTypeInfo().Assembly);
+            AutoMapperConfig.RegisterMappings(typeof(CategoryGetAllViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup
             using (var serviceScope = app.ApplicationServices.CreateScope())

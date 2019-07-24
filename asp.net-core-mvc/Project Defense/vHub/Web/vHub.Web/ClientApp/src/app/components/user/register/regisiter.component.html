@@ -21,53 +21,10 @@
             <div class="row justify-content-center">
                 <div class="col-lg-5">
                     <div class="card bg-secondary shadow border-0 pt-3">
-                        <div class="container">
-                            <!--username-->
-                            <ngb-alert
-                                    *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('minlength')"
-                                    type="danger"
-                                    [dismissible]="false">
-                                <div class="alert-inner--icon">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                </div>
-                                <span class="alert-inner--text">Username must be at least 4 symbols long!</span>
-                            </ngb-alert>
-                            <!--email-->
-                            <ngb-alert
-                                    *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('email')"
-                                    type="danger"
-                                    [dismissible]="false">
-                                <div class="alert-inner--icon">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                </div>
-                                <span class="alert-inner--text">Enter a valid email!</span>
-                            </ngb-alert>
-                            <!--password-->
-                            <ngb-alert
-                                    *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('minlength')"
-                                    type="danger"
-                                    [dismissible]="false">
-                                <div class="alert-inner--icon">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                </div>
-                                <span class="alert-inner--text">Password must be at least 6 symbols long!</span>
-                            </ngb-alert>
-                            <!--image-->
-                            <ngb-alert
-                                    *ngIf="registerForm.get('image').touched && registerForm.get('image').hasError('requiredFileTypes')"
-                                    type="danger"
-                                    [dismissible]="false">
-                                <div class="alert-inner--icon">
-                                    <i class="fa fa-exclamation-triangle"></i>
-                                </div>
-                                <span class="alert-inner--text">Image must be in jpg, jpeg or png format!</span>
-                            </ngb-alert>
-                        </div>
-
                         <div class="card-body px-lg-5 py-lg-3">
 
                             <div class="text-center text-muted mb-4">
-                                <small>Already have an account? <a [routerLink]="['/login']">Login</a></small>
+                                <small>Already have an account? <a [routerLink]="['/user/login']">Login</a></small>
                             </div>
                             <form [formGroup]="registerForm" (ngSubmit)="register()">
                                 <div class="form-group">
@@ -75,9 +32,19 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-circle-08"></i></span>
                                         </div>
-                                        <input  formControlName="username"
+                                        <input id="username" formControlName="username"
                                                class="form-control" placeholder="Username"
                                                type="text">
+                                    </div>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('required')">
+                                            Username is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('minlength')">
+                                            Username must be at least 4 characters!
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -85,8 +52,18 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-email-83"></i></span>
                                         </div>
-                                        <input formControlName="email" class="form-control" placeholder="Email"
-                                               type="email">
+                                        <input id="email" formControlName="email" class="form-control"
+                                               placeholder="Email" type="email">
+                                    </div>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('required')">
+                                            Email is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('email')">
+                                            Enter a valid email!
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -94,24 +71,29 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
-                                        <input formControlName="password" class="form-control" placeholder="Password"
-                                               type="password">
-
+                                        <input id="password" formControlName="password" class="form-control"
+                                               placeholder="Password" type="password">
+                                    </div>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')">
+                                            Password is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('minlength')">
+                                            Password must be at least 6 characters!
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="input-group input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-cloud-upload-96"></i></span>
-                                        </div>
-                                        <div class="custom-file">
-                                            <app-file-upload formControlName="image"
-                                                             [progress]="progress"></app-file-upload>
-                                        </div>
+                                    <app-file-upload formControlName="image" id="image"
+                                                     [progress]="progress"></app-file-upload>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="registerForm.get('image').touched && registerForm.get('image').hasError('required')">
+                                            Image is required!
+                                        </ng-container>
                                     </div>
-                                </div>
-                                <div class="text-right text-muted font-italic mb-3">
-                                    <small>All fields are required</small>
                                 </div>
                                 <div class="text-muted font-italic">
                                     <small>password strength:

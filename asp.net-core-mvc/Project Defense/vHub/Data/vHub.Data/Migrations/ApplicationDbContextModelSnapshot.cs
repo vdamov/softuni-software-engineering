@@ -211,9 +211,61 @@ namespace vHub.Data.Migrations
 
                     b.Property<DateTime?>("ModifiedOn");
 
+                    b.Property<string>("Name");
+
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "acd7461d-13c3-4cd2-93a9-2548223d794c",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Music"
+                        },
+                        new
+                        {
+                            Id = "99c49a3b-b143-4077-8cc9-4f4d0cbc97d9",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Product Review"
+                        },
+                        new
+                        {
+                            Id = "7b641f94-180f-4f0a-8799-99b86696025f",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "How-To"
+                        },
+                        new
+                        {
+                            Id = "0de4ee42-ee04-4b96-a96c-8d2dd2730108",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Vlog"
+                        },
+                        new
+                        {
+                            Id = "e43a81e0-8221-4df9-9ae0-5abdd7cae6ee",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Gaming"
+                        },
+                        new
+                        {
+                            Id = "51c4e742-9f00-4fb3-947a-8015ece24c02",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Comedy"
+                        },
+                        new
+                        {
+                            Id = "64db093b-4928-4699-8224-4ca4c10d89ef",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Educational"
+                        },
+                        new
+                        {
+                            Id = "8af3aa95-0320-49fa-baf8-008794d7c855",
+                            CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Other"
+                        });
                 });
 
             modelBuilder.Entity("vHub.Data.Models.Comment", b =>
@@ -280,6 +332,8 @@ namespace vHub.Data.Migrations
                     b.Property<string>("ThumbnailUrl");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("VideoUrl");
 
                     b.Property<int>("Views");
 
@@ -366,7 +420,7 @@ namespace vHub.Data.Migrations
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("vHub.Data.Models.Category", "Category")
-                        .WithMany()
+                        .WithMany("Videos")
                         .HasForeignKey("CategoryId");
                 });
 #pragma warning restore 612, 618

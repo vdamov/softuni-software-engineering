@@ -23,7 +23,7 @@
 
                         <div class="card-body px-lg-5 py-lg-5">
                             <div class="text-center text-muted mb-4">
-                                <small>Don't have an account? <a [routerLink]="['/register']">Register</a></small>
+                                <small>Don't have an account? <a [routerLink]="['/user/register']">Register</a></small>
                             </div>
                             <form  [formGroup]="loginForm" (ngSubmit)="login()">
                                 <div class="form-group">
@@ -33,6 +33,16 @@
                                         </div>
                                         <input formControlName="username" class="form-control" placeholder="Username" type="text">
                                     </div>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="loginForm.get('username').touched && loginForm.get('username').hasError('required')">
+                                            Username is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="loginForm.get('username').touched && loginForm.get('username').hasError('minlength')">
+                                            Username must be at least 4 characters!
+                                        </ng-container>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="input-group input-group-alternative">
@@ -40,6 +50,16 @@
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
                                         <input formControlName="password" class="form-control" placeholder="Password" type="password">
+                                    </div>
+                                    <div class="invalid-feedback" style="display: block">
+                                        <ng-container
+                                                *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">
+                                            Password is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('minlength')">
+                                            Password must be at least 6 characters!
+                                        </ng-container>
                                     </div>
                                 </div>
                                 <div class="custom-control custom-control-alternative custom-checkbox">

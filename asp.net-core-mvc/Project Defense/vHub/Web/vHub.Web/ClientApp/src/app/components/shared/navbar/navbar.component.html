@@ -8,29 +8,35 @@
             <div class="input-group input-group-sm col-sm-7 ">
                 <input class="form-control" placeholder="Search..." type="text">
                 <div class="input-group-append">
-                    <button type="submit"  class="btn btn-neutral btn-sm">
+                    <button type="submit" class="btn btn-neutral btn-sm">
                         <i class="fa fa-lg fa-search"></i>
                     </button>
                 </div>
             </div>
         </div>
-        <ul class="navbar-nav align-items-lg-center ml-lg-auto">
+        <div ngbDropdown class="d-inline-block" *ngIf="authService.isAuthenticated()">
+            <a ngbDropdownToggle href="javascript:void(0)" class="btn btn-link text-white">Uncensored</a>
+            <div ngbDropdownMenu class="dropdown-menu-inverse">
+                <a ngbDropdownItem [routerLink]="['/upload']">
+                    <span class="dropdown-item">Upload</span>
+                </a>
+                <a ngbDropdownItem [routerLink]="['/user/profile']">
+                    <span class="dropdown-item">Profile</span>
+                </a>
+                <a ngbDropdownItem (click)="authService.logout()">
+                    <span class="dropdown-item">Logout</span>
+                </a>
+            </div>
+        </div>
+        <ul class="navbar-nav align-items-lg-center ml-lg-auto" *ngIf="authService.isAuthenticated() === false">
             <li class="nav-item">
-                <a class="nav-link " [routerLink]="['/upload']">
-                    <i class="ni ni-ui-04 d-lg-none"></i>
-                    <span class="nav-link-inner--text">Upload</span>
+                <a class="nav-link " [routerLink]="['/user/register']">
+                    <span class="nav-link-inner--text">Register</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link " [routerLink]="['/user/profile']">
-                    <i class="ni ni-ui-04 d-lg-none"></i>
-                    <span class="nav-link-inner--text">Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link " routerLink="#">
-                    <i class="ni ni-ui-04 d-lg-none"></i>
-                    <span class="nav-link-inner--text">Logout</span>
+                <a class="nav-link " [routerLink]="['/user/login']">
+                    <span class="nav-link-inner--text">Login</span>
                 </a>
             </li>
         </ul>

@@ -62,7 +62,8 @@ namespace vHub.Data.Migrations
                 {
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true)
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -184,6 +185,7 @@ namespace vHub.Data.Migrations
                     ModifiedOn = table.Column<DateTime>(nullable: true),
                     Title = table.Column<string>(nullable: true),
                     ThumbnailUrl = table.Column<string>(nullable: true),
+                    VideoUrl = table.Column<string>(nullable: true),
                     Views = table.Column<int>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
                     CategoryId = table.Column<string>(nullable: true)
@@ -259,6 +261,21 @@ namespace vHub.Data.Migrations
                         principalTable: "Videos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "CreatedOn", "ModifiedOn", "Name" },
+                values: new object[,]
+                {
+                    { "acd7461d-13c3-4cd2-93a9-2548223d794c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Music" },
+                    { "99c49a3b-b143-4077-8cc9-4f4d0cbc97d9", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Product Review" },
+                    { "7b641f94-180f-4f0a-8799-99b86696025f", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "How-To" },
+                    { "0de4ee42-ee04-4b96-a96c-8d2dd2730108", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Vlog" },
+                    { "e43a81e0-8221-4df9-9ae0-5abdd7cae6ee", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gaming" },
+                    { "51c4e742-9f00-4fb3-947a-8015ece24c02", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Comedy" },
+                    { "64db093b-4928-4699-8224-4ca4c10d89ef", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Educational" },
+                    { "8af3aa95-0320-49fa-baf8-008794d7c855", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Other" }
                 });
 
             migrationBuilder.CreateIndex(

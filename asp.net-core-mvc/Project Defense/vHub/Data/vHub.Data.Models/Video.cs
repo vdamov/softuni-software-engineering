@@ -14,6 +14,7 @@ namespace vHub.Data.Models
         }
         public string Title { get; set; }
         public string ThumbnailUrl { get; set; }
+        public string VideoUrl { get; set; }
         public int Views { get; set; }
         public string AuthorId { get; set; }
         public ApplicationUser Author { get; set; }

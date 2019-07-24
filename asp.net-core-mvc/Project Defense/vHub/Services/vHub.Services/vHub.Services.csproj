@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\vHub.Data.Common\vHub.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\vHub.Data.Models\vHub.Data.Models.csproj" />
+    <ProjectReference Include="..\..\vHub.Common\vHub.Common.csproj" />
   </ItemGroup>
 
 </Project>

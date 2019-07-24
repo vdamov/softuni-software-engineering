@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
+using AutoMapper;
 
 namespace vHub.Web.Controllers
 {
@@ -30,29 +31,11 @@ namespace vHub.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register([FromForm]UserRegisterBindingModel model)
         {
-            var fileNameToLower = model.Image.FileName.ToLower();
-            var isCorrectExtension = fileNameToLower.EndsWith(".jpg")
-                || fileNameToLower.EndsWith(".jpeg")
-                || fileNameToLower.EndsWith(".png");
-            var maxContentLength = 1024 * 512;
-            if (!ModelState.IsValid || model.Image == null || model.Image.Length > maxContentLength || !isCorrectExtension)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetFirstError());
             }
-            var user = new ApplicationUser { Email = model.Email, UserName = model.Username };
-
-            if (!Directory.Exists(environment.WebRootPath + "\\profile-pictures\\"))
-            {
-                Directory.CreateDirectory(environment.WebRootPath + "\\profile-pictures\\");
-            }
-            var imagePath = "\\profile-pictures\\" + user.Id + '.' + fileNameToLower.Split(".").Last();
-            using (FileStream filestream = System.IO.File.Create(environment.WebRootPath + imagePath))
-            {
-                await model.Image.CopyToAsync(filestream);
-                await filestream.FlushAsync();
-            }
-            user.ImageUrl = imagePath;
-
+            var user = Mapper.Map<ApplicationUser>(model);
             var result = await userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)

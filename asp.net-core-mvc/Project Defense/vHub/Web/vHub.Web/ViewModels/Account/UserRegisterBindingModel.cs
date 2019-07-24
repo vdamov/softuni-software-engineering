@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
+using vHub.Common.Mapping;
+using vHub.Data.Models;
 
 namespace vHub.Web.ViewModels.Account
 {
-    public class UserRegisterBindingModel
+    public class UserRegisterBindingModel : IMapTo<ApplicationUser>
     {
         [Required]
         [MinLength(4)]
@@ -20,6 +22,6 @@ namespace vHub.Web.ViewModels.Account
         public string Password { get; set; }
 
         [Required]
-        public IFormFile Image { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

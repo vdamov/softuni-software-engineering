@@ -53,7 +53,14 @@
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
+            builder.Entity<Video>()
+               .HasOne(e => e.Author)
+               .WithMany(e => e.Uploads)
+               .HasForeignKey(e => e.AuthorId);
+
             ConfigureUserIdentityRelations(builder);
+
+            AddCategories(builder);
 
             EntityIndexesConfiguration.Configure(builder);
 
@@ -75,6 +82,45 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
+        }
+
+        private void AddCategories(ModelBuilder builder)
+        {
+            builder.Entity<Category>()
+                .HasData(
+                new Category()
+                {
+                    Name = "Music"
+                },
+                new Category()
+                {
+                    Name = "Product Review"
+                },
+                new Category()
+                {
+                    Name = "How-To"
+                },
+                new Category()
+                {
+                    Name = "Vlog"
+                },
+                new Category()
+                {
+                    Name = "Gaming"
+                },
+                new Category()
+                {
+                    Name = "Comedy"
+                },
+                new Category()
+                {
+                    Name = "Educational"
+                },
+                 new Category()
+                 {
+                     Name = "Other"
+                 }
+                );
         }
 
         private static void ConfigureUserIdentityRelations(ModelBuilder builder)

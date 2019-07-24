@@ -15,7 +15,7 @@ import {HomeModule} from './components/home/home.module';
 import {LoginComponent} from './components/user/login/login.component';
 import {WatchModule} from './components/video/watch/watch.module';
 import {ProfileModule} from './components/user/profile/profile.module';
-import { UploadComponent } from './components/video/upload/upload.component';
+import {UploadComponent} from './components/video/upload/upload.component';
 import {CoreModule} from './core/core.module';
 import {HttpClientModule} from '@angular/common/http';
 import {SectionsModule} from './components/sections/sections.module';

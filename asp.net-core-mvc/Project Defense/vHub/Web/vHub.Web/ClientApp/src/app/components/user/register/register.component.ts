@@ -1,18 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {UserService} from '../../../core/services/user.service';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
-    selector: 'app-signup',
+    selector: 'app-register',
     templateUrl: './regisiter.component.html',
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
-    private progress = 0;
+    progress = 0;
 
-    constructor(private fb: FormBuilder, private router: Router, private userService: UserService) {
+    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
     }
 
     ngOnInit() {
@@ -25,16 +25,22 @@ export class RegisterComponent implements OnInit {
     }
 
 
-
     register() {
-        const formData = new FormData();
-        formData.append('Image', this.registerForm.get('image').value);
-        formData.append('Username', this.registerForm.get('username').value);
-        formData.append('Email', this.registerForm.get('email').value);
-        formData.append('Password', this.registerForm.get('password').value);
-        this.userService.register(formData)
-            .subscribe(() => {
-                this.router.navigate(['/user/login']);
+        const profilePictureForm = new FormData();
+        profilePictureForm.append('file', this.registerForm.get('image').value);
+        profilePictureForm.append('upload_preset', 'urcs4ru3');
+        profilePictureForm.append('folder', 'profile-pictures');
+        this.authService.uploadProfilePicture(profilePictureForm)
+            .subscribe((res) => {
+                const form = new FormData();
+                form.append('username', this.registerForm.get('username').value);
+                form.append('email', this.registerForm.get('email').value);
+                form.append('password', this.registerForm.get('password').value);
+                // @ts-ignore
+                form.append('imageUrl', res.secure_url);
+                this.authService.register(form).subscribe(() => {
+                    this.router.navigate(['/user/login']);
+                });
             });
     }
 }
