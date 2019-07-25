@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {IUser} from '../../components/shared/interfaces/user.interface';
 import {HttpClient} from '@angular/common/http';
-import {tap} from 'rxjs/operators';
 
 @Injectable({
     providedIn: 'root'
@@ -24,10 +23,7 @@ export class AuthService {
 
     login(body: IUser) {
 
-        return this.http.post(this.loginURL, body)
-            .pipe(tap({
-                complete: () => this.authSubject.next(true)
-            }));
+        return this.http.post(this.loginURL, body);
     }
 
     register(formData: FormData) {
@@ -49,6 +45,7 @@ export class AuthService {
         localStorage.setItem('access_token', authResult.access_token);
         localStorage.setItem('expires_in', new Date().getTime() + authResult.expires_in);
         localStorage.setItem('roles', authResult.roles);
+        this.authSubject.next(true);
     }
 
     isAuthenticated() {

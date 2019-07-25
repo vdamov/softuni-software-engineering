@@ -58,6 +58,11 @@
                .WithMany(e => e.Uploads)
                .HasForeignKey(e => e.AuthorId);
 
+            builder.Entity<Rate>()
+                .HasOne(e => e.Author)
+                .WithMany(e => e.Ratings)
+                .HasForeignKey(e => e.AuthorId);
+
             ConfigureUserIdentityRelations(builder);
 
             AddCategories(builder);

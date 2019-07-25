@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using vHub.Data.Common.Repositories;
 using vHub.Data.Models;
@@ -12,14 +12,23 @@ namespace vHub.Services
         {
             this.repository = repository;
         }
-        public async Task<string> Upload(Video video)
+        public async Task<string> CreateAsync(Video video)
         {
             repository.Add(video);
             await repository.SaveChangesAsync();
-            var videoId = repository.All()
-                .SingleOrDefault(v => v.CreatedOn == video.CreatedOn && v.AuthorId == video.AuthorId).Id;
+            var videoEntity = await repository.All()
+                .SingleOrDefaultAsync(v => v.CreatedOn == video.CreatedOn && v.AuthorId == video.AuthorId);
 
-            return videoId;
+            return videoEntity.Id;
+        }
+
+        public async Task<Video> GetByIdAsync(string id)
+        {
+            var video = await repository.All()
+                .Include(e => e.Author)
+                .Include(e => e.Category)
+                .SingleOrDefaultAsync(v => v.Id == id);
+            return video;
         }
     }
 }

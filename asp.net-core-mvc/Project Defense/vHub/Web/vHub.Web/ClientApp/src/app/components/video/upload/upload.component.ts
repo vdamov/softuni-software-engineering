@@ -46,22 +46,17 @@ export class UploadComponent implements OnInit {
                 uploadProgress(progress => (this.progress = progress)),
                 toResponseBody()
             )
-            .subscribe(res => {
-                console.log(res);
+            .subscribe((res) => {
                 // @ts-ignore
                 const thumbnailUrl = res.secure_url.substring(0, res.secure_url.length - 3) + 'jpg';
                 // @ts-ignore
                 const videoUrl = res.secure_url;
-
                 const form: FormData = new FormData();
+
                 form.append('title', this.uploadForm.get('title').value);
                 form.append('categoryName', this.uploadForm.get('category').value);
                 form.append('thumbnailUrl', thumbnailUrl);
                 form.append('videoUrl', videoUrl);
-                console.log(form.get('title'));
-                console.log(form.get('categoryName'));
-                console.log(form.get('thumbnailUrl'));
-                console.log(form.get('videoUrl'));
 
 
                 this.videoService.create(form).subscribe((videoId) => {

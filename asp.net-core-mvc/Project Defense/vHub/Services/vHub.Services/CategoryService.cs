@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 using vHub.Data.Common.Repositories;
 using vHub.Data.Models;
 namespace vHub.Services
@@ -18,9 +20,9 @@ namespace vHub.Services
 
             return categories;
         }
-        public Category GetCategoryByName(string name)
+        public async Task<Category> GetCategoryByNameAsync(string name)
         {
-            var category = repository.All().SingleOrDefault(c => c.Name == name);
+            var category = await repository.All().SingleOrDefaultAsync(c => c.Name == name);
             return category;
         }
     }

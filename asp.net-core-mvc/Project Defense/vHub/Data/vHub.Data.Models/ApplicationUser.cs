@@ -1,14 +1,10 @@
-﻿// ReSharper disable VirtualMemberCallInConstructor
-namespace vHub.Data.Models
+﻿namespace vHub.Data.Models
 {
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Collections.Generic;
-
-    using vHub.Data.Common.Models;
-
-    using Microsoft.AspNetCore.Identity;
-    using System.ComponentModel.DataAnnotations.Schema;
     using System.ComponentModel;
+    using vHub.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
     {

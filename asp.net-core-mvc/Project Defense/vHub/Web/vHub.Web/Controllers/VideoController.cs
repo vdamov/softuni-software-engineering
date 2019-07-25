@@ -19,6 +19,20 @@ namespace vHub.Web.Controllers
             this.categoryService = categoryService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var video = await videoService.GetByIdAsync(id);
+            if (video == null || !ModelState.IsValid)
+            {
+                return NotFound();
+            }
+            var model = Mapper.Map<VideoGetByIdViewModel>(video);
+
+            return Json(model);
+
+        }
+
         [HttpPost]
         public async Task<IActionResult> Upload([FromForm] VideoUploadBindingModel model)
         {
@@ -29,7 +43,7 @@ namespace vHub.Web.Controllers
             }
 
             var video = Mapper.Map<Video>(model);
-            var category = categoryService.GetCategoryByName(model.CategoryName);
+            var category = await categoryService.GetCategoryByNameAsync(model.CategoryName);
             if (category == null)
             {
                 return BadRequest();
@@ -37,7 +51,7 @@ namespace vHub.Web.Controllers
             video.CategoryId = category.Id;
             video.AuthorId = User.GetId();
 
-            var videoId = await videoService.Upload(video);
+            var videoId = await videoService.CreateAsync(video);
             return Json(videoId);
         }
     }

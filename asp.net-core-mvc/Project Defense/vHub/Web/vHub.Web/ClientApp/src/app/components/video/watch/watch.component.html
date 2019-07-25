@@ -20,45 +20,48 @@
                 <div class="col-md-9">
                     <div class="card ">
                         <div class="card-img-top">
-                            <mat-video src="assets/NASA.mp4" poster="assets/NASA.jpg"></mat-video>
+                            <mat-video src="{{video.videoUrl}}" poster="{{video.thumbnailUrl}}"></mat-video>
                         </div>
                         <div class="card-body py-0">
                             <div class="row">
-                                <h3 class="display-3 text-right mb-0">NASA Aircraft Launch</h3>
+                                <h1 class="display-4 text-right mb-0">{{video.title}}</h1>
                             </div>
-                            <div class="row">
-                                <div class="col-md-9 px-0">
-                                    <p class="text-muted display-4 font-weight-normal mb-0">
-                                        <i class="fa fa-play-circle"></i> 123 views
-                                    </p>
+                            <div class="row ">
+                                <div class="col-md-10 px-0">
+                                    <h5 class="text-black-50 mt-2">
+                                        <i class="fa fa-play-circle"></i> {{video.views}} views
+                                    </h5>
                                 </div>
-                                <div class="col-md-3 px-0 text-right">
-                                    <button type="button" class="btn  btn-outline-primary">
+                                <div class="col-md-2 px-1 text-right ">
+                                    <button [disabled]="hasVoted" (click)="like()" class="btn  btn-link  text-primary">
                                         <i class="fa far fa-thumbs-up"></i>
-                                        123
+                                        {{likes}}
                                     </button>
-                                    <button type="button" class="btn btn-outline-danger">
+                                    <button [disabled]="hasVoted" (click)="dislike()" class="btn  btn-link   text-danger ">
                                         <i class="fa far fa-thumbs-down"></i>
-                                        123
+                                        {{dislikes}}
                                     </button>
+
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-xl-1 px-1">
-                                    <img src="assets/img/theme/team-3-800x800.jpg"
-                                         class="img-thumbnail shadow-lg mb-2 float-left" alt="">
+                                <div class="col-1 pl-0 pr-1 mx-auto">
+                                    <img src="{{video.authorImageUrl}}"
+                                         class="img-fluid rounded shadow-lg mt-1" alt="">
                                 </div>
-                                <div class="col-xl-3">
+                                <div class="col-3">
                                     <div class="row">
 
-                                        <p class="font-weight-bold text-dark mb-0">Uncensored</p>
+                                        <p class="font-weight-bold text-dark mb-0">{{video.authorUsername}}</p>
                                     </div>
                                     <div class="row">
-                                        <p class="font-weight-light font-italic text-muted">Uploaded on 07.02.1995</p>
+                                        <p class="small font-italic text-black-50">Uploaded
+                                            on {{video.createdOn | date: 'dd MMMM, yyyy'}}</p>
                                     </div>
                                 </div>
-                                <div class="col-xl-8 text-right pt-50">
-                                    <p class="font-weight-bold">Category: <span><a href="">Science</a></span></p>
+                                <div class="col-8 text-right pt-50">
+                                    <p class="font-weight-bold">Category: <span><a
+                                            href="">{{video.categoryName}}</a></span></p>
                                 </div>
                             </div>
                         </div>
