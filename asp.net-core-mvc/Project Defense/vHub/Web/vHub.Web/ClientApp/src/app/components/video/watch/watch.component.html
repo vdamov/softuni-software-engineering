@@ -20,7 +20,8 @@
                 <div class="col-md-9">
                     <div class="card ">
                         <div class="card-img-top">
-                            <mat-video src="{{video.videoUrl}}" poster="{{video.thumbnailUrl}}"></mat-video>
+                            <mat-video *ngIf="(getVideoById$ | async) as video" src="{{video.videoUrl}}"
+                                       poster="{{video.thumbnailUrl}}"></mat-video>
                         </div>
                         <div class="card-body py-0">
                             <div class="row">
@@ -32,14 +33,16 @@
                                         <i class="fa fa-play-circle"></i> {{video.views}} views
                                     </h5>
                                 </div>
-                                <div class="col-md-2 px-1 text-right ">
-                                    <button [disabled]="hasVoted" (click)="like()" class="btn  btn-link  text-primary">
+                                <div *ngIf="(getAllByVideoId$ | async) as rate" class="col-md-2 px-1 text-right ">
+                                    <button [disabled]="this.checkIfVoted$ | async" (click)="like()"
+                                            class="btn  btn-link  text-primary">
                                         <i class="fa far fa-thumbs-up"></i>
-                                        {{likes}}
+                                        {{rate.likes}}
                                     </button>
-                                    <button [disabled]="hasVoted" (click)="dislike()" class="btn  btn-link   text-danger ">
+                                    <button [disabled]="this.checkIfVoted$ | async" (click)="dislike()"
+                                            class="btn  btn-link   text-danger ">
                                         <i class="fa far fa-thumbs-down"></i>
-                                        {{dislikes}}
+                                        {{rate.dislikes}}
                                     </button>
 
                                 </div>
@@ -69,24 +72,10 @@
                             <app-comments-section></app-comments-section>
                         </div>
                     </div>
-
                 </div>
                 <div class="col-md-3">
-                    <div class="mb-3">
-                        <app-thumbnail-section></app-thumbnail-section>
-                    </div>
-                    <div class="mb-3">
-                        <app-thumbnail-section></app-thumbnail-section>
-                    </div>
-                    <div class="mb-3">
-                        <app-thumbnail-section></app-thumbnail-section>
-                    </div>
-                    <div class="mb-3">
-                        <app-thumbnail-section></app-thumbnail-section>
-                    </div>
-                    <div class="mb-3">
-                        <app-thumbnail-section></app-thumbnail-section>
-                    </div>
+                    <app-related-section *ngIf="(getVideoById$ | async) as video" [categoryId]="video.categoryId"
+                                         [videoId]="video.id"></app-related-section>
                 </div>
             </div>
         </div>

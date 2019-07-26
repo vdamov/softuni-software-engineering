@@ -8,6 +8,8 @@ import {IVideo} from '../../components/shared/interfaces/video.interface';
 export class VideoService {
     private readonly createURL = '/api/video/upload/';
     private readonly getByIdURL = '/api/video/getbyid/';
+    private readonly getAllURL = '/api/video/getall/';
+    private readonly take5URL = '/api/video/take5/';
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/video/upload/';
 
     constructor(private http: HttpClient) {
@@ -26,5 +28,13 @@ export class VideoService {
 
     getById(id: string) {
         return this.http.get<IVideo>(this.getByIdURL + id);
+    }
+
+    getAll() {
+        return this.http.get(this.getAllURL);
+    }
+
+    take5ByCategoryId(categoryId: string, videoId: string) {
+        return this.http.post(this.take5URL, {categoryId, videoId});
     }
 }

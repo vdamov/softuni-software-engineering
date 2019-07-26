@@ -5,6 +5,8 @@ using vHub.Data.Models;
 using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
 using vHub.Web.ViewModels.Video;
+using Microsoft.AspNetCore.Authorization;
+using System.Collections.Generic;
 
 namespace vHub.Web.Controllers
 {
@@ -53,6 +55,28 @@ namespace vHub.Web.Controllers
 
             var videoId = await videoService.CreateAsync(video);
             return Json(videoId);
+        }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll()
+        {
+            var videos = await videoService.GetAllOrderByCreatedOnDescAsync();
+            var videosViewModel = Mapper.Map<List<VideoGetAllViewModel>>(videos);
+
+            return Json(videosViewModel);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> Take5([FromBody]VideoTake5BindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var fiveVideos = await videoService.Take5ByCategoryIdAsync(model.CategoryId, model.VideoId);
+            var viewModels = Mapper.Map<List<VideoTake5ViewModel>>(fiveVideos);
+            return Ok(viewModels);
         }
     }
 }

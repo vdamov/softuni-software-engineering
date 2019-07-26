@@ -34,14 +34,38 @@ namespace vHub.Web.Controllers
             {
                 return BadRequest(ModelState.GetFirstError());
             }
-            var rate = Mapper.Map<Rate>(model);
-            rate.AuthorId = User.GetId();
-            if (rate.AuthorId == null)
+            var authorId = User.GetId();
+            if (authorId == null)
             {
                 return Unauthorized();
             }
-            await rateService.AddAsync(rate);
-            return Ok();
+            var hasVoted = await rateService.CheckIfVotedAsync(model.VideoId, authorId);
+            if(!hasVoted)
+            {
+                var rate = Mapper.Map<Rate>(model);
+                rate.AuthorId = authorId;
+
+                await rateService.AddAsync(rate);
+                return Ok();
+            }
+            return BadRequest();
+        }
+        [HttpPost]
+        public async Task<IActionResult> CheckIfVoted([FromBody] CheckIfVotedBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var authorId = User.GetId();
+            if (authorId == null)
+            {
+                return Unauthorized();
+            }
+
+            var hasVoted = await rateService.CheckIfVotedAsync(model.VideoId, authorId);
+
+            return Ok(hasVoted);
         }
     }
 }

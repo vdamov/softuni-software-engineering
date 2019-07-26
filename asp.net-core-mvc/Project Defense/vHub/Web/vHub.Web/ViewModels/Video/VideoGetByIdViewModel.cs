@@ -5,6 +5,7 @@ namespace vHub.Web.ViewModels.Video
 {
     public class VideoGetByIdViewModel : IMapFrom<Data.Models.Video>
     {
+        public string Id { get; set; }
         public string Title { get; set; }
         public string VideoUrl { get; set; }
         public string ThumbnailUrl { get; set; }

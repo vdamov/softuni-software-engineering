@@ -29,7 +29,12 @@ namespace vHub.Services
             repository.Add(rate);
             await repository.SaveChangesAsync();
         }
-
+        public async Task<bool> CheckIfVotedAsync(string videoId, string authorId)
+        {
+            var hasVoted = await repository.All()
+                .AnyAsync(r => r.AuthorId == authorId && r.VideoId == videoId);
+            return hasVoted;
+        }
 
     }
 }

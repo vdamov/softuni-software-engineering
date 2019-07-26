@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {VideoService} from '../../core/services/video.service';
+import {IVideo} from '../shared/interfaces/video.interface';
 
 @Component({
     selector: 'app-home',
@@ -7,15 +9,15 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class HomeComponent implements OnInit {
-    model = {
-        left: true,
-        middle: false,
-        right: false
-    };
+    private videos: IVideo[];
 
-    focus;
-    focus1;
-    constructor() { }
+    constructor(private videoService: VideoService) {
+    }
 
-    ngOnInit() {}
+    ngOnInit() {
+        this.videoService.getAll().subscribe((res: IVideo[]) => {
+            console.log(res);
+            this.videos = res;
+        });
+    }
 }

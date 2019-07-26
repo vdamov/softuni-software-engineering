@@ -7,6 +7,7 @@ import {HttpClient} from '@angular/common/http';
 export class RateService {
     private readonly getAllRatesURL = '/api/rate/getall/';
     private readonly addRateURL = '/api/rate/add/';
+    private readonly checkIfVotedURL = '/api/rate/checkifvoted/';
 
     constructor(private http: HttpClient) {
     }
@@ -17,5 +18,9 @@ export class RateService {
 
     add(videoId: string, rating: number) {
         return this.http.post(this.addRateURL, {videoId, rating});
+    }
+
+    checkIfVoted(videoId: string) {
+        return this.http.post<boolean>(this.checkIfVotedURL, {videoId});
     }
 }

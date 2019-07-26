@@ -4,6 +4,7 @@ import {VideoService} from '../../../core/services/video.service';
 import {IVideo} from '../../shared/interfaces/video.interface';
 import {RateService} from '../../../core/services/rate.service';
 import {AuthService} from '../../../core/services/auth.service';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-watch',
@@ -12,42 +13,40 @@ import {AuthService} from '../../../core/services/auth.service';
 })
 export class WatchComponent implements OnInit {
     private video: IVideo;
-    private Id: string;
-    private likes: number;
-    private dislikes: number;
-    private hasVoted: boolean;
+    private checkIfVoted$: Observable<boolean>;
+    private getAllByVideoId$: Observable<object>;
+    private getVideoById$: Observable<IVideo>;
 
     constructor(private route: ActivatedRoute,
                 private videoService: VideoService,
                 private rateService: RateService,
                 private authService: AuthService) {
-        this.hasVoted = false;
-        this.Id = route.snapshot.paramMap.get('id');
+        this.loadPage();
     }
 
     ngOnInit() {
-        console.log(this.Id);
-        this.videoService.getById(this.Id)
-            .subscribe((res) => {
-                this.video = res;
+        this.route.params
+            .subscribe(() => {
+                this.loadPage();
             });
-        if (this.authService.isAuthenticated()) {
-            // TODO CHECK IF USER HAS VOTED
-        }
-        // @ts-ignore
-        this.rateService.getAllByVideoId(this.Id).subscribe(({likes, dislikes}) => {
-            this.likes = likes;
-            this.dislikes = dislikes;
-        });
+    }
 
+
+    loadPage() {
+        this.video = this.route.snapshot.data.video;
+        if (this.authService.isAuthenticated()) {
+            this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
+        }
+        this.getAllByVideoId$ = this.rateService.getAllByVideoId(this.video.id);
+        this.getVideoById$ = this.videoService.getById(this.video.id);
 
     }
 
     like() {
-        if (this.authService.isAuthenticated() && !this.hasVoted) {
-            this.rateService.add(this.Id, 1).subscribe((res) => {
-                this.likes++;
-                this.hasVoted = true;
+        if (this.authService.isAuthenticated()) {
+            this.rateService.add(this.video.id, 1).subscribe((res) => {
+                this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
+                this.getAllByVideoId$ = this.rateService.getAllByVideoId(this.video.id);
             });
         } else {
             // TODO LOGIN MODAL
@@ -55,14 +54,13 @@ export class WatchComponent implements OnInit {
     }
 
     dislike() {
-        if (this.authService.isAuthenticated() && !this.hasVoted) {
-            this.rateService.add(this.Id, 2).subscribe((res) => {
-                this.dislikes++;
-                this.hasVoted = true;
+        if (this.authService.isAuthenticated()) {
+            this.rateService.add(this.video.id, 2).subscribe((res) => {
+                this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
+                this.getAllByVideoId$ = this.rateService.getAllByVideoId(this.video.id);
             });
         } else {
             // TODO LOGIN MODAL
         }
     }
-
 }

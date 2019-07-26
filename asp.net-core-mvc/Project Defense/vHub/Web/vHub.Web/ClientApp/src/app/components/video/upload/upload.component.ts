@@ -48,7 +48,11 @@ export class UploadComponent implements OnInit {
             )
             .subscribe((res) => {
                 // @ts-ignore
-                const thumbnailUrl = res.secure_url.substring(0, res.secure_url.length - 3) + 'jpg';
+                let thumbnailUrl = res.secure_url.substring(0, res.secure_url.length - 3) + 'jpg';
+                const arr = thumbnailUrl.split('/upload/');
+                console.log(arr);
+                thumbnailUrl = arr[0] + '/upload/w_426,h_240/' + arr[1];
+                console.log(thumbnailUrl);
                 // @ts-ignore
                 const videoUrl = res.secure_url;
                 const form: FormData = new FormData();

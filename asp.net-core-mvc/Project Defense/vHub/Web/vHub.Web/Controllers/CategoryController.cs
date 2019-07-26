@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 using vHub.Services;
 using vHub.Web.ViewModels.Category;
-using vHub.Common.Mapping;
-using Microsoft.AspNetCore.Authorization;
 
 namespace vHub.Web.Controllers
 {
@@ -19,7 +20,8 @@ namespace vHub.Web.Controllers
         [HttpGet]
         public IActionResult All()
         {
-            var categories = categoryService.GetAll().To<CategoryGetAllViewModel>().ToList();
+            var categories = categoryService.GetAll().ToList();
+            Mapper.Map<List<CategoryGetAllViewModel>>(categories);
             return Json(categories);
         }
     }
