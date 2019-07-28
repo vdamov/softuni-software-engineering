@@ -8,6 +8,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AuthService {
     private readonly loginURL: string = '/api/account/login';
+    private readonly getByIdURL: string = '/api/account/getbyid/';
     private readonly registerURL: string = '/api/account/register';
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/image/upload';
     private authSubject: BehaviorSubject<boolean>;
@@ -46,6 +47,10 @@ export class AuthService {
         localStorage.setItem('expires_in', new Date().getTime() + authResult.expires_in);
         localStorage.setItem('roles', authResult.roles);
         this.authSubject.next(true);
+    }
+
+    getById(id: string) {
+        return this.http.get<IUser>(this.getByIdURL + id);
     }
 
     isAuthenticated() {

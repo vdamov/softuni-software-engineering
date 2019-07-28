@@ -50,7 +50,6 @@ export class UploadComponent implements OnInit {
                 // @ts-ignore
                 let thumbnailUrl = res.secure_url.substring(0, res.secure_url.length - 3) + 'jpg';
                 const arr = thumbnailUrl.split('/upload/');
-                console.log(arr);
                 thumbnailUrl = arr[0] + '/upload/w_426,h_240/' + arr[1];
                 console.log(thumbnailUrl);
                 // @ts-ignore

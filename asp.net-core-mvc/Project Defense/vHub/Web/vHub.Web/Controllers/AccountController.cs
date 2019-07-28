@@ -13,6 +13,9 @@ using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using AutoMapper;
+using vHub.Services;
+using System.Collections.Generic;
+using vHub.Data.Common.Enums;
 
 namespace vHub.Web.Controllers
 {
@@ -20,16 +23,18 @@ namespace vHub.Web.Controllers
     public class AccountController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly IHostingEnvironment environment;
+        private readonly IAccountService accountService;
 
-        public AccountController(UserManager<ApplicationUser> userManager, IHostingEnvironment environment)
+        public AccountController(
+            UserManager<ApplicationUser> userManager,
+            IAccountService accountService)
         {
             this.userManager = userManager;
-            this.environment = environment;
+            this.accountService = accountService;
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register([FromForm]UserRegisterBindingModel model)
+        public async Task<IActionResult> Register([FromForm]AccountRegisterBindingModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -45,5 +50,26 @@ namespace vHub.Web.Controllers
 
             return BadRequest(result.GetFirstError());
         }
+        [HttpGet]
+        public async Task<IActionResult> GetById(string id)
+        {
+            var user = await accountService.GetByIdAsync(id);
+            if (user == null)
+            {
+                return BadRequest();
+            }
+            var viewModel = Mapper.Map<AccountGetByIdViewModel>(user);
+            var liked = user.Ratings.Where(r => r.Rating == RateType.Like).Select(r => r.Video).ToList();
+            var LikedViewModel = Mapper.Map<List<AccountGeyByIdThumbnailViewModel>>(liked);
+            viewModel.Liked = LikedViewModel;
+            viewModel.LikesCount = liked.Count;
+            viewModel.TotalViews = user.Uploads.Sum(v => v.Views);
+            viewModel.UploadedCount = user.Uploads.Count;
+
+            return Json(viewModel);
+
+
+        }
+
     }
 }

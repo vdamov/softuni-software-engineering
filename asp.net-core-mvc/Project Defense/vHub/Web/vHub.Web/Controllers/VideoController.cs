@@ -78,5 +78,18 @@ namespace vHub.Web.Controllers
             var viewModels = Mapper.Map<List<VideoTake5ViewModel>>(fiveVideos);
             return Ok(viewModels);
         }
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> AddView(string id)
+        {
+
+            var result = await videoService.AddViewAsync(id);
+
+            if (!result)
+            {
+                return BadRequest();
+            }
+            return Ok();
+        }
     }
 }

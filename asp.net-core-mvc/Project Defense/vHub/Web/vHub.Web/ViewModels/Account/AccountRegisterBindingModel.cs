@@ -5,7 +5,7 @@ using vHub.Data.Models;
 
 namespace vHub.Web.ViewModels.Account
 {
-    public class UserRegisterBindingModel : IMapTo<ApplicationUser>
+    public class AccountRegisterBindingModel : IMapTo<ApplicationUser>
     {
         [Required]
         [MinLength(4)]

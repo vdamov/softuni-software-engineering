@@ -13,6 +13,7 @@ namespace vHub.Web.ViewModels.Video
         public string CategoryId { get; set; }
         public DateTime CreatedOn { get; set; }
         public int Views { get; set; }
+        public string AuthorId { get; set; }
         public string AuthorUsername { get; set; }
         public string AuthorImageUrl { get; set; }
     }

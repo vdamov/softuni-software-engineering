@@ -23,23 +23,23 @@
                         <div class="col-lg-3 order-lg-2">
                             <div class="card-profile-image">
                                 <a href="javascript:void(0)">
-                                    <img src="./assets/img/theme/team-4-800x800.jpg" class="rounded-circle">
+                                    <img src="{{user.imageUrl}}" class="rounded-circle">
                                 </a>
                             </div>
                         </div>
                         <div class="col-lg-4 order-lg-3 text-lg-right align-self-lg-center">
                             <div class="card-profile-stats d-flex justify-content-center py-0">
                                 <div>
-                                    <span class="heading">22</span>
+                                    <span class="heading">{{user.uploadedCount}}</span>
                                     <span class="description">Uploaded</span>
                                 </div>
                                 <div>
-                                    <span class="heading">10</span>
-                                    <span class="description">Likes</span>
+                                    <span class="heading">{{user.likesCount}}</span>
+                                    <span class="description">Liked</span>
                                 </div>
                                 <div>
-                                    <span class="heading">123123</span>
-                                    <span class="description">Views</span>
+                                    <span class="heading">{{user.totalViews}}</span>
+                                    <span class="description">Total Views</span>
                                 </div>
                             </div>
 
@@ -47,8 +47,8 @@
                         <div class="col-lg-4 order-lg-1">
                             <div class="card-profile-stats text-center">
                                 <div>
-                                    <span class="heading">Uncensored</span>
-                                    <span class="description">Member since 1 year</span>
+                                    <span class="heading">{{user.username}}</span>
+                                    <span class="description">Joined {{user.createdOn | dateAgo}}</span>
                                 </div>
 
                             </div>
@@ -64,25 +64,8 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <div class="row row-grid align-items-center">
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                    </div>
-                                    <div class="row row-grid align-items-center">
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
+                                        <div class="col-md-4" *ngFor="let video of user.uploads">
+                                            <app-thumbnail-section [video]="video"></app-thumbnail-section>
                                         </div>
                                     </div>
                                 </ng-template>
@@ -93,25 +76,8 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <div class="row row-grid align-items-center">
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                    </div>
-                                    <div class="row row-grid align-items-center">
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <app-thumbnail-section></app-thumbnail-section>
+                                        <div class="col-md-4" *ngFor="let video of user.liked">
+                                            <app-thumbnail-section [video]="video"></app-thumbnail-section>
                                         </div>
                                     </div>
                                 </ng-template>

@@ -108,6 +108,7 @@
             services.AddTransient<IVideoService, VideoService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IRateService, RateService>();
+            services.AddTransient<IAccountService, AccountService>();
 
             // Identity stores
             services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();

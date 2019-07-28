@@ -37,7 +37,10 @@ export class RegisterComponent implements OnInit {
                 form.append('email', this.registerForm.get('email').value);
                 form.append('password', this.registerForm.get('password').value);
                 // @ts-ignore
-                form.append('imageUrl', res.secure_url);
+                let imageUrl = res.secure_url;
+                const arr = imageUrl.split('/upload/');
+                imageUrl = arr[0] + '/upload/w_200,h_200/' + arr[1];
+                form.append('imageUrl', imageUrl);
                 this.authService.register(form).subscribe(() => {
                     this.router.navigate(['/user/login']);
                 });

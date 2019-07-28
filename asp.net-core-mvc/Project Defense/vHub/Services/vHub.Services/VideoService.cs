@@ -33,7 +33,7 @@ namespace vHub.Services
             return video;
         }
 
-        public  async Task<List<Video>> GetAllOrderByCreatedOnDescAsync()
+        public async Task<List<Video>> GetAllOrderByCreatedOnDescAsync()
         {
             var videos = await repository.All()
                 .Include(v => v.Author)
@@ -41,6 +41,7 @@ namespace vHub.Services
                 .ToListAsync();
             return videos;
         }
+
         public async Task<List<Video>> Take5ByCategoryIdAsync(string categoryId, string videoId)
         {
             var fiveVideos = new List<Video>();
@@ -64,5 +65,19 @@ namespace vHub.Services
             return fiveVideos;
 
         }
+
+        public async Task<bool> AddViewAsync(string videoId)
+        {
+            var video = await repository.GetByIdAsync(videoId);
+            if (video == null)
+            {
+                return false;
+            }
+            video.Views = ++video.Views;
+            await repository.SaveChangesAsync();
+            return true;
+        }
+
+      
     }
 }

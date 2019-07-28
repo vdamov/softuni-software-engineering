@@ -5,6 +5,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatVideoModule} from 'mat-video';
 import {WatchComponent} from './watch.component';
 import {SectionsModule} from '../../sections/sections.module';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -13,7 +14,8 @@ import {SectionsModule} from '../../sections/sections.module';
         BrowserModule,
         BrowserAnimationsModule,
         MatVideoModule,
-        SectionsModule
+        SectionsModule,
+        RouterModule,
     ],
     declarations: [WatchComponent],
     exports: [WatchComponent],

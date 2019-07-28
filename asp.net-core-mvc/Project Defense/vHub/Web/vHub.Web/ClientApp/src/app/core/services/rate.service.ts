@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {IRate} from '../../components/shared/interfaces/rate.interface';
 
 @Injectable({
     providedIn: 'root'
@@ -13,7 +14,7 @@ export class RateService {
     }
 
     getAllByVideoId(id: string) {
-        return this.http.get(this.getAllRatesURL + id);
+        return this.http.get<IRate>(this.getAllRatesURL + id);
     }
 
     add(videoId: string, rating: number) {

@@ -10,15 +10,18 @@ import {LandingComponent} from './components/landing/landing.component';
 import {LoginComponent} from './components/user/login/login.component';
 import {WatchComponent} from './components/video/watch/watch.component';
 import {UploadComponent} from './components/video/upload/upload.component';
+
 import {SingleVideoResolver} from './core/resolvers/single-video.resolver';
+import {SingleRateResolver} from './core/resolvers/single-rate.resolver';
+import {SingleUserResolver} from './core/resolvers/single-user.resolver';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'user/profile', component: ProfileComponent},
+    {path: 'user/profile/:id', component: ProfileComponent, resolve: {user: SingleUserResolver}},
     {path: 'user/register', component: RegisterComponent},
     {path: 'user/login', component: LoginComponent},
     {path: 'landing', component: LandingComponent},
-    {path: 'watch/:id', component: WatchComponent, resolve: {video: SingleVideoResolver}},
+    {path: 'watch/:id', component: WatchComponent, resolve: {video: SingleVideoResolver, rate: SingleRateResolver}},
     {path: 'upload', component: UploadComponent},
     {path: '', redirectTo: 'home', pathMatch: 'full'}
 ];
