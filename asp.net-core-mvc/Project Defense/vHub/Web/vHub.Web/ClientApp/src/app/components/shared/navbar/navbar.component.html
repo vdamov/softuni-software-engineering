@@ -14,13 +14,13 @@
                 </div>
             </div>
         </div>
-        <div ngbDropdown class="d-inline-block" *ngIf="authService.isAuthenticated()">
-            <a ngbDropdownToggle href="javascript:void(0)" class="btn btn-link text-white">Uncensored</a>
+        <div ngbDropdown class="d-inline-block" *ngIf="(authService.isAuthenticated()) as user">
+            <a ngbDropdownToggle href="javascript:void(0)" class="btn btn-link text-white">{{user.username}}</a>
             <div ngbDropdownMenu class="dropdown-menu-inverse">
-                <a ngbDropdownItem [routerLink]="['/upload']">
+                <a ngbDropdownItem [routerLink]="['/upload' ]">
                     <span class="dropdown-item">Upload</span>
                 </a>
-                <a ngbDropdownItem [routerLink]="['/user/profile']">
+                <a ngbDropdownItem [routerLink]="['/user/profile', user.userId]">
                     <span class="dropdown-item">Profile</span>
                 </a>
                 <a ngbDropdownItem (click)="authService.logout()">

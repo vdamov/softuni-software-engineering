@@ -19,6 +19,11 @@ import {UploadComponent} from './components/video/upload/upload.component';
 import {CoreModule} from './core/core.module';
 import {HttpClientModule} from '@angular/common/http';
 import {SectionsModule} from './components/sections/sections.module';
+import {JwtModule} from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+    return localStorage.getItem('access_token');
+}
 
 @NgModule({
     declarations: [
@@ -34,6 +39,12 @@ import {SectionsModule} from './components/sections/sections.module';
         BrowserModule,
         NgbModule.forRoot(),
         HttpClientModule,
+        JwtModule.forRoot({
+            config: {
+                tokenGetter: tokenGetter,
+                blacklistedRoutes: ['https://api.cloudinary.com/']
+            }
+        }),
         FormsModule,
         ReactiveFormsModule,
         RouterModule,
@@ -42,7 +53,7 @@ import {SectionsModule} from './components/sections/sections.module';
         SectionsModule,
         HomeModule,
         WatchModule,
-        ProfileModule
+        ProfileModule,
     ],
     providers: [],
     bootstrap: [AppComponent]

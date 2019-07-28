@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 import {IUser} from '../../components/shared/interfaces/user.interface';
 import {HttpClient} from '@angular/common/http';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
 @Injectable({
     providedIn: 'root'
@@ -11,16 +12,22 @@ export class AuthService {
     private readonly getByIdURL: string = '/api/account/getbyid/';
     private readonly registerURL: string = '/api/account/register';
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/image/upload';
-    private authSubject: BehaviorSubject<boolean>;
+    private authSubject: BehaviorSubject<any>;
 
-    constructor(private http: HttpClient) {
-        this.authSubject = new BehaviorSubject(!!localStorage.getItem('access_token'));
-
+    constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+        this.authSubject = new BehaviorSubject(this.parseToken());
     }
 
-    get token() {
-        return localStorage.getItem('access_token');
+    parseToken() {
+        const token = this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter());
+        if (token === null) {
+            return false;
+        }
+        const username = token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+        const userId = token['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'];
+        return {userId, username};
     }
+
 
     login(body: IUser) {
 
@@ -37,16 +44,12 @@ export class AuthService {
 
     logout() {
         localStorage.removeItem('access_token');
-        localStorage.removeItem('expires_in');
-        localStorage.removeItem('roles');
         this.authSubject.next(false);
     }
 
     setSession(authResult) {
         localStorage.setItem('access_token', authResult.access_token);
-        localStorage.setItem('expires_in', new Date().getTime() + authResult.expires_in);
-        localStorage.setItem('roles', authResult.roles);
-        this.authSubject.next(true);
+        this.authSubject.next(this.parseToken());
     }
 
     getById(id: string) {
