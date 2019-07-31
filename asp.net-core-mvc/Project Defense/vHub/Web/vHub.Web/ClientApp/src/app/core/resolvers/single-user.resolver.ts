@@ -2,21 +2,21 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {IUser} from '../../components/shared/interfaces/user.interface';
-import {AuthService} from '../services/auth.service';
+import {UserService} from '../services/user.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class SingleUserResolver implements Resolve<IUser> {
-    constructor(private authService: AuthService) {
+    constructor(private userService: UserService) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IUser> {
-        let id: string;
-        if (route.params.id) {
-            id = route.params.id;
+        let username: string;
+        if (route.params.username) {
+            username = route.params.username;
         }
-        return this.authService.getById(id);
+        return this.userService.getByUsername(username);
     }
 
 }

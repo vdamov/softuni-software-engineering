@@ -12,6 +12,7 @@ export class VideoService {
     private readonly getAllURL = '/api/video/getall/';
     private readonly take5URL = '/api/video/take5/';
     private readonly addViewURL = '/api/video/addview/';
+    private readonly searchUrl = '/api/video/search/';
 
     constructor(private http: HttpClient) {
     }
@@ -40,7 +41,11 @@ export class VideoService {
     }
 
     addView(videoId: string) {
-        return this.http.get(this.addViewURL + videoId, );
+        return this.http.get(this.addViewURL + videoId);
 
+    }
+
+    search(query: string) {
+        return this.http.get<IVideo[]>(this.searchUrl + query);
     }
 }

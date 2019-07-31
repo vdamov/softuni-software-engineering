@@ -53,16 +53,6 @@
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
-            builder.Entity<Video>()
-               .HasOne(e => e.Author)
-               .WithMany(e => e.Uploads)
-               .HasForeignKey(e => e.AuthorId);
-
-            builder.Entity<Rate>()
-                .HasOne(e => e.Author)
-                .WithMany(e => e.Ratings)
-                .HasForeignKey(e => e.AuthorId);
-
             ConfigureUserIdentityRelations(builder);
 
             AddCategories(builder);
@@ -171,11 +161,11 @@
                 var entity = (IAuditInfo)entry.Entity;
                 if (entry.State == EntityState.Added && entity.CreatedOn == default(DateTime))
                 {
-                    entity.CreatedOn = DateTime.UtcNow;
+                    entity.CreatedOn = DateTime.Now;
                 }
                 else
                 {
-                    entity.ModifiedOn = DateTime.UtcNow;
+                    entity.ModifiedOn = DateTime.Now;
                 }
             }
         }

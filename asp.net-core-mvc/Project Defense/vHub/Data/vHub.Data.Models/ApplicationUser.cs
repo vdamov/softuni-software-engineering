@@ -4,6 +4,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
     using vHub.Data.Common.Models;
 
     public class ApplicationUser : IdentityUser, IAuditInfo, IDeletableEntity
@@ -14,7 +15,6 @@
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
-            this.Uploads = new HashSet<Video>();
         }
         //custom columns
         public string ImageUrl { get; set; }
@@ -28,6 +28,7 @@
 
         public virtual ICollection<Video> Uploads { get; set; }
         public virtual ICollection<Rate> Ratings { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

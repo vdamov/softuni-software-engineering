@@ -1,0 +1,42 @@
+<main class="profile-page">
+    <section class="section section-lg section-hero section-shaped">
+        <!-- Background circles -->
+        <div class="shape shape-style-3 shape-dark">
+            <span class="span-150"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+        </div>
+
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew zindex-100">
+            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg">
+                <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
+    </section>
+    <section class="section section-lg pt-lg-0 mt--300">
+        <div class="container mt--150">
+            <div class="card card-profile shadow ">
+                <div class="px-4">
+                    <div class="row justify-content-center">
+                        <div class="card-title">
+                            <h3 class="display-3 mb-0 text-center">
+                                Category {{categoryName.toLocaleUpperCase()}}
+                            </h3>
+                        </div>
+                    </div>
+                    <hr class="mat-stepper-horizontal-line">
+                    <div class="card-body">
+                        <div class="row row-grid align-items-center">
+                            <div class="col-md-4" *ngFor="let video of videos">
+                                <app-thumbnail-section [video]="video"></app-thumbnail-section>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

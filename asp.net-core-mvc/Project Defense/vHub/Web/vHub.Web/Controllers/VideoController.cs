@@ -22,6 +22,7 @@ namespace vHub.Web.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetById(string id)
         {
             var video = await videoService.GetByIdAsync(id);
@@ -90,6 +91,16 @@ namespace vHub.Web.Controllers
                 return BadRequest();
             }
             return Ok();
+        }
+        [HttpGet("api/{controller}/{action}/{query}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Search(string query)
+        {
+            var videos = await videoService.SearchAsync(query);
+
+            var viewModel = Mapper.Map<List<VideoSearchViewModel>>(videos);
+
+            return Json(viewModel);
         }
     }
 }

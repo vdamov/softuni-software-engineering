@@ -22,6 +22,6 @@ export class RateService {
     }
 
     checkIfVoted(videoId: string) {
-        return this.http.post<boolean>(this.checkIfVotedURL, {videoId});
+        return this.http.get<boolean>(this.checkIfVotedURL + videoId);
     }
 }

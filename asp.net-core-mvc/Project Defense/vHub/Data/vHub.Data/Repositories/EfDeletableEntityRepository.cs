@@ -62,7 +62,7 @@ namespace vHub.Data.Repositories
         public override void Delete(TEntity entity)
         {
             entity.IsDeleted = true;
-            entity.DeletedOn = DateTime.UtcNow;
+            entity.DeletedOn = DateTime.Now;
 
             this.Update(entity);
         }

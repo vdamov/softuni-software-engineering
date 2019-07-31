@@ -10,7 +10,7 @@ using vHub.Data;
 namespace vHub.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190725223512_Initial-Create")]
+    [Migration("20190731200933_Initial-Create")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,61 +211,76 @@ namespace vHub.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.HasKey("Id");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Categories");
 
                     b.HasData(
                         new
                         {
-                            Id = "f9ac88e9-e827-403c-8f4b-a93f580420c3",
+                            Id = "c2db6986-c168-4ebc-9160-9996da88d679",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Music"
                         },
                         new
                         {
-                            Id = "848bff52-c04e-4edd-94e7-21babf1c9973",
+                            Id = "eab57d8c-0f26-4370-9888-c8751242920c",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Product Review"
                         },
                         new
                         {
-                            Id = "2f238c4f-0d95-43ea-b9dd-6b93707fbeaa",
+                            Id = "67fb8be0-0d39-4037-864b-bc34ac1706c2",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "How-To"
                         },
                         new
                         {
-                            Id = "14f4ffad-4938-45ed-884d-7d014828555c",
+                            Id = "1ed088ba-64fe-4c5f-bedc-7714991ef6c1",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Vlog"
                         },
                         new
                         {
-                            Id = "d5711f85-630f-4017-ad85-f20d65d42e95",
+                            Id = "45694287-35eb-4c13-94fe-acf1cb962600",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Gaming"
                         },
                         new
                         {
-                            Id = "249b6787-9b9d-4842-a794-b61766d8d9ea",
+                            Id = "2c505c33-1d90-4e1e-a868-90afc65520d6",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Comedy"
                         },
                         new
                         {
-                            Id = "8a77d080-332d-4b93-b0cf-2832b3c4558b",
+                            Id = "4200a515-4d5a-4092-8268-5b5c669f2f2e",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Educational"
                         },
                         new
                         {
-                            Id = "71b52fee-e354-4371-b0f3-e4cf4a27af9c",
+                            Id = "617a4549-fc33-422a-b21d-1231a8f46593",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            IsDeleted = false,
                             Name = "Other"
                         });
                 });
@@ -277,9 +292,14 @@ namespace vHub.Data.Migrations
 
                     b.Property<string>("AuthorId");
 
-                    b.Property<string>("Context");
+                    b.Property<string>("Content")
+                        .IsRequired();
 
                     b.Property<DateTime>("CreatedOn");
+
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
 
                     b.Property<DateTime?>("ModifiedOn");
 
@@ -288,6 +308,8 @@ namespace vHub.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("VideoId");
 
@@ -303,6 +325,10 @@ namespace vHub.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime?>("ModifiedOn");
 
                     b.Property<int>("Rating");
@@ -312,6 +338,8 @@ namespace vHub.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.HasIndex("VideoId");
 
@@ -329,13 +357,20 @@ namespace vHub.Data.Migrations
 
                     b.Property<DateTime>("CreatedOn");
 
+                    b.Property<DateTime?>("DeletedOn");
+
+                    b.Property<bool>("IsDeleted");
+
                     b.Property<DateTime?>("ModifiedOn");
 
-                    b.Property<string>("ThumbnailUrl");
+                    b.Property<string>("ThumbnailUrl")
+                        .IsRequired();
 
-                    b.Property<string>("Title");
+                    b.Property<string>("Title")
+                        .IsRequired();
 
-                    b.Property<string>("VideoUrl");
+                    b.Property<string>("VideoUrl")
+                        .IsRequired();
 
                     b.Property<int>("Views");
 
@@ -344,6 +379,8 @@ namespace vHub.Data.Migrations
                     b.HasIndex("AuthorId");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("IsDeleted");
 
                     b.ToTable("Videos");
                 });
@@ -396,7 +433,7 @@ namespace vHub.Data.Migrations
             modelBuilder.Entity("vHub.Data.Models.Comment", b =>
                 {
                     b.HasOne("vHub.Data.Models.ApplicationUser", "Author")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("AuthorId");
 
                     b.HasOne("vHub.Data.Models.Video", "Video")

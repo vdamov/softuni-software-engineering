@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {Router, NavigationEnd, NavigationStart} from '@angular/router';
 import {Location, PopStateEvent} from '@angular/common';
 import {AuthService} from '../../../core/services/auth.service';
-import {JwtHelperService} from '@auth0/angular-jwt';
+import {VideoService} from '../../../core/services/video.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
     selector: 'app-navbar',
@@ -13,18 +14,15 @@ export class NavbarComponent implements OnInit {
     public isCollapsed = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
+    private searchForm: FormGroup;
 
     constructor(public location: Location,
                 private router: Router,
-                private authService: AuthService,
-                private jwtHelper: JwtHelperService) {
+                private fb: FormBuilder,
+                private authService: AuthService) {
     }
 
     ngOnInit() {
-        console.log(this.authService.isAuthenticated());
-        console.log(this.jwtHelper.decodeToken(this.jwtHelper.tokenGetter()));
-        console.log(this.jwtHelper.isTokenExpired(this.jwtHelper.tokenGetter()));
-        console.log(this.jwtHelper.getTokenExpirationDate(this.jwtHelper.tokenGetter()));
         this.router.events.subscribe((event) => {
             this.isCollapsed = true;
             if (event instanceof NavigationStart) {
@@ -43,6 +41,18 @@ export class NavbarComponent implements OnInit {
         this.location.subscribe((ev: PopStateEvent) => {
             this.lastPoppedUrl = ev.url;
         });
+        this.searchForm = this.fb.group({
+            query: [null, [Validators.required]]
+        });
     }
+
+    searchSubmit() {
+        if (this.searchForm.valid) {
+            const query = this.searchForm.get('query').value;
+            this.router.navigate(['/search', query]);
+            this.searchForm.reset();
+        }
+    }
+
 
 }

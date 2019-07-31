@@ -72,7 +72,7 @@
                 return;
             }
 
-            var now = DateTime.UtcNow;
+            var now = DateTime.Now;
             var unixTimeSeconds = (long)Math.Round(
                 (now.ToUniversalTime() - new DateTimeOffset(1970, 1, 1, 0, 0, 0, TimeSpan.Zero)).TotalSeconds);
 

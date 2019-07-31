@@ -6,6 +6,9 @@ import {RateService} from '../../../core/services/rate.service';
 import {AuthService} from '../../../core/services/auth.service';
 import {Observable} from 'rxjs';
 import {IRate} from '../../shared/interfaces/rate.interface';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {CommentService} from '../../../core/services/comment.service';
+import {IComment} from '../../shared/interfaces/comment.interface';
 
 @Component({
     selector: 'app-watch',
@@ -23,7 +26,9 @@ export class WatchComponent implements OnInit {
     constructor(private route: ActivatedRoute,
                 private videoService: VideoService,
                 private rateService: RateService,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private commentService: CommentService,
+                private modalService: NgbModal) {
     }
 
     ngOnInit() {
@@ -39,6 +44,10 @@ export class WatchComponent implements OnInit {
         });
     }
 
+    open(content) {
+        this.modalService.open(content, {windowClass: 'modal-mini', size: 'sm', centered: true}).result.then((result) => {
+        });
+    }
 
     loadPage() {
         this.video = this.route.snapshot.data.video;
@@ -51,25 +60,25 @@ export class WatchComponent implements OnInit {
     }
 
 
-    like() {
+    like(content) {
         if (this.authService.isAuthenticated()) {
             this.rateService.add(this.video.id, 1).subscribe((res) => {
                 this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
                 this.rate.likes++;
             });
         } else {
-            // TODO LOGIN MODAL
+            this.open(content);
         }
     }
 
-    dislike() {
+    dislike(content) {
         if (this.authService.isAuthenticated()) {
             this.rateService.add(this.video.id, 2).subscribe((res) => {
                 this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
                 this.rate.dislikes++;
             });
         } else {
-            // TODO LOGIN MODAL
+            this.open(content);
         }
     }
 }

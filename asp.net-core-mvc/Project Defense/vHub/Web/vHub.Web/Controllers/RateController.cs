@@ -6,6 +6,7 @@ using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
 using vHub.Web.ViewModels.Rate;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vHub.Web.Controllers
 {
@@ -20,6 +21,7 @@ namespace vHub.Web.Controllers
             this.rateService = rateService;
         }
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll(string id)
         {
             var likes = await rateService.GetCountByVideoIdAndRateTypeAsync(id, RateType.Like);
@@ -40,7 +42,7 @@ namespace vHub.Web.Controllers
                 return Unauthorized();
             }
             var hasVoted = await rateService.CheckIfVotedAsync(model.VideoId, authorId);
-            if(!hasVoted)
+            if (!hasVoted)
             {
                 var rate = Mapper.Map<Rate>(model);
                 rate.AuthorId = authorId;
@@ -50,20 +52,16 @@ namespace vHub.Web.Controllers
             }
             return BadRequest();
         }
-        [HttpPost]
-        public async Task<IActionResult> CheckIfVoted([FromBody] CheckIfVotedBindingModel model)
+        [HttpGet]
+        public async Task<IActionResult> CheckIfVoted(string id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState.GetFirstError());
-            }
             var authorId = User.GetId();
             if (authorId == null)
             {
                 return Unauthorized();
             }
 
-            var hasVoted = await rateService.CheckIfVotedAsync(model.VideoId, authorId);
+            var hasVoted = await rateService.CheckIfVotedAsync(id, authorId);
 
             return Ok(hasVoted);
         }

@@ -4,39 +4,41 @@
         <a class="navbar-brand mr-lg-5" [routerLink]="['/home']">
             <img src="./assets/img/brand/logo.png">
         </a>
-        <div class="navbar-nav navbar-collapse row">
-            <div class="input-group input-group-sm col-sm-7 ">
-                <input class="form-control" placeholder="Search..." type="text">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-neutral btn-sm">
-                        <i class="fa fa-lg fa-search"></i>
-                    </button>
+            <div class="navbar-nav navbar-collapse row">
+                <form class="form-group col-sm-7 mb-0" [formGroup]="searchForm" (ngSubmit)="searchSubmit()">
+                <div class="input-group input-group-sm  ">
+                    <input (keydown.enter)="searchSubmit()" formControlName="query" class="form-control" placeholder="Search..." type="text">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-neutral btn-sm">
+                            <i class="fa fa-lg fa-search"></i>
+                        </button>
+                    </div>
                 </div>
+                </form>
             </div>
-        </div>
         <div ngbDropdown class="d-inline-block" *ngIf="(authService.isAuthenticated()) as user">
             <a ngbDropdownToggle href="javascript:void(0)" class="btn btn-link text-white">{{user.username}}</a>
             <div ngbDropdownMenu class="dropdown-menu-inverse">
                 <a ngbDropdownItem [routerLink]="['/upload' ]">
-                    <span class="dropdown-item">Upload</span>
+                    <span class="dropdown-item"><i class="ni ni-cloud-upload-96"></i>Upload</span>
                 </a>
-                <a ngbDropdownItem [routerLink]="['/user/profile', user.userId]">
-                    <span class="dropdown-item">Profile</span>
+                <a ngbDropdownItem [routerLink]="['/user/profile', user.username.toLowerCase()]">
+                    <span class="dropdown-item"><i class="ni ni-circle-08"></i>Profile</span>
                 </a>
                 <a ngbDropdownItem (click)="authService.logout()">
-                    <span class="dropdown-item">Logout</span>
+                    <span class="dropdown-item"><i class="fa fa-sign-out"></i>Logout</span>
                 </a>
             </div>
         </div>
         <ul class="navbar-nav align-items-lg-center ml-lg-auto" *ngIf="authService.isAuthenticated() === false">
             <li class="nav-item">
                 <a class="nav-link " [routerLink]="['/user/register']">
-                    <span class="nav-link-inner--text">Register</span>
+                    <span class="nav-link-inner--text"><i class="fa fa-user-plus"></i>Register</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link " [routerLink]="['/user/login']">
-                    <span class="nav-link-inner--text">Login</span>
+                    <span class="nav-link-inner--text"><i class="fa fa-sign-in"></i>Login</span>
                 </a>
             </li>
         </ul>

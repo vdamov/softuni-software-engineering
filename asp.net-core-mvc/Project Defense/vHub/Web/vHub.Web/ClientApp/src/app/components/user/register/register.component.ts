@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
+import {UserService} from '../../../core/services/user.service';
 
 @Component({
     selector: 'app-register',
@@ -12,7 +13,7 @@ export class RegisterComponent implements OnInit {
     public registerForm: FormGroup;
     progress = 0;
 
-    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService) {
+    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private userService: UserService) {
     }
 
     ngOnInit() {
@@ -30,7 +31,7 @@ export class RegisterComponent implements OnInit {
         profilePictureForm.append('file', this.registerForm.get('image').value);
         profilePictureForm.append('upload_preset', 'urcs4ru3');
         profilePictureForm.append('folder', 'profile-pictures');
-        this.authService.uploadProfilePicture(profilePictureForm)
+        this.userService.uploadProfilePicture(profilePictureForm)
             .subscribe((res) => {
                 const form = new FormData();
                 form.append('username', this.registerForm.get('username').value);

@@ -4,7 +4,6 @@ export interface IVideo {
     thumbnailUrl: string;
     videoUrl: string;
     views: number;
-    authorId: string;
     authorUsername: string;
     authorImageUrl: string;
     createdOn: Date;

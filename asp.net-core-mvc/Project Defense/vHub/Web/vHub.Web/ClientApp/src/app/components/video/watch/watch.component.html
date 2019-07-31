@@ -20,7 +20,7 @@
                 <div class="col-md-9">
                     <div class="card ">
                         <div class="card-img-top">
-                            <mat-video #videoplayer src="{{video.videoUrl}}"
+                            <mat-video #videoplayer src="{{video.videoUrl}}" [keyboard]="false"
                                        poster="{{video.thumbnailUrl}}"></mat-video>
                         </div>
                         <div class="card-body py-0">
@@ -34,12 +34,12 @@
                                     </h5>
                                 </div>
                                 <div class="col-md-2 px-1 text-right ">
-                                    <button [disabled]="this.checkIfVoted$ | async" (click)="like()"
+                                    <button [disabled]="this.checkIfVoted$ | async" (click)="like(login)"
                                             class="btn  btn-link  text-primary">
                                         <i class="fa far fa-thumbs-up"></i>
                                         {{rate.likes}}
                                     </button>
-                                    <button [disabled]="this.checkIfVoted$ | async" (click)="dislike()"
+                                    <button [disabled]="this.checkIfVoted$ | async" (click)="dislike(login)"
                                             class="btn  btn-link   text-danger ">
                                         <i class="fa far fa-thumbs-down"></i>
                                         {{rate.dislikes}}
@@ -49,13 +49,13 @@
                             </div>
                             <div class="row">
                                 <div class=" col-4 pl-0 pr-1 mx-auto">
-                                    <a [routerLink]="['/user/profile', video.authorId]">
+                                    <a [routerLink]="['/user/profile', video.authorUsername.toLowerCase()]">
                                         <img src="{{video.authorImageUrl}}"
                                              class="img-fluid rounded-circle  shadow-lg mt-1 float-left mr-2" alt=""
                                              width="75">
                                     </a>
                                     <div class="row">
-                                        <a [routerLink]="['/user/profile', video.authorId]">
+                                        <a [routerLink]="['/user/profile', video.authorUsername.toLowerCase()]">
                                             <p class="font-weight-bold mb-0">{{video.authorUsername}}</p>
                                         </a>
                                     </div>
@@ -66,7 +66,8 @@
                                 </div>
                                 <div class="col-8 text-right pt-50">
                                     <p class="font-weight-bold">Category: <span><a
-                                            href="">{{video.categoryName}}</a></span></p>
+                                            [routerLink]="['/category', video.categoryName.toLowerCase()]">{{video.categoryName}}</a></span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -85,3 +86,25 @@
     </section>
 </main>
 
+<ng-template #login let-c="close" let-d="dismiss">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h6 class="modal-title" id="modal-title-default">Type your modal title</h6>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="d('Cross click')">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the
+                blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language
+                ocean.</p>
+            <p>A small river named Duden flows by their place and supplies it with the necessary regelialia. It is a
+                paradisematic country, in which roasted parts of sentences fly into your mouth.</p>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-link  ml-auto" data-dismiss="modal" (click)="c('Close click')">Close
+            </button>
+        </div>
+    </div>
+</ng-template>

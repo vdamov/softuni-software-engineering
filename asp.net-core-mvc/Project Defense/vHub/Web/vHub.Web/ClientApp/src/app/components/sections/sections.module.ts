@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NouisliderModule} from 'ng2-nouislider';
 import {JwBootstrapSwitchNg2Module} from 'jw-bootstrap-switch-ng2';
 import {RouterModule} from '@angular/router';
@@ -17,13 +17,15 @@ import {TypographySectionComponent} from './typography-section/typography-sectio
 import {AngularSectionComponent} from './angular-section/angular-section.component';
 import {NucleoSectionComponent} from './nucleo-section/nucleo-section.component';
 import {VersionsSectionComponent} from './versions-section/versions-section.component';
-import {NgbdModalComponent} from './modal/modal.component';
-import {NgbdModalContent} from './modal/modal.component';
+
 import {CommentsSectionComponent} from './comments-section/comments-section.component';
 import {ThumbnailSectionComponent} from './thumbnail-section/thumbnail-section.component';
 import {FileUploadComponent} from './file-upload/file-upload.component';
 import {ProgressComponent} from './progress/progress.component';
 import {RelatedSectionComponent} from './related-section/related-section.component';
+import {UserModule} from '../user/user.module';
+import { ModalSectionComponent } from './modal-section/modal-section.component';
+import {CoreModule} from '../../core/core.module';
 
 @NgModule({
     declarations: [
@@ -38,22 +40,23 @@ import {RelatedSectionComponent} from './related-section/related-section.compone
         AngularSectionComponent,
         NucleoSectionComponent,
         VersionsSectionComponent,
-        NgbdModalComponent,
-        NgbdModalContent,
         CommentsSectionComponent,
         ThumbnailSectionComponent,
         FileUploadComponent,
         ProgressComponent,
-        RelatedSectionComponent
+        RelatedSectionComponent,
+        ModalSectionComponent
     ],
-    entryComponents: [NgbdModalContent],
+    entryComponents: [],
     imports: [
         CommonModule,
         FormsModule,
         NgbModule,
         RouterModule,
         NouisliderModule,
-        JwBootstrapSwitchNg2Module
+        JwBootstrapSwitchNg2Module,
+        CoreModule,
+        ReactiveFormsModule,
     ],
     exports: [
         SectionsComponent,

@@ -77,7 +77,17 @@ namespace vHub.Services
             await repository.SaveChangesAsync();
             return true;
         }
+        public async Task<List<Video>> SearchAsync(string value)
+        {
+            var videos = await repository
+                .All()
+                .Where(v => v.Title.Contains(value))
+                .Include(v => v.Author)
+                .ToListAsync();
 
-      
+            return videos;
+        }
+
+
     }
 }

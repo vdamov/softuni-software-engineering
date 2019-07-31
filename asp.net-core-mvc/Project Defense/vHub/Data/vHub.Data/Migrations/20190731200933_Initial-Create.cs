@@ -63,7 +63,9 @@ namespace vHub.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,9 +185,11 @@ namespace vHub.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    ThumbnailUrl = table.Column<string>(nullable: true),
-                    VideoUrl = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Title = table.Column<string>(nullable: false),
+                    ThumbnailUrl = table.Column<string>(nullable: false),
+                    VideoUrl = table.Column<string>(nullable: false),
                     Views = table.Column<int>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
                     CategoryId = table.Column<string>(nullable: true)
@@ -214,7 +218,9 @@ namespace vHub.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Context = table.Column<string>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Content = table.Column<string>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
                     VideoId = table.Column<string>(nullable: true)
                 },
@@ -242,6 +248,8 @@ namespace vHub.Data.Migrations
                     Id = table.Column<string>(nullable: false),
                     CreatedOn = table.Column<DateTime>(nullable: false),
                     ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
                     Rating = table.Column<int>(nullable: false),
                     AuthorId = table.Column<string>(nullable: true),
                     VideoId = table.Column<string>(nullable: true)
@@ -265,17 +273,17 @@ namespace vHub.Data.Migrations
 
             migrationBuilder.InsertData(
                 table: "Categories",
-                columns: new[] { "Id", "CreatedOn", "ModifiedOn", "Name" },
+                columns: new[] { "Id", "CreatedOn", "DeletedOn", "IsDeleted", "ModifiedOn", "Name" },
                 values: new object[,]
                 {
-                    { "f9ac88e9-e827-403c-8f4b-a93f580420c3", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Music" },
-                    { "848bff52-c04e-4edd-94e7-21babf1c9973", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Product Review" },
-                    { "2f238c4f-0d95-43ea-b9dd-6b93707fbeaa", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "How-To" },
-                    { "14f4ffad-4938-45ed-884d-7d014828555c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Vlog" },
-                    { "d5711f85-630f-4017-ad85-f20d65d42e95", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Gaming" },
-                    { "249b6787-9b9d-4842-a794-b61766d8d9ea", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Comedy" },
-                    { "8a77d080-332d-4b93-b0cf-2832b3c4558b", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Educational" },
-                    { "71b52fee-e354-4371-b0f3-e4cf4a27af9c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "Other" }
+                    { "c2db6986-c168-4ebc-9160-9996da88d679", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Music" },
+                    { "eab57d8c-0f26-4370-9888-c8751242920c", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Product Review" },
+                    { "67fb8be0-0d39-4037-864b-bc34ac1706c2", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "How-To" },
+                    { "1ed088ba-64fe-4c5f-bedc-7714991ef6c1", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Vlog" },
+                    { "45694287-35eb-4c13-94fe-acf1cb962600", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Gaming" },
+                    { "2c505c33-1d90-4e1e-a868-90afc65520d6", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Comedy" },
+                    { "4200a515-4d5a-4092-8268-5b5c669f2f2e", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Educational" },
+                    { "617a4549-fc33-422a-b21d-1231a8f46593", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, false, null, "Other" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -328,9 +336,19 @@ namespace vHub.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Categories_IsDeleted",
+                table: "Categories",
+                column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Comments_AuthorId",
                 table: "Comments",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_IsDeleted",
+                table: "Comments",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_VideoId",
@@ -341,6 +359,11 @@ namespace vHub.Data.Migrations
                 name: "IX_Rates_AuthorId",
                 table: "Rates",
                 column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Rates_IsDeleted",
+                table: "Rates",
+                column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Rates_VideoId",
@@ -356,6 +379,11 @@ namespace vHub.Data.Migrations
                 name: "IX_Videos_CategoryId",
                 table: "Videos",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Videos_IsDeleted",
+                table: "Videos",
+                column: "IsDeleted");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

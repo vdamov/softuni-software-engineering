@@ -12,25 +12,69 @@ namespace vHub.Services
 {
     public class AccountService : IAccountService
     {
-        private readonly IRepository<ApplicationUser> repository;
+        private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
+        private readonly IDeletableEntityRepository<Rate> rateRepository;
+        private readonly IDeletableEntityRepository<Video> videoRepository;
+        private readonly IDeletableEntityRepository<Comment> commentRepository;
 
-        public AccountService(IRepository<ApplicationUser> repository)
+        public AccountService(
+            IDeletableEntityRepository<ApplicationUser> userRepository,
+            IDeletableEntityRepository<Rate> rateRepository,
+            IDeletableEntityRepository<Video> videoRepository,
+            IDeletableEntityRepository<Comment> commentRepository
+            )
         {
-            this.repository = repository;
+            this.userRepository = userRepository;
+            this.rateRepository = rateRepository;
+            this.videoRepository = videoRepository;
+            this.commentRepository = commentRepository;
         }
-        public async Task<ApplicationUser> GetByIdAsync(string id)
+        public async Task<ApplicationUser> GetByUsernameAsync(string username)
         {
-            var user = await repository.All()
+            var user = await userRepository.All()
                      .Include(u => u.Ratings)
                      .ThenInclude(r => r.Video)
                      .ThenInclude(v => v.Author)
                      .Include(u => u.Uploads)
-                .SingleOrDefaultAsync(u => u.Id == id);
+                .SingleOrDefaultAsync(u => u.UserName == username);
 
 
 
             return user;
         }
-      
+        public async Task<bool> BanByUsername(string username)
+        {
+            var user = await userRepository.All()
+                .Include(u => u.Uploads)
+                .Include(u => u.Ratings)
+                .Include(u => u.Comments)
+                .SingleOrDefaultAsync(u => u.UserName == username);
+            if (user == null)
+            {
+                return false;
+            }
+            foreach (var rate in user.Ratings)
+            {
+                rateRepository.Delete(rate);
+            }
+            foreach (var comment in user.Comments)
+            {
+                commentRepository.Delete(comment);
+            }
+            foreach (var video in user.Uploads)
+            {
+                videoRepository.Delete(video);
+            }
+            userRepository.Delete(user);
+
+            await rateRepository.SaveChangesAsync();
+            await commentRepository.SaveChangesAsync();
+            await videoRepository.SaveChangesAsync();
+            await userRepository.SaveChangesAsync();
+
+
+            return true;
+        }
+
     }
 }

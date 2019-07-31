@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using vHub.Data.Common.Repositories;
@@ -13,10 +14,10 @@ namespace vHub.Services
         {
             this.repository = repository;
         }
-        public IQueryable<Category> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
 
-            var categories = repository.All();
+            var categories = await repository.All().ToListAsync();
 
             return categories;
         }
@@ -24,6 +25,23 @@ namespace vHub.Services
         {
             var category = await repository.All().SingleOrDefaultAsync(c => c.Name == name);
             return category;
+        }
+
+        public async Task<List<Video>> GetAllVideosByCategoryNameAsync(string name)
+        {
+            var category = await repository
+                     .All()
+                     .Include(c => c.Videos)
+                     .ThenInclude(v => v.Author)
+                     .SingleOrDefaultAsync(c => c.Name == name);
+
+            if (category == null)
+            {
+                return null;
+            }
+            var videos = category.Videos.OrderByDescending(v => v.CreatedOn).ToList();
+
+            return videos;
         }
     }
 }

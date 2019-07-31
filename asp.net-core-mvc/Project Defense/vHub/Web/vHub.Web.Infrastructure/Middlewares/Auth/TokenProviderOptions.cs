@@ -13,7 +13,7 @@
 
         public string Audience { get; set; }
 
-        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(15);
+        public TimeSpan Expiration { get; set; } = TimeSpan.FromDays(1);
 
         public Func<Task<string>> NonceGenerator { get; set; } = () => Task.FromResult(Guid.NewGuid().ToString());
 

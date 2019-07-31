@@ -1,21 +1,16 @@
-﻿using System.Threading.Tasks;
-
-using vHub.Data.Models;
-using vHub.Web.Infrastructure.Extensions;
-using vHub.Web.ViewModels.Account;
-
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.IO;
-using Microsoft.AspNetCore.Hosting;
-using System.Linq;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Internal;
-using AutoMapper;
-using vHub.Services;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using vHub.Common;
 using vHub.Data.Common.Enums;
+using vHub.Data.Models;
+using vHub.Services;
+using vHub.Web.Infrastructure.Extensions;
+using vHub.Web.ViewModels.Account;
 
 namespace vHub.Web.Controllers
 {
@@ -50,10 +45,11 @@ namespace vHub.Web.Controllers
 
             return BadRequest(result.GetFirstError());
         }
-        [HttpGet]
-        public async Task<IActionResult> GetById(string id)
+        [HttpGet("api/{controller}/{action}/{username}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> Get(string username)
         {
-            var user = await accountService.GetByIdAsync(id);
+            var user = await accountService.GetByUsernameAsync(username);
             if (user == null)
             {
                 return BadRequest();

@@ -109,6 +109,7 @@
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<IRateService, RateService>();
             services.AddTransient<IAccountService, AccountService>();
+            services.AddTransient<ICommentSerivce, CommentService>();
 
             // Identity stores
             services.AddTransient<IUserStore<ApplicationUser>, ApplicationUserStore>();
