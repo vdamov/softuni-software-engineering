@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {UserService} from '../../../core/services/user.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
     selector: 'app-register',
@@ -10,10 +11,18 @@ import {UserService} from '../../../core/services/user.service';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+    private textClass: string;
+    private passwordStrength: string;
+    private readonly strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#\$%\^&\*])(?=.{8,})');
+    private readonly mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[!_@#\$%\^&\*]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
     public registerForm: FormGroup;
     progress = 0;
 
-    constructor(private fb: FormBuilder, private router: Router, private authService: AuthService, private userService: UserService) {
+    constructor(private fb: FormBuilder,
+                private router: Router,
+                private authService: AuthService,
+                private userService: UserService,
+                private modalService: NgbModal) {
     }
 
     ngOnInit() {
@@ -22,6 +31,7 @@ export class RegisterComponent implements OnInit {
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required, Validators.minLength(6)]],
             image: [null, [Validators.required]],
+            privacy: [false, [Validators.pattern('true')]],
         });
     }
 
@@ -46,6 +56,34 @@ export class RegisterComponent implements OnInit {
                     this.router.navigate(['/user/login']);
                 });
             });
+    }
+
+    passwordCheck() {
+        const password = this.registerForm.get('password').value;
+        if (this.strongRegex.test(password)) {
+            this.passwordStrength = 'strong';
+            this.textClass = 'text-success';
+        } else if (this.mediumRegex.test(password)) {
+            this.passwordStrength = 'medium';
+            this.textClass = 'text-warning';
+        } else {
+            this.passwordStrength = 'weak';
+            this.textClass = 'text-danger';
+        }
+    }
+
+    open(content) {
+        this.modalService.open(content, {windowClass: 'modal-mini', size: 'sm', centered: true});
+    }
+
+    accept(c: Function) {
+        this.registerForm.get('privacy').setValue(true);
+        c();
+    }
+
+    close(c: Function) {
+        this.registerForm.get('privacy').setValue(false);
+        c();
     }
 }
 

@@ -52,5 +52,20 @@ namespace vHub.Web.Controllers
             var viewModel = Mapper.Map<CommentAddViewModel>(comment);
             return Ok(viewModel);
         }
+        [HttpPost]
+        public async Task<IActionResult> Delete([FromBody]CommentDeleteBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var result = await commentSerivce.DeleteByIdAsync(model.Id);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

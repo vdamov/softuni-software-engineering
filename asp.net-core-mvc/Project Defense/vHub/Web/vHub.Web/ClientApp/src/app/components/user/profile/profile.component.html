@@ -29,7 +29,8 @@
                             <div class="row mt-3 justify-content-center" *ngIf="
                             authService.isAdmin &&
                             authService.isAuthenticated().username !== user.username.toLowerCase()">
-                                <button class="btn btn-sm btn-link text-danger" (click)="open(modal)">Ban User
+                                <button class="btn btn-sm btn-link text-danger" (click)="open(modal)">
+                                    Ban User
                                 </button>
                             </div>
                         </div>

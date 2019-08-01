@@ -44,4 +44,16 @@ export class CommentsSectionComponent implements OnInit {
     }
 
 
+    deleteComment(comment: IComment) {
+        if (this.authService.isAdmin) {
+            this.commentService.adminDeleteById(comment.id).subscribe(() => {
+                this.comments.splice(this.comments.indexOf(comment), 1);
+            });
+        } else if (this.authService.isAuthenticated().username === comment.authorUsername) {
+            this.commentService.deleteById(comment.id).subscribe(() => {
+                this.comments.splice(this.comments.indexOf(comment), 1);
+            });
+        }
+
+    }
 }

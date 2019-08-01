@@ -45,8 +45,7 @@ export class WatchComponent implements OnInit {
     }
 
     open(content) {
-        this.modalService.open(content, {windowClass: 'modal-mini', size: 'sm', centered: true}).result.then((result) => {
-        });
+        this.modalService.open(content, {windowClass: 'modal-mini', size: 'sm', centered: true});
     }
 
     loadPage() {

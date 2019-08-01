@@ -23,8 +23,6 @@ import {ThumbnailSectionComponent} from './thumbnail-section/thumbnail-section.c
 import {FileUploadComponent} from './file-upload/file-upload.component';
 import {ProgressComponent} from './progress/progress.component';
 import {RelatedSectionComponent} from './related-section/related-section.component';
-import {UserModule} from '../user/user.module';
-import { ModalSectionComponent } from './modal-section/modal-section.component';
 import {CoreModule} from '../../core/core.module';
 
 @NgModule({
@@ -44,8 +42,7 @@ import {CoreModule} from '../../core/core.module';
         ThumbnailSectionComponent,
         FileUploadComponent,
         ProgressComponent,
-        RelatedSectionComponent,
-        ModalSectionComponent
+        RelatedSectionComponent
     ],
     entryComponents: [],
     imports: [

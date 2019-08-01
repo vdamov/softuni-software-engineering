@@ -11,14 +11,17 @@
     <div class="row" *ngFor="let comment of comments">
         <div class="col-lg-1">
             <a [routerLink]="['/user/profile', comment.authorUsername.toLowerCase()]">
-                <img src="{{comment.authorImageUrl}}" width="75" class="img-fluid rounded-circle mt-2"/>
+                <img src="{{comment.authorImageUrl}}" width="75" class="img-fluid rounded-circle mt-4"/>
             </a>
         </div>
         <div class="col-lg-11">
-            <p>
+            <p class="mt-3">
                 <a class="float-left"
                    [routerLink]="['/user/profile', comment.authorUsername.toLowerCase()]"><strong>{{comment.authorUsername}}</strong></a>
             </p>
+            <div class="float-right" *ngIf="authService.isAdmin || authService.isAuthenticated().username === comment.authorUsername">
+                <button class="btn btn-link text-default" (click)="deleteComment(comment)" ><i class="fa fas fa-trash "></i></button>
+            </div>
             <div class="clearfix"></div>
             <p>{{comment.content}}</p>
             <p class="text-muted text-right">{{comment.createdOn | dateAgo}}</p>

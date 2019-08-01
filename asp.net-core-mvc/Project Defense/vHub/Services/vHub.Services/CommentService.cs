@@ -11,9 +11,9 @@ namespace vHub.Services
 {
     public class CommentService : ICommentSerivce
     {
-        private readonly IRepository<Comment> repository;
+        private readonly IDeletableEntityRepository<Comment> repository;
 
-        public CommentService(IRepository<Comment> repository)
+        public CommentService(IDeletableEntityRepository<Comment> repository)
         {
             this.repository = repository;
         }
@@ -37,6 +37,17 @@ namespace vHub.Services
                 .Include(c => c.Author)
                 .SingleOrDefaultAsync(c => c.Id == comment.Id);
             return commentFromDb;
+        }
+        public async Task<bool> DeleteByIdAsync(string id)
+        {
+            var comment = await repository.GetByIdAsync(id);
+            if (comment == null)
+            {
+                return false;
+            }
+            repository.Delete(comment);
+            var result = await repository.SaveChangesAsync();
+            return result > 0;
         }
     }
 }

@@ -1,7 +1,7 @@
 export interface IComment {
+    id: string;
     content: string;
     createdOn: Date;
-    authorId: string;
     authorUsername: string;
     authorImageUrl: string;
 }

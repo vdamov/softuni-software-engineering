@@ -6,11 +6,6 @@ using vHub.Common;
 namespace vHub.Web.Areas.Administration.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = GlobalConstants.AdministratorRoleName)]
-    public class BaseController : Controller
-    {
-        public IActionResult Index()
-        {
-            return View();
-        }
-    }
+    [Route("api/admin/{controller}/{action}/{id?}")]
+    public class BaseController : Controller {}
 }

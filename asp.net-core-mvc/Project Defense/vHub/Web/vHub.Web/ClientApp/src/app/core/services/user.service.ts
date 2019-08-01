@@ -11,7 +11,7 @@ export class UserService {
 
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/image/upload';
     private readonly getByUsernameURL: string = '/api/account/get/';
-    private readonly banByUserIdURL: string = '/api/account/ban/';
+    private readonly banByUserIdURL: string = '/api/admin/account/ban/';
 
 
     constructor(private http: HttpClient) {
@@ -20,11 +20,13 @@ export class UserService {
     uploadProfilePicture(formData: FormData) {
         return this.http.post(this.uploadURL, formData);
     }
+
     getByUsername(username: string) {
         return this.http.get<IUser>(this.getByUsernameURL + username);
     }
+
     banByUsername(username: string) {
-        return this.http.get(this.banByUserIdURL + username);
+        return this.http.post(this.banByUserIdURL, {username});
     }
 }
 

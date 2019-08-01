@@ -8,6 +8,8 @@ import {IComment} from '../../components/shared/interfaces/comment.interface';
 export class CommentService {
     private readonly getAllCommentsURL = '/api/comment/getall/';
     private readonly addCommentURL = '/api/comment/add';
+    private readonly adminDeleteCommentURL = '/api/admin/comment/delete/';
+    private readonly deleteCommentURL = '/api/comment/delete/';
 
     constructor(private http: HttpClient) {
     }
@@ -18,5 +20,12 @@ export class CommentService {
 
     add(videoId: string, content: string) {
         return this.http.post(this.addCommentURL, {videoId, content});
+    }
+
+    adminDeleteById(id: string) {
+        return this.http.post(this.adminDeleteCommentURL, {id});
+    }
+    deleteById(id: string) {
+        return this.http.post(this.deleteCommentURL, {id});
     }
 }

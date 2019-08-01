@@ -13,7 +13,7 @@ import {RouterModule} from '@angular/router';
     declarations: [
         LoginComponent,
         RegisterComponent,
-        ProfileComponent
+        ProfileComponent,
     ],
     imports: [
         CommonModule,
