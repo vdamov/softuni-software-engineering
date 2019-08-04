@@ -1,9 +1,9 @@
-<a [routerLink]="['/watch/' + video.id]">
-  <div class="card shadow-lg">
-    <img class="img-fluid rounded shadow" src="{{video.thumbnailUrl}}" alt="">
-    <div class="card-body py-0">
+<a [routerLink]="['/watch/' + video.id]" >
+  <div class="card shadow-lg" placement="middle" ngbTooltip="{{video.title}}">
+    <img class="img-fluid rounded shadow" src="{{video.thumbnailUrl}}" alt="{{video.title}}">
+    <div class="card-body py-0"  >
       <div class="row justify-content-center">
-        <h3 class="display-4 text-center mb-0">{{video.title}}</h3>
+        <h3 class="display-4 text-center mb-0">{{shortenTitle}}</h3>
       </div>
       <div class="row py-0 justify-content-center">
         <div class="col-md-6 px-0">

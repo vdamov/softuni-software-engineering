@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using vHub.Data.Common.Enums;
@@ -9,9 +10,9 @@ namespace vHub.Services
 {
     public class RateService : IRateService
     {
-        private readonly IRepository<Rate> repository;
+        private readonly IDeletableEntityRepository<Rate> repository;
 
-        public RateService(IRepository<Rate> repository)
+        public RateService(IDeletableEntityRepository<Rate> repository)
         {
             this.repository = repository;
         }
@@ -35,6 +36,6 @@ namespace vHub.Services
                 .AnyAsync(r => r.AuthorId == authorId && r.VideoId == videoId);
             return hasVoted;
         }
-
+      
     }
 }

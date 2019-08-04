@@ -42,7 +42,7 @@ namespace vHub.Services
 
             return user;
         }
-        public async Task<bool> BanByUsername(string username)
+        public async Task<bool> BanByUsernameAsync(string username)
         {
             var user = await userRepository.All()
                 .Include(u => u.Uploads)
@@ -74,6 +74,51 @@ namespace vHub.Services
 
 
             return true;
+        }
+
+        public async Task<bool> UnbanByIdAsync(string id)
+        {
+            var user = await userRepository.AllWithDeleted()
+                .Include(u => u.Uploads)
+                .Include(u => u.Ratings)
+                .Include(u => u.Comments)
+                .SingleOrDefaultAsync(u => u.Id == id);
+            if (user == null)
+            {
+                return false;
+            }
+            foreach (var rate in user.Ratings)
+            {
+                rateRepository.Undelete(rate);
+            }
+            foreach (var comment in user.Comments)
+            {
+                commentRepository.Undelete(comment);
+            }
+            foreach (var video in user.Uploads)
+            {
+                videoRepository.Undelete(video);
+            }
+            userRepository.Undelete(user);
+
+            await rateRepository.SaveChangesAsync();
+            await commentRepository.SaveChangesAsync();
+            await videoRepository.SaveChangesAsync();
+            await userRepository.SaveChangesAsync();
+
+
+            return true;
+        }
+
+        public async Task<List<ApplicationUser>> GetAllDeletedAsync()
+        {
+            var users = await userRepository.AllWithDeleted()
+                   .Where(u => u.IsDeleted)
+                   .Include(u => u.Uploads)
+                   .Include(u => u.Comments)
+                   .Include(u => u.Ratings)
+                   .ToListAsync();
+            return users;
         }
 
     }

@@ -11,7 +11,9 @@ export class UserService {
 
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/image/upload';
     private readonly getByUsernameURL: string = '/api/account/get/';
-    private readonly banByUserIdURL: string = '/api/admin/account/ban/';
+    private readonly banByUsernameURL: string = '/api/admin/account/ban/';
+    private readonly allDeletedURL: string = '/api/admin/account/alldeleted/';
+    private readonly unbanByUserIdURL: string = '/api/admin/account/unban/';
 
 
     constructor(private http: HttpClient) {
@@ -26,7 +28,15 @@ export class UserService {
     }
 
     banByUsername(username: string) {
-        return this.http.post(this.banByUserIdURL, {username});
+        return this.http.post(this.banByUsernameURL, {username});
+    }
+
+    getAllDeleted() {
+        return this.http.get(this.allDeletedURL);
+    }
+
+    unbanById(id: string) {
+        return this.http.put(this.unbanByUserIdURL, {id});
     }
 }
 

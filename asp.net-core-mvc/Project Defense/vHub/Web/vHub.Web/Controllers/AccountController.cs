@@ -55,12 +55,6 @@ namespace vHub.Web.Controllers
                 return BadRequest();
             }
             var viewModel = Mapper.Map<AccountGetByIdViewModel>(user);
-            var liked = user.Ratings.Where(r => r.Rating == RateType.Like).Select(r => r.Video).ToList();
-            var LikedViewModel = Mapper.Map<List<AccountGeyByIdThumbnailViewModel>>(liked);
-            viewModel.Liked = LikedViewModel;
-            viewModel.LikesCount = liked.Count;
-            viewModel.TotalViews = user.Uploads.Sum(v => v.Views);
-            viewModel.UploadedCount = user.Uploads.Count;
 
             return Json(viewModel);
 

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using vHub.Data.Models;
 using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
@@ -52,14 +50,14 @@ namespace vHub.Web.Controllers
             var viewModel = Mapper.Map<CommentAddViewModel>(comment);
             return Ok(viewModel);
         }
-        [HttpPost]
-        public async Task<IActionResult> Delete([FromBody]CommentDeleteBindingModel model)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetFirstError());
             }
-            var result = await commentSerivce.DeleteByIdAsync(model.Id);
+            var result = await commentSerivce.DeleteByIdAsync(id);
 
             if (!result)
             {

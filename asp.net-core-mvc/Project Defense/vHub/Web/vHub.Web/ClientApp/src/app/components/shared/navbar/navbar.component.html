@@ -19,6 +19,9 @@
         <div ngbDropdown class="d-inline-block" *ngIf="(authService.isAuthenticated()) as user">
             <a ngbDropdownToggle href="javascript:void(0)" class="btn btn-link text-white">{{user.username}}</a>
             <div ngbDropdownMenu class="dropdown-menu-inverse">
+                <a *ngIf="this.authService.isAdmin" ngbDropdownItem [routerLink]="['/admin' ]">
+                    <span class="dropdown-item"><i class="fa fas fa-user-secret"></i>Admin Panel</span>
+                </a>
                 <a ngbDropdownItem [routerLink]="['/upload' ]">
                     <span class="dropdown-item"><i class="ni ni-cloud-upload-96"></i>Upload</span>
                 </a>

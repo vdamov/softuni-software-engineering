@@ -7,6 +7,7 @@ export interface IVideo {
     authorUsername: string;
     authorImageUrl: string;
     createdOn: Date;
+    deletedOn: Date;
     categoryId: string;
     categoryName: string;
 }

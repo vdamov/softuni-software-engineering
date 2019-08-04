@@ -49,5 +49,26 @@ namespace vHub.Services
             var result = await repository.SaveChangesAsync();
             return result > 0;
         }
+        public async Task<bool> RestoreByIdAsync(string id)
+        {
+            var comment = await repository.AllWithDeleted().SingleOrDefaultAsync(c => c.Id == id);
+            if (comment == null)
+            {
+                return false;
+            }
+            repository.Undelete(comment);
+            var result = await repository.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<List<Comment>> GetAllDeletedAsync()
+        {
+            var comments = await repository.AllWithDeleted()
+                   .Where(c => c.IsDeleted)
+                   .Include(c => c.Author)
+                   .Include(c => c.Video)
+                   .ToListAsync();
+            return comments;
+        }
     }
 }

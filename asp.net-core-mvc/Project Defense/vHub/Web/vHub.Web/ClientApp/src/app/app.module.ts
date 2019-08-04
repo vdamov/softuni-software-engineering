@@ -18,6 +18,7 @@ import {JwtModule} from '@auth0/angular-jwt';
 import {UserModule} from './components/user/user.module';
 import {VideoModule} from './components/video/video.module';
 import { CategoryComponent } from './components/category/category.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 export function tokenGetter() {
     return localStorage.getItem('access_token');
@@ -30,6 +31,7 @@ export function tokenGetter() {
         NavbarComponent,
         FooterComponent,
         CategoryComponent,
+        AdminComponent,
     ],
     imports: [
         BrowserModule,

@@ -15,9 +15,11 @@ import {SingleRateResolver} from './core/resolvers/single-rate.resolver';
 import {SingleUserResolver} from './core/resolvers/single-user.resolver';
 import {CategoryComponent} from './components/category/category.component';
 import {SearchComponent} from './components/video/search/search.component';
+import {AdminComponent} from './components/admin/admin.component';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
+    {path: 'admin', component: AdminComponent},
     {path: 'user/profile/:username', component: ProfileComponent, resolve: {user: SingleUserResolver}},
     {path: 'user/register', component: RegisterComponent},
     {path: 'user/login', component: LoginComponent},

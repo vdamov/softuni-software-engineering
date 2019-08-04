@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {VideoService} from '../../../core/services/video.service';
 import {IVideo} from '../../shared/interfaces/video.interface';
 import {RateService} from '../../../core/services/rate.service';
@@ -8,7 +8,6 @@ import {Observable} from 'rxjs';
 import {IRate} from '../../shared/interfaces/rate.interface';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CommentService} from '../../../core/services/comment.service';
-import {IComment} from '../../shared/interfaces/comment.interface';
 
 @Component({
     selector: 'app-watch',
@@ -24,6 +23,7 @@ export class WatchComponent implements OnInit {
     private getVideoById$: Observable<IVideo>;
 
     constructor(private route: ActivatedRoute,
+                private router: Router,
                 private videoService: VideoService,
                 private rateService: RateService,
                 private authService: AuthService,
@@ -59,25 +59,41 @@ export class WatchComponent implements OnInit {
     }
 
 
-    like(content) {
+    like() {
         if (this.authService.isAuthenticated()) {
             this.rateService.add(this.video.id, 1).subscribe((res) => {
                 this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
                 this.rate.likes++;
             });
         } else {
-            this.open(content);
+            this.router.navigate(['/user/login']);
         }
     }
 
-    dislike(content) {
+    dislike() {
         if (this.authService.isAuthenticated()) {
             this.rateService.add(this.video.id, 2).subscribe((res) => {
                 this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
                 this.rate.dislikes++;
             });
         } else {
-            this.open(content);
+            this.router.navigate(['/user/login']);
+        }
+    }
+
+    deleteVideo(c: Function) {
+        if (this.authService.isAdmin) {
+            this.videoService.adminDeleteById(this.video.id)
+                .subscribe((res) => {
+                    c();
+                    this.router.navigate(['/home']);
+                });
+        } else if (this.authService.isAuthenticated()) {
+            this.videoService.deleteById(this.video.id)
+                .subscribe((res) => {
+                    c();
+                    this.router.navigate(['/home']);
+                });
         }
     }
 }

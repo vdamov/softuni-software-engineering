@@ -9,6 +9,7 @@ export class RateService {
     private readonly getAllRatesURL = '/api/rate/getall/';
     private readonly addRateURL = '/api/rate/add/';
     private readonly checkIfVotedURL = '/api/rate/checkifvoted/';
+    private readonly allDeletedURL = '/api/admin/rate/alldeleted/';
 
     constructor(private http: HttpClient) {
     }
@@ -23,5 +24,8 @@ export class RateService {
 
     checkIfVoted(videoId: string) {
         return this.http.get<boolean>(this.checkIfVotedURL + videoId);
+    }
+    getAllDeleted() {
+        return this.http.get(this.allDeletedURL);
     }
 }

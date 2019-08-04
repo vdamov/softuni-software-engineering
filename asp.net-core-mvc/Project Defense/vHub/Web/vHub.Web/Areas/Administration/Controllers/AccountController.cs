@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using vHub.Common;
 using vHub.Data.Common.Repositories;
@@ -28,7 +29,7 @@ namespace vHub.Web.Areas.Administration.Controllers
             {
                 return BadRequest(ModelState.GetFirstError());
             }
-            var result = await accountService.BanByUsername(model.Username);
+            var result = await accountService.BanByUsernameAsync(model.Username);
 
             if (!result)
             {
@@ -36,6 +37,30 @@ namespace vHub.Web.Areas.Administration.Controllers
 
             }
             return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Unban([FromBody]AccountUnbanByIdBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var result = await accountService.UnbanByIdAsync(model.Id);
+
+            if (!result)
+            {
+                return NotFound();
+
+            }
+            return Ok();
+        }
+        [HttpGet]
+        public async Task<IActionResult> AllDeleted()
+        {
+            var users = await accountService.GetAllDeletedAsync();
+            var viewModel = Mapper.Map<List<AccountAllDeletedViewModel>>(users);
+
+            return Json(viewModel);
         }
     }
 }

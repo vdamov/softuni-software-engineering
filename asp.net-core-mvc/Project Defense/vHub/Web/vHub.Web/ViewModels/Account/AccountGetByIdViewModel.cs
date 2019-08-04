@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using vHub.Common.Mapping;
+using vHub.Data.Common.Enums;
 using vHub.Data.Models;
 
 namespace vHub.Web.ViewModels.Account
 {
-    public class AccountGetByIdViewModel : IMapFrom<ApplicationUser>
+    public class AccountGetByIdViewModel : IHaveCustomMappings
     {
         public AccountGetByIdViewModel()
         {
@@ -15,11 +18,20 @@ namespace vHub.Web.ViewModels.Account
         public string Username { get; set; }
         public string ImageUrl { get; set; }
         public DateTime CreatedOn { get; set; }
-        public int UploadedCount { get; set; }
+        public int VideosCount { get; set; }
         public int LikesCount { get; set; }
         public int TotalViews { get; set; }
         public ICollection<AccountGeyByIdThumbnailViewModel> Uploads { get; set; }
         public ICollection<AccountGeyByIdThumbnailViewModel> Liked { get; set; }
+
+        public void CreateMappings(IMapperConfigurationExpression configuration)
+        {
+            configuration.CreateMap<ApplicationUser, AccountGetByIdViewModel>()
+                .ForMember(dest => dest.VideosCount, opt => opt.MapFrom(src => src.Uploads.Count))
+                .ForMember(dest => dest.Liked, opt => opt.MapFrom(src => src.Ratings.Where(r => r.Rating == RateType.Like).Select(r => r.Video).ToList()))
+                .ForMember(dest => dest.TotalViews, opt => opt.MapFrom(src => src.Uploads.Sum(v => v.Views)))
+                .ForMember(dest => dest.LikesCount, opt => opt.MapFrom(src => src.Ratings.Where(r => r.Rating == RateType.Like).Select(r => r.Video).Count()));
+        }
     }
 
     public class AccountGeyByIdThumbnailViewModel : IMapFrom<Data.Models.Video>

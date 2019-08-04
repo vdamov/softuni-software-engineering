@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CommentService} from '../../../core/services/comment.service';
 import {IComment} from '../../shared/interfaces/comment.interface';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../core/services/auth.service';
 
@@ -16,6 +16,7 @@ export class CommentsSectionComponent implements OnInit {
     private videoId: string;
 
     constructor(
+        private router: Router,
         private route: ActivatedRoute,
         private fb: FormBuilder,
         private commentService: CommentService,
@@ -34,12 +35,14 @@ export class CommentsSectionComponent implements OnInit {
     }
 
     submitForm() {
-        if (this.addCommentForm.valid && this.authService.isAuthenticated()) {
+        if (this.authService.isAuthenticated()) {
             const context = this.addCommentForm.get('content').value;
             this.commentService.add(this.videoId, context).subscribe((res: IComment) => {
                 this.comments.splice(0, 0, res);
                 this.addCommentForm.reset();
             });
+        } else {
+            this.router.navigate(['/user/login']);
         }
     }
 

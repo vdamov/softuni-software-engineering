@@ -1,0 +1,136 @@
+<main class="profile-page">
+    <section class="section section-lg section-hero section-shaped">
+        <!-- Background circles -->
+        <div class="shape shape-style-3 shape-dark">
+            <span class="span-150"></span>
+            <span class="span-100"></span>
+            <span class="span-75"></span>
+        </div>
+
+        <!-- SVG separator -->
+        <div class="separator separator-bottom separator-skew zindex-100">
+            <svg x="0" y="0" viewBox="0 0 2560 100" preserveAspectRatio="none" version="1.1"
+                 xmlns="http://www.w3.org/2000/svg">
+                <polygon class="fill-white" points="2560 0 2560 100 0 100"></polygon>
+            </svg>
+        </div>
+    </section>
+    <section class="section section-lg pt-lg-0 mt--300">
+        <div class="container mt--150">
+            <div class="card card-profile shadow ">
+                <div class="px-4">
+
+
+                    <section class="section">
+                        <ngb-tabset [justify]="'center'" class="custom-tab-content flex-column flex-md-row"
+                                    type="pills">
+
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <i class="ni ni-cloud-upload-96 mr-2"></i> Banned Users
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Username</th>
+                                            <th scope="col">Videos</th>
+                                            <th scope="col">Ratings</th>
+                                            <th scope="col">Comments</th>
+                                            <th scope="col">Banned</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let user of users; index as i">
+                                            <th scope="row">{{ i + 1 }}</th>
+                                            <td>{{ user.username }}</td>
+                                            <td>{{ user.videosCount | number }}</td>
+                                            <td>{{ user.ratingsCount | number }}</td>
+                                            <td>{{ user.commentsCount | number }}</td>
+                                            <td>{{ user.deletedOn | date: 'dd MMMM, yyyy' }}</td>
+                                            <td>
+                                                <button (click)="unbanUser(user.id)" class="btn btn-sm btn-default">
+                                                    Unban
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <i class="fa fa-thumbs-up"></i> Deleted videos
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Views</th>
+                                            <th scope="col">Deleted</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let video of videos; index as i">
+                                            <th scope="row">{{ i + 1 }}</th>
+                                            <td>{{ video.title }}</td>
+                                            <td>{{ video.authorUsername }}</td>
+                                            <td>{{ video.views }}</td>
+                                            <td>{{ video.deletedOn | date: 'dd MMMM, yyyy' }}</td>
+                                            <td>
+                                                <button (click)="restoreVideo(video.id)" class="btn btn-sm btn-default">
+                                                    Restore
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-template>
+                            </ngb-tab>
+                            <ngb-tab>
+                                <ng-template ngbTabTitle>
+                                    <i class="fa fa-thumbs-up"></i> Deleted comments
+                                </ng-template>
+                                <ng-template ngbTabContent>
+                                    <table class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Author</th>
+                                            <th scope="col">Video</th>
+                                            <th scope="col">Content</th>
+                                            <th scope="col">Deleted</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr *ngFor="let comment of comments; index as i">
+                                            <th scope="row">{{ i + 1 }}</th>
+                                            <td>{{ comment.authorUsername }}</td>
+                                            <td>{{ comment.videoTitle }}</td>
+                                            <td>{{comment.content}}</td>
+                                            <td>{{comment.deletedOn | date: 'dd MMMM, yyyy'}}</td>
+                                            <td>
+                                                <button (click)="restoreComment(comment.id)"
+                                                        class="btn btn-sm btn-default">Restore
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </ng-template>
+                            </ngb-tab>
+
+                        </ngb-tabset>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

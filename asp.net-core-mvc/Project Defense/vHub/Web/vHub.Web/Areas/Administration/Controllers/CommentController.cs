@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using vHub.Services;
 using vHub.Web.Areas.Administration.ViewModels.Comment;
@@ -14,20 +16,43 @@ namespace vHub.Web.Areas.Administration.Controllers
         {
             this.commentSerivce = commentSerivce;
         }
-        [HttpPost]
-        public async Task<IActionResult> Delete([FromBody]CommentDeleteBindingModel model)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState.GetFirstError());
             }
-            var result = await commentSerivce.DeleteByIdAsync(model.Id);
+            var result = await commentSerivce.DeleteByIdAsync(id);
 
             if (!result)
             {
                 return NotFound();
             }
             return Ok();
+        }
+        [HttpPut]
+        public async Task<IActionResult> Restore([FromBody]CommentRestoreByIdBindingModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var result = await commentSerivce.RestoreByIdAsync(model.Id);
+
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
+        [HttpGet]
+        public async Task<IActionResult> AllDeleted()
+        {
+            var comments = await commentSerivce.GetAllDeletedAsync();
+            var viewModel = Mapper.Map<List<CommentAllDeletedViewModel>>(comments);
+
+            return Json(viewModel);
         }
     }
 }

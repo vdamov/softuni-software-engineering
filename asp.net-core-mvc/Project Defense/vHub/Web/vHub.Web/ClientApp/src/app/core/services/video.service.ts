@@ -13,6 +13,10 @@ export class VideoService {
     private readonly take5URL = '/api/video/take5/';
     private readonly addViewURL = '/api/video/addview/';
     private readonly searchUrl = '/api/video/search/';
+    private readonly adminDeleteURL = '/api/admin/video/delete/';
+    private readonly deleteURL = '/api/video/delete/';
+    private readonly allDeletedURL = '/api/admin/video/alldeleted/';
+    private readonly restoreVideoURL = '/api/admin/video/restore/';
 
     constructor(private http: HttpClient) {
     }
@@ -47,5 +51,21 @@ export class VideoService {
 
     search(query: string) {
         return this.http.get<IVideo[]>(this.searchUrl + query);
+    }
+
+    adminDeleteById(id: string) {
+        return this.http.delete(this.adminDeleteURL + id);
+    }
+
+    deleteById(id: string) {
+        return this.http.delete(this.deleteURL + id);
+    }
+
+    getAllDeleted() {
+        return this.http.get(this.allDeletedURL);
+    }
+
+    restoreById(id: string) {
+        return this.http.put(this.restoreVideoURL, {id});
     }
 }

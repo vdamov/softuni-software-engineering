@@ -102,5 +102,20 @@ namespace vHub.Web.Controllers
 
             return Json(viewModel);
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (!ModelState.IsValid || id == null)
+            {
+                return BadRequest(ModelState.GetFirstError());
+            }
+            var result = await videoService.DeleteByIdAsync(id);
+            if (!result)
+            {
+                return NotFound();
+            }
+            return Ok();
+        }
     }
 }

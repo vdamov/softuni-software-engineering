@@ -7,7 +7,10 @@ export interface IUser {
     email: string;
     password: string;
     createdOn: Date;
-    uploadedCount: number;
+    deletedOn: Date;
+    videosCount: number;
+    ratingsCount: number;
+    commentsCount: number;
     likesCount: number;
     totalViews: number;
     uploads: IVideo[];
