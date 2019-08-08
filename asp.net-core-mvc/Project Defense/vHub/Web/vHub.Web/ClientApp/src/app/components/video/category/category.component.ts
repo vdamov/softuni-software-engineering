@@ -11,14 +11,16 @@ import {IVideo} from '../shared/interfaces/video.interface';
 export class CategoryComponent implements OnInit {
     private categoryName: string;
     private videos: IVideo[];
+    private page = 0;
 
     constructor(private route: ActivatedRoute, private  categoryService: CategoryService) {
     }
 
     ngOnInit() {
         this.categoryName = this.route.snapshot.paramMap.get('name');
-        this.categoryService.allVideos(this.categoryName).subscribe((res) => {
-            this.videos = res;
+        this.categoryService.get20(this.page, this.categoryName).subscribe((res) => {
+            this.videos = this.videos.concat(res);
+            ++this.page;
         });
     }
 
