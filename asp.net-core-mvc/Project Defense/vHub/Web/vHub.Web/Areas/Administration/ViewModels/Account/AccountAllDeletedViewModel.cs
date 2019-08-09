@@ -20,7 +20,7 @@ namespace vHub.Web.Areas.Administration.ViewModels.Account
                 .ForMember(dest => dest.VideosCount, opt => opt.MapFrom(src => src.Uploads.Count))
                 .ForMember(dest => dest.RatingsCount, opt => opt.MapFrom(src => src.Ratings.Count))
                 .ForMember(dest => dest.CommentsCount, opt => opt.MapFrom(src => src.Comments.Count));
-              
+
         }
     }
 }

@@ -1,9 +1,8 @@
 ﻿namespace vHub.Web.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Identity;
     using System;
     using System.Linq;
-
-    using Microsoft.AspNetCore.Identity;
 
     public static class IdentityResultExtensions
     {

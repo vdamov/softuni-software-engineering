@@ -6,7 +6,6 @@ import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app.routing';
 
 import {AppComponent} from './app.component';
-import {LandingComponent} from './components/landing/landing.component';
 import {NavbarComponent} from './components/shared/navbar/navbar.component';
 import {FooterComponent} from './components/shared/footer/footer.component';
 
@@ -17,20 +16,15 @@ import {SectionsModule} from './components/sections/sections.module';
 import {JwtModule} from '@auth0/angular-jwt';
 import {UserModule} from './components/user/user.module';
 import {VideoModule} from './components/video/video.module';
-import { CategoryComponent } from './components/category/category.component';
 import { AdminComponent } from './components/admin/admin.component';
 
-export function tokenGetter() {
-    return localStorage.getItem('access_token');
-}
+
 
 @NgModule({
     declarations: [
         AppComponent,
-        LandingComponent,
         NavbarComponent,
         FooterComponent,
-        CategoryComponent,
         AdminComponent,
     ],
     imports: [
@@ -58,4 +52,8 @@ export function tokenGetter() {
     bootstrap: [AppComponent]
 })
 export class AppModule {
+}
+
+function tokenGetter() {
+    return localStorage.getItem('access_token');
 }

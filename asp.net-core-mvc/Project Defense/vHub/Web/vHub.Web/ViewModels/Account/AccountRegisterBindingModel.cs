@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using vHub.Common.Mapping;
 using vHub.Data.Models;
 
@@ -9,6 +8,7 @@ namespace vHub.Web.ViewModels.Account
     {
         [Required]
         [MinLength(4)]
+        [StringLength(15)]
         public string Username { get; set; }
 
         [Required]

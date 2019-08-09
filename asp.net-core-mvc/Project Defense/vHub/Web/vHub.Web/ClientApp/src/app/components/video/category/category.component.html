@@ -28,8 +28,13 @@
                     </div>
                     <hr class="mat-stepper-horizontal-line">
                     <div class="card-body">
-                        <div class="row row-grid align-items-center">
-                            <div class="col-md-4" *ngFor="let video of videos">
+                        <div class="row row-grid align-items-center"
+                             infiniteScroll
+                             [infiniteScrollDistance]="2"
+                             [infiniteScrollThrottle]="400"
+                             (scrolled)="getVideos()"
+                        >
+                            <div class="col-md-4 mb-4" *ngFor="let video of videos">
                                 <app-thumbnail-section [video]="video"></app-thumbnail-section>
                             </div>
                         </div>

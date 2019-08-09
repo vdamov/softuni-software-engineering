@@ -20,6 +20,7 @@
         public string ImageUrl { get; set; }
 
         [DisplayName("Username")]
+        [StringLength(15)]
         public override string UserName
         {
             get => base.UserName;

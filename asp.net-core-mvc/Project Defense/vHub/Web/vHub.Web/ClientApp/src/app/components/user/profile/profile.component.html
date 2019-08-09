@@ -37,15 +37,15 @@
                         <div class="col-lg-4 order-lg-3 text-lg-right ">
                             <div class="card-profile-stats d-flex justify-content-center py-0 ">
                                 <div>
-                                    <span class="heading">{{user.videosCount}}</span>
+                                    <span class="heading">{{user.videosCount | number}}</span>
                                     <span class="description">Uploaded</span>
                                 </div>
                                 <div>
-                                    <span class="heading">{{user.likesCount}}</span>
+                                    <span class="heading">{{user.likesCount | number}}</span>
                                     <span class="description">Liked</span>
                                 </div>
                                 <div>
-                                    <span class="heading">{{user.totalViews}}</span>
+                                    <span class="heading">{{user.totalViews | number}}</span>
                                     <span class="description">Total Views</span>
                                 </div>
                             </div>
@@ -71,7 +71,7 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <div class="row row-grid align-items-center">
-                                        <div class="col-md-4" *ngFor="let video of user.uploads">
+                                        <div class="col-md-4 mb-4" *ngFor="let video of user.uploads">
                                             <app-thumbnail-section [video]="video"></app-thumbnail-section>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                 </ng-template>
                                 <ng-template ngbTabContent>
                                     <div class="row row-grid align-items-center">
-                                        <div class="col-md-4" *ngFor="let video of user.liked">
+                                        <div class="col-md-4 mb-4" *ngFor="let video of user.liked">
                                             <app-thumbnail-section [video]="video"></app-thumbnail-section>
                                         </div>
                                     </div>

@@ -1,10 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using vHub.Data.Common.Enums;
 using vHub.Data.Common.Repositories;
 using vHub.Data.Models;
 
@@ -12,22 +9,23 @@ namespace vHub.Services
 {
     public class AccountService : IAccountService
     {
+        private readonly IVideoService videoService;
+        private readonly ICommentSerivce commentSerivce;
+        private readonly IRateService rateService;
         private readonly IDeletableEntityRepository<ApplicationUser> userRepository;
-        private readonly IDeletableEntityRepository<Rate> rateRepository;
-        private readonly IDeletableEntityRepository<Video> videoRepository;
-        private readonly IDeletableEntityRepository<Comment> commentRepository;
 
         public AccountService(
             IDeletableEntityRepository<ApplicationUser> userRepository,
-            IDeletableEntityRepository<Rate> rateRepository,
-            IDeletableEntityRepository<Video> videoRepository,
-            IDeletableEntityRepository<Comment> commentRepository
+            IVideoService videoService,
+            ICommentSerivce commentSerivce,
+            IRateService rateService
+
             )
         {
+            this.videoService = videoService;
             this.userRepository = userRepository;
-            this.rateRepository = rateRepository;
-            this.videoRepository = videoRepository;
-            this.commentRepository = commentRepository;
+            this.commentSerivce = commentSerivce;
+            this.rateService = rateService;
         }
         public async Task<ApplicationUser> GetByUsernameAsync(string username)
         {
@@ -55,21 +53,18 @@ namespace vHub.Services
             }
             foreach (var rate in user.Ratings)
             {
-                rateRepository.Delete(rate);
+                await rateService.DeleteByIdAsync(rate.Id);
             }
             foreach (var comment in user.Comments)
             {
-                commentRepository.Delete(comment);
+                await commentSerivce.DeleteByIdAsync(comment.Id);
             }
             foreach (var video in user.Uploads)
             {
-                videoRepository.Delete(video);
+                await videoService.DeleteByIdAsync(video.Id);
             }
             userRepository.Delete(user);
 
-            await rateRepository.SaveChangesAsync();
-            await commentRepository.SaveChangesAsync();
-            await videoRepository.SaveChangesAsync();
             await userRepository.SaveChangesAsync();
 
 
@@ -89,21 +84,19 @@ namespace vHub.Services
             }
             foreach (var rate in user.Ratings)
             {
-                rateRepository.Undelete(rate);
+                await rateService.RestoreByIdAsync(rate.Id);
             }
             foreach (var comment in user.Comments)
             {
-                commentRepository.Undelete(comment);
+                await commentSerivce.RestoreByIdAsync(comment.Id);
             }
             foreach (var video in user.Uploads)
             {
-                videoRepository.Undelete(video);
+                await videoService.RestoreByIdAsync(video.Id);
             }
             userRepository.Undelete(user);
 
-            await rateRepository.SaveChangesAsync();
-            await commentRepository.SaveChangesAsync();
-            await videoRepository.SaveChangesAsync();
+
             await userRepository.SaveChangesAsync();
 
 
@@ -117,6 +110,7 @@ namespace vHub.Services
                    .Include(u => u.Uploads)
                    .Include(u => u.Comments)
                    .Include(u => u.Ratings)
+                   .OrderByDescending(u => u.DeletedOn)
                    .ToListAsync();
             return users;
         }

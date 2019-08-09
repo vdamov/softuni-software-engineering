@@ -2,14 +2,12 @@
 namespace vHub.Data.Repositories
 #pragma warning restore SA1300 // Element should begin with upper-case letter
 {
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
-
     using vHub.Data.Common.Models;
     using vHub.Data.Common.Repositories;
-
-    using Microsoft.EntityFrameworkCore;
 
     public class EfDeletableEntityRepository<TEntity> : EfRepository<TEntity>, IDeletableEntityRepository<TEntity>
         where TEntity : class, IDeletableEntity

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using AutoMapper;
 using vHub.Common.Mapping;
 using vHub.Data.Common.Enums;
 using vHub.Data.Models;

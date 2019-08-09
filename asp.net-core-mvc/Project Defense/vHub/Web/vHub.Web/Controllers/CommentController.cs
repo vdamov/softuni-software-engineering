@@ -19,15 +19,15 @@ namespace vHub.Web.Controllers
             this.commentSerivce = commentSerivce;
         }
 
-        [HttpGet]
+        [HttpGet("api/{controller}/{action}/{page}/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll(string id)
+        public async Task<IActionResult> Get10(int page, string id)
         {
             if (id == null)
             {
                 return BadRequest();
             }
-            var comments = await commentSerivce.GetAllByVideoIdAsync(id);
+            var comments = await commentSerivce.Get10ByVideoIdAsync(page, id);
             var viewModel = Mapper.Map<List<CommentGetAllViewModel>>(comments);
             return Json(viewModel);
         }

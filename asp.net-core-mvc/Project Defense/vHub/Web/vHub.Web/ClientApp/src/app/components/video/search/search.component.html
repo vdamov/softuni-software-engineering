@@ -26,15 +26,28 @@
                         </div>
                     </div>
                     <hr class="mat-stepper-horizontal-line">
-                    <div class="card-body">
-                        <div class="row row-grid align-items-center">
-                            <div class="col-md-4" *ngFor="let video of videos$ | async">
-                                <app-thumbnail-section [video]="video"></app-thumbnail-section>
-                            </div>
-                        </div>
+                    <div class="card-body" *ngIf="videos.length;then found; else notFound">
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </main>
+<ng-template #notFound>
+    <div class="align-items-center text-center pt-200">
+        <h3>No results found</h3>
+        <p>Try different keywords</p>
+    </div>
+</ng-template>
+<ng-template #found>
+    <div class="row row-grid align-items-center"
+         infiniteScroll
+         [infiniteScrollDistance]="2"
+         [infiniteScrollThrottle]="400"
+         (scrolled)="getVideos()"
+    >
+        <div class="col-md-4 mb-4" *ngFor="let video of videos">
+            <app-thumbnail-section [video]="video"></app-thumbnail-section>
+        </div>
+    </div>
+</ng-template>

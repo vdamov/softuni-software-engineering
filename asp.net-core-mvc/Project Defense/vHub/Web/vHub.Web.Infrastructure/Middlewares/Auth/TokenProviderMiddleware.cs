@@ -1,5 +1,8 @@
 ﻿namespace vHub.Web.Infrastructure.Middlewares.Auth
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Options;
+    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IdentityModel.Tokens.Jwt;
@@ -8,17 +11,10 @@
     using System.Security.Claims;
     using System.Security.Principal;
     using System.Threading.Tasks;
-
     using vHub.Common;
-
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
-
-    using Newtonsoft.Json;
 
     public class TokenProviderMiddleware
     {
-        private const string contentType = "application/json";
         private readonly RequestDelegate next;
         private readonly TokenProviderOptions options;
         private readonly Func<HttpContext, Task<GenericPrincipal>> principalResolver;
@@ -40,7 +36,7 @@
                 return this.next(context);
             }
 
-            if (context.Request.Method.Equals("POST") && context.Request.ContentType == contentType)
+            if (context.Request.Method.Equals("POST") && context.Request.ContentType == GlobalConstants.JsonContentType)
             {
                 return this.GenerateToken(context);
             }
@@ -68,7 +64,7 @@
             if (principal == null)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-                await context.Response.WriteAsync("Invalid email or password.");
+                await context.Response.WriteAsync("Invalid username or password.");
                 return;
             }
 

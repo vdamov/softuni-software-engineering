@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using vHub.Data.Common.Models;
 
 namespace vHub.Data.Models

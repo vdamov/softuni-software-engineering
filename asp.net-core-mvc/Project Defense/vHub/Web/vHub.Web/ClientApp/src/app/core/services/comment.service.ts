@@ -6,7 +6,7 @@ import {IComment} from '../../components/shared/interfaces/comment.interface';
     providedIn: 'root'
 })
 export class CommentService {
-    private readonly getAllCommentsURL = '/api/comment/getall/';
+    private readonly get10ByVideoIdURL = '/api/comment/get10/';
     private readonly addCommentURL = '/api/comment/add';
     private readonly adminDeleteCommentURL = '/api/admin/comment/delete/';
     private readonly allDeletedURL = '/api/admin/comment/alldeleted/';
@@ -16,8 +16,8 @@ export class CommentService {
     constructor(private http: HttpClient) {
     }
 
-    getAllByVideoId(id: string) {
-        return this.http.get<IComment[]>(this.getAllCommentsURL + id);
+    get10ByVideoId(page: number, id: string) {
+        return this.http.get<IComment[]>(this.get10ByVideoIdURL + page + '/' + id);
     }
 
     add(videoId: string, content: string) {

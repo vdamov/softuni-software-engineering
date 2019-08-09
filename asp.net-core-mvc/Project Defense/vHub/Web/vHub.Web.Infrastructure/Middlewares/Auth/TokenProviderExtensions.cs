@@ -1,12 +1,11 @@
 ﻿namespace vHub.Web.Infrastructure.Middlewares.Auth
 {
-    using System;
-    using System.Security.Principal;
-    using System.Threading.Tasks;
-
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
+    using System;
+    using System.Security.Principal;
+    using System.Threading.Tasks;
 
     public static class TokenProviderExtensions
     {

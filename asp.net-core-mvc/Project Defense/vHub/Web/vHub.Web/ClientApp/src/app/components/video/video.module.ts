@@ -10,18 +10,23 @@ import {MatVideoModule} from 'mat-video';
 import {SectionsModule} from '../sections/sections.module';
 import {UserModule} from '../user/user.module';
 import { SearchComponent } from './search/search.component';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
+import {CategoryComponent} from './category/category.component';
 
 @NgModule({
     declarations: [
         WatchComponent,
         UploadComponent,
-        SearchComponent],
+        SearchComponent,
+        CategoryComponent
+    ],
     imports: [
         CommonModule,
         RouterModule,
         BrowserModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
+        InfiniteScrollModule,
         MatVideoModule,
         SectionsModule,
         UserModule,

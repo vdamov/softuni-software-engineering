@@ -25,6 +25,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vHub.Common", "vHub.Common\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "vHub.Web.Infrastructure", "Web\vHub.Web.Infrastructure\vHub.Web.Infrastructure.csproj", "{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "vHub.Tests", "Tests\vHub.Tests\vHub.Tests.csproj", "{67120EA6-9EFC-42BA-B74D-C3FEE213A894}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67120EA6-9EFC-42BA-B74D-C3FEE213A894}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67120EA6-9EFC-42BA-B74D-C3FEE213A894}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67120EA6-9EFC-42BA-B74D-C3FEE213A894}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67120EA6-9EFC-42BA-B74D-C3FEE213A894}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -70,6 +76,7 @@ Global
 		{4B844ECB-E845-49A6-8B31-85E577933598} = {ACBE44C4-E198-45E2-BA02-6655250A0006}
 		{D0D59508-CF8B-4656-A344-396C530BB9DF} = {ACBE44C4-E198-45E2-BA02-6655250A0006}
 		{7A7A7986-1F5B-4EBD-9B17-8B41F8FABA58} = {E389DEB6-5F90-444B-A054-12A10D39C76F}
+		{67120EA6-9EFC-42BA-B74D-C3FEE213A894} = {7A731632-6714-44E2-A9E4-069EBA9E666C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DD2059AB-7360-413F-BF1F-B38E4374F4AD}

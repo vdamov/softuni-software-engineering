@@ -1,3 +1,6 @@
 .custom-select {
     border: none;
 }
+.container {
+    min-height: 35rem;
+}

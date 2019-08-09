@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {filter, map, tap} from 'rxjs/operators';
 import {HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
 import {VideoService} from '../../../core/services/video.service';
-import {pipe} from 'rxjs';
+import {pipe, Subscription} from 'rxjs';
 import {CategoryService} from '../../../core/services/category.service';
 import {ICategory} from '../../shared/interfaces/category.interface';
 import {Router} from '@angular/router';
@@ -13,10 +13,12 @@ import {Router} from '@angular/router';
     templateUrl: './upload.component.html',
     styleUrls: ['./upload.component.css']
 })
-export class UploadComponent implements OnInit {
+export class UploadComponent implements OnInit, OnDestroy {
     public progress = 0;
     public uploadForm: FormGroup;
     public categories: ICategory[];
+    private fileFormat = '.mp4';
+    private subscription: Subscription = new Subscription();
 
     constructor(private fb: FormBuilder,
                 private videoService: VideoService,
@@ -26,13 +28,14 @@ export class UploadComponent implements OnInit {
 
 
     ngOnInit() {
-        this.categoryService.getAll().subscribe((res) => {
-            this.categories = res;
-        });
+        this.subscription.add(this.categoryService.getAll().subscribe((res) => {
+                this.categories = res;
+            })
+        );
         this.uploadForm = this.fb.group({
-            title: [null, [Validators.required]],
+            title: [null, [Validators.required, Validators.maxLength(30)]],
             category: ['', [Validators.required]],
-            video: [null, [Validators.required]]
+            video: [null, [Validators.required, requiredFileType(['mp4'])]]
         });
     }
 
@@ -41,7 +44,7 @@ export class UploadComponent implements OnInit {
         videoFormData.append('file', this.uploadForm.get('video').value);
         videoFormData.append('upload_preset', 'urcs4ru3');
         videoFormData.append('folder', 'videos');
-        this.videoService.upload(videoFormData)
+        this.subscription.add(this.videoService.upload(videoFormData)
             .pipe(
                 uploadProgress(progress => (this.progress = progress)),
                 toResponseBody()
@@ -51,7 +54,6 @@ export class UploadComponent implements OnInit {
                 let thumbnailUrl = res.secure_url.substring(0, res.secure_url.length - 3) + 'jpg';
                 const arr = thumbnailUrl.split('/upload/');
                 thumbnailUrl = arr[0] + '/upload/w_426,h_240/' + arr[1];
-                console.log(thumbnailUrl);
                 // @ts-ignore
                 const videoUrl = res.secure_url;
                 const form: FormData = new FormData();
@@ -62,10 +64,16 @@ export class UploadComponent implements OnInit {
                 form.append('videoUrl', videoUrl);
 
 
-                this.videoService.create(form).subscribe((videoId) => {
-                    this.router.navigate(['/watch/' + videoId]);
-                });
-            });
+                this.subscription.add(this.videoService.create(form).subscribe((videoId) => {
+                        this.router.navigate(['/watch/' + videoId]);
+                    })
+                );
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 
 }
@@ -83,4 +91,27 @@ export function toResponseBody<T>() {
         filter((event: HttpEvent<T>) => event.type === HttpEventType.Response),
         map((res: HttpResponse<T>) => res.body)
     );
+}
+
+export function requiredFileType(args: string[]) {
+    return function (control: FormControl) {
+        const file = control.value;
+        if (file) {
+            const arr = file.name.split('.');
+            const extension = arr[arr.length - 1].toLowerCase();
+            if (args) {
+                for (let i = 0; i < args.length; i++) {
+                    const type = args[i];
+                    if (type.toLowerCase() === extension.toLowerCase()) {
+                        return null;
+                    }
+
+                }
+                return {requiredFileType: true};
+            }
+        }
+
+        return null;
+    };
+
 }

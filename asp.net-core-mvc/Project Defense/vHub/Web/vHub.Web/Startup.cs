@@ -1,6 +1,21 @@
 ﻿namespace vHub.Web
 {
+    using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Diagnostics;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.SpaServices.AngularCli;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+    using Newtonsoft.Json;
     using System;
+    using System.IO;
     using System.Linq;
     using System.Net;
     using System.Reflection;
@@ -8,7 +23,6 @@
     using System.Security.Principal;
     using System.Text;
     using System.Threading.Tasks;
-
     using vHub.Common;
     using vHub.Common.Mapping;
     using vHub.Data;
@@ -16,25 +30,8 @@
     using vHub.Data.Models;
     using vHub.Data.Repositories;
     using vHub.Data.Seeding;
-    using vHub.Web.Infrastructure.Middlewares.Auth;
-
-    using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
-    using Microsoft.Extensions.Configuration;
-    using Microsoft.Extensions.DependencyInjection;
-    using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using Microsoft.IdentityModel.Tokens;
-
-    using Newtonsoft.Json;
-    using Microsoft.AspNetCore.SpaServices.AngularCli;
-    using System.IO;
     using vHub.Services;
+    using vHub.Web.Infrastructure.Middlewares.Auth;
     using vHub.Web.ViewModels.Category;
 
     public class Startup

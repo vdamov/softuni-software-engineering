@@ -1,4 +1,9 @@
-<div class="container-fluid">
+<div class="container-fluid"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="400"
+     (scrolled)="getComments()"
+>
     <div class="section pt-0">
         <form [formGroup]="addCommentForm" (ngSubmit)="submitForm()">
             <textarea (keydown.enter)="submitForm()" formControlName="content"

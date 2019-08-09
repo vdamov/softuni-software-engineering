@@ -1,12 +1,12 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using vHub.Data.Models;
 using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
 using vHub.Web.ViewModels.Video;
-using Microsoft.AspNetCore.Authorization;
-using System.Collections.Generic;
 
 namespace vHub.Web.Controllers
 {
@@ -57,11 +57,11 @@ namespace vHub.Web.Controllers
             var videoId = await videoService.CreateAsync(video);
             return Json(videoId);
         }
-        [HttpGet]
+        [HttpGet("api/{controller}/{action}/{page}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> Get20(int page)
         {
-            var videos = await videoService.GetAllOrderByCreatedOnDescAsync();
+            var videos = await videoService.Get20OrderByCreatedOnDescAsync(page);
             var videosViewModel = Mapper.Map<List<VideoGetAllViewModel>>(videos);
 
             return Json(videosViewModel);
@@ -92,11 +92,11 @@ namespace vHub.Web.Controllers
             }
             return Ok();
         }
-        [HttpGet("api/{controller}/{action}/{query}")]
+        [HttpGet("api/{controller}/{action}/{page}/{query}")]
         [AllowAnonymous]
-        public async Task<IActionResult> Search(string query)
+        public async Task<IActionResult> Search(int page, string query)
         {
-            var videos = await videoService.SearchAsync(query);
+            var videos = await videoService.SearchAsync(page, query);
 
             var viewModel = Mapper.Map<List<VideoSearchViewModel>>(videos);
 

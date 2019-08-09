@@ -9,7 +9,7 @@ export class VideoService {
     private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/video/upload/';
     private readonly createURL = '/api/video/upload/';
     private readonly getByIdURL = '/api/video/getbyid/';
-    private readonly getAllURL = '/api/video/getall/';
+    private readonly get20URL = '/api/video/get20/';
     private readonly take5URL = '/api/video/take5/';
     private readonly addViewURL = '/api/video/addview/';
     private readonly searchUrl = '/api/video/search/';
@@ -36,8 +36,8 @@ export class VideoService {
         return this.http.get<IVideo>(this.getByIdURL + id);
     }
 
-    getAll() {
-        return this.http.get(this.getAllURL);
+    get18(page: number) {
+        return this.http.get(this.get20URL + page);
     }
 
     take5ByCategoryId(categoryId: string, videoId: string) {
@@ -49,8 +49,8 @@ export class VideoService {
 
     }
 
-    search(query: string) {
-        return this.http.get<IVideo[]>(this.searchUrl + query);
+    search(page: number, query: string) {
+        return this.http.get<IVideo[]>(this.searchUrl + page + '/' + query);
     }
 
     adminDeleteById(id: string) {

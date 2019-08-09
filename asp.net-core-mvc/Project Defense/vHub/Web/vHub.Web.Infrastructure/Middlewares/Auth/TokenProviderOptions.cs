@@ -1,9 +1,8 @@
 ﻿namespace vHub.Web.Infrastructure.Middlewares.Auth
 {
+    using Microsoft.IdentityModel.Tokens;
     using System;
     using System.Threading.Tasks;
-
-    using Microsoft.IdentityModel.Tokens;
 
     public class TokenProviderOptions
     {

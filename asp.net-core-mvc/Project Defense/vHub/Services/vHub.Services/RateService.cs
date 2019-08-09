@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using vHub.Data.Common.Enums;
@@ -36,6 +35,37 @@ namespace vHub.Services
                 .AnyAsync(r => r.AuthorId == authorId && r.VideoId == videoId);
             return hasVoted;
         }
-      
+        public async Task<bool> DeleteByIdAsync(string id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+            var rate = await repository.GetByIdAsync(id);
+            if (rate == null)
+            {
+                return false;
+            }
+            repository.Delete(rate);
+            var result = await repository.SaveChangesAsync();
+            return result > 0;
+        }
+
+        public async Task<bool> RestoreByIdAsync(string id)
+        {
+            if (id == null)
+            {
+                return false;
+            }
+            var rate = await repository.AllWithDeleted().SingleOrDefaultAsync(r => r.Id == id);
+            if (rate == null)
+            {
+                return false;
+            }
+            repository.Undelete(rate);
+            var result = await repository.SaveChangesAsync();
+            return result > 0;
+        }
+
     }
 }

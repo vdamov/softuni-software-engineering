@@ -1,4 +1,4 @@
-import {Component, OnInit, Inject, Renderer, ElementRef, ViewChild, HostListener} from '@angular/core';
+import {Component, OnInit, Inject, Renderer, ElementRef, ViewChild, HostListener, OnDestroy} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 import 'rxjs/add/operator/filter';
@@ -46,10 +46,10 @@ export class AppComponent implements OnInit {
             //  $(window).height()
 
             if (st + window.innerHeight < document.body.scrollHeight) {
-            // $('.navbar.headroom--unpinned').removeClass('headroom--unpinned').addClass('headroom--pinned');
-            if (navbar.classList.contains('headroom--unpinned')) {
-                navbar.classList.remove('headroom--unpinned');
-                navbar.classList.add('headroom--pinned');
+                // $('.navbar.headroom--unpinned').removeClass('headroom--unpinned').addClass('headroom--pinned');
+                if (navbar.classList.contains('headroom--unpinned')) {
+                    navbar.classList.remove('headroom--unpinned');
+                    navbar.classList.add('headroom--pinned');
                 }
             }
         }

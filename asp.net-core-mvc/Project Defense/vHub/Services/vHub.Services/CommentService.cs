@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using vHub.Data.Common.Repositories;
 using vHub.Data.Models;
@@ -17,12 +15,14 @@ namespace vHub.Services
         {
             this.repository = repository;
         }
-        public async Task<List<Comment>> GetAllByVideoIdAsync(string videoId)
+        public async Task<List<Comment>> Get10ByVideoIdAsync(int page, string videoId)
         {
             var comments = await repository.All()
-                   .Where(c => c.Video.Id == videoId)
+                   .Where(c => c.VideoId == videoId)
                    .Include(c => c.Author)
                    .OrderByDescending(c => c.CreatedOn)
+                   .Skip(10 * page)
+                   .Take(10)
                    .ToListAsync();
 
             return comments;
@@ -40,6 +40,10 @@ namespace vHub.Services
         }
         public async Task<bool> DeleteByIdAsync(string id)
         {
+            if (id == null)
+            {
+                return false;
+            }
             var comment = await repository.GetByIdAsync(id);
             if (comment == null)
             {
@@ -67,6 +71,7 @@ namespace vHub.Services
                    .Where(c => c.IsDeleted)
                    .Include(c => c.Author)
                    .Include(c => c.Video)
+                   .OrderByDescending(c => c.DeletedOn)
                    .ToListAsync();
             return comments;
         }

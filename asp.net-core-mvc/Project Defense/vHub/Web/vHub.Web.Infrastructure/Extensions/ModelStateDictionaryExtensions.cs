@@ -1,9 +1,8 @@
 ﻿namespace vHub.Web.Infrastructure.Extensions
 {
+    using Microsoft.AspNetCore.Mvc.ModelBinding;
     using System;
     using System.Linq;
-
-    using Microsoft.AspNetCore.Mvc.ModelBinding;
 
     public static class ModelStateDictionaryExtensions
     {

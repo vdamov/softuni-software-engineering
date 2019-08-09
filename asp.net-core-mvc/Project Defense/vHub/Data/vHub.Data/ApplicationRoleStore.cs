@@ -1,11 +1,9 @@
 ﻿namespace vHub.Data
 {
-    using System.Security.Claims;
-
-    using vHub.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+    using System.Security.Claims;
+    using vHub.Data.Models;
 
     public class ApplicationRoleStore : RoleStore<
         ApplicationRole,

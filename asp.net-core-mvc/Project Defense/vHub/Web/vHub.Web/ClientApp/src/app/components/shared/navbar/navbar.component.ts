@@ -1,20 +1,22 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Router, NavigationEnd, NavigationStart} from '@angular/router';
 import {Location, PopStateEvent} from '@angular/common';
 import {AuthService} from '../../../core/services/auth.service';
 import {VideoService} from '../../../core/services/video.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
     private lastPoppedUrl: string;
     private yScrollStack: number[] = [];
     private searchForm: FormGroup;
+    private subscription: Subscription = new Subscription();
 
     constructor(public location: Location,
                 private router: Router,
@@ -23,24 +25,26 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.router.events.subscribe((event) => {
-            this.isCollapsed = true;
-            if (event instanceof NavigationStart) {
-                if (event.url != this.lastPoppedUrl) {
-                    this.yScrollStack.push(window.scrollY);
+        this.subscription.add(this.router.events.subscribe((event) => {
+                this.isCollapsed = true;
+                if (event instanceof NavigationStart) {
+                    if (event.url != this.lastPoppedUrl) {
+                        this.yScrollStack.push(window.scrollY);
+                    }
+                } else if (event instanceof NavigationEnd) {
+                    if (event.url == this.lastPoppedUrl) {
+                        this.lastPoppedUrl = undefined;
+                        window.scrollTo(0, this.yScrollStack.pop());
+                    } else {
+                        window.scrollTo(0, 0);
+                    }
                 }
-            } else if (event instanceof NavigationEnd) {
-                if (event.url == this.lastPoppedUrl) {
-                    this.lastPoppedUrl = undefined;
-                    window.scrollTo(0, this.yScrollStack.pop());
-                } else {
-                    window.scrollTo(0, 0);
-                }
-            }
-        });
-        this.location.subscribe((ev: PopStateEvent) => {
-            this.lastPoppedUrl = ev.url;
-        });
+            })
+        );
+        this.subscription.add(this.location.subscribe((ev: PopStateEvent) => {
+                this.lastPoppedUrl = ev.url;
+            })
+        );
         this.searchForm = this.fb.group({
             query: [null, [Validators.required]]
         });
@@ -52,7 +56,11 @@ export class NavbarComponent implements OnInit {
             this.router.navigate(['/search', query]);
             this.searchForm.reset();
         }
+
+
     }
 
-
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
+    }
 }

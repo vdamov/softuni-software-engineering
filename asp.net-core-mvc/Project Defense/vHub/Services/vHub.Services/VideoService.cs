@@ -9,25 +9,26 @@ namespace vHub.Services
     public class VideoService : IVideoService
     {
         private readonly IDeletableEntityRepository<Video> videoRepository;
-        private readonly IDeletableEntityRepository<Comment> commentRepository;
-        private readonly IDeletableEntityRepository<Rate> rateRepository;
+        private readonly ICommentSerivce commentSerivce;
+        private readonly IRateService rateService;
 
-        public VideoService(IDeletableEntityRepository<Video> videoRepository,
-                            IDeletableEntityRepository<Comment> commentRepository,
-                            IDeletableEntityRepository<Rate> rateRepository)
+        public VideoService(
+            IDeletableEntityRepository<Video> videoRepository,
+                            ICommentSerivce commentSerivce,
+                            IRateService rateService
+            )
         {
             this.videoRepository = videoRepository;
-            this.commentRepository = commentRepository;
-            this.rateRepository = rateRepository;
+            this.commentSerivce = commentSerivce;
+            this.rateService = rateService;
+
         }
         public async Task<string> CreateAsync(Video video)
         {
             videoRepository.Add(video);
             await videoRepository.SaveChangesAsync();
-            var videoEntity = await videoRepository.All()
-                .SingleOrDefaultAsync(v => v.CreatedOn == video.CreatedOn && v.AuthorId == video.AuthorId);
 
-            return videoEntity.Id;
+            return video.Id;
         }
 
         public async Task<Video> GetByIdAsync(string id)
@@ -39,11 +40,13 @@ namespace vHub.Services
             return video;
         }
 
-        public async Task<List<Video>> GetAllOrderByCreatedOnDescAsync()
+        public async Task<List<Video>> Get20OrderByCreatedOnDescAsync(int page)
         {
             var videos = await videoRepository.All()
                 .Include(v => v.Author)
                 .OrderByDescending(v => v.CreatedOn)
+                .Skip(20 * page)
+                .Take(20)
                 .ToListAsync();
             return videos;
         }
@@ -74,21 +77,33 @@ namespace vHub.Services
 
         public async Task<bool> AddViewAsync(string videoId)
         {
+            if (videoId == null)
+            {
+                return false;
+            }
             var video = await videoRepository.GetByIdAsync(videoId);
             if (video == null)
             {
                 return false;
             }
             video.Views = ++video.Views;
+            videoRepository.Update(video);
             await videoRepository.SaveChangesAsync();
             return true;
         }
-        public async Task<List<Video>> SearchAsync(string value)
+        public async Task<List<Video>> SearchAsync(int page, string query)
         {
+            if (query == null)
+            {
+                return null;
+            }
             var videos = await videoRepository
                 .All()
-                .Where(v => v.Title.Contains(value))
+                .Where(v => v.Title.Contains(query.Trim()))
                 .Include(v => v.Author)
+                .OrderByDescending(v => v.CreatedOn)
+                .Skip(20 * page)
+                .Take(20)
                 .ToListAsync();
 
             return videos;
@@ -107,14 +122,13 @@ namespace vHub.Services
             }
             foreach (var rate in video.Ratings)
             {
-                this.rateRepository.Delete(rate);
+                await rateService.DeleteByIdAsync(rate.Id);
             }
             foreach (var comment in video.Comments)
             {
-                this.commentRepository.Delete(comment);
+                await commentSerivce.DeleteByIdAsync(comment.Id);
             }
-            await rateRepository.SaveChangesAsync();
-            await commentRepository.SaveChangesAsync();
+
             videoRepository.Delete(video);
             var result = await videoRepository.SaveChangesAsync();
 
@@ -133,14 +147,13 @@ namespace vHub.Services
             }
             foreach (var rate in video.Ratings)
             {
-                this.rateRepository.Undelete(rate);
+                await rateService.RestoreByIdAsync(rate.Id);
             }
             foreach (var comment in video.Comments)
             {
-                this.commentRepository.Undelete(comment);
+                await commentSerivce.RestoreByIdAsync(comment.Id);
             }
-            await rateRepository.SaveChangesAsync();
-            await commentRepository.SaveChangesAsync();
+
             videoRepository.Undelete(video);
             var result = await videoRepository.SaveChangesAsync();
 
@@ -151,6 +164,7 @@ namespace vHub.Services
             var videos = await videoRepository.AllWithDeleted()
                 .Where(v => v.IsDeleted)
                 .Include(v => v.Author)
+                .OrderByDescending(v => v.DeletedOn)
                 .ToListAsync();
 
             return videos;

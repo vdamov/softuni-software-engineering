@@ -15,6 +15,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class FileUploadComponent implements ControlValueAccessor {
     @Input() progress;
+    @Input() fileFormat;
     onChange: Function;
     private file: File | null = null;
 

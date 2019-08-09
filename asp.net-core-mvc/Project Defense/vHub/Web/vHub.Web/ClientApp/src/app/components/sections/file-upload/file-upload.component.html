@@ -1,7 +1,7 @@
 <div class="file-drop-area mb-2">
     <span class="fake-btn">Choose file</span>
     <span class="file-msg">{{file ? file.name : 'or drag and drop file here' }}</span>
-    <input class="file-input" type="file">
+    <input [accept]="fileFormat" class="file-input" type="file">
 </div>
 
 <div>

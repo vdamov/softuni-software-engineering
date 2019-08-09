@@ -1,12 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using vHub.Data.Common.Enums;
 using vHub.Data.Models;
 using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
 using vHub.Web.ViewModels.Rate;
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
 
 namespace vHub.Web.Controllers
 {

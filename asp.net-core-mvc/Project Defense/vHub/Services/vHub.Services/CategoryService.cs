@@ -27,7 +27,7 @@ namespace vHub.Services
             return category;
         }
 
-        public async Task<List<Video>> GetAllVideosByCategoryNameAsync(string name)
+        public async Task<List<Video>> Get20VideosByCategoryNameOrderByDescAsync(int page, string name)
         {
             var category = await repository
                      .All()
@@ -39,7 +39,11 @@ namespace vHub.Services
             {
                 return null;
             }
-            var videos = category.Videos.OrderByDescending(v => v.CreatedOn).ToList();
+            var videos = category.Videos
+                .OrderByDescending(v => v.CreatedOn)
+               .Skip(20 * page)
+               .Take(20)
+                .ToList();
 
             return videos;
         }

@@ -42,6 +42,10 @@
                                             Username is required!
                                         </ng-container>
                                         <ng-container
+                                                *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('maxlength')">
+                                            The maximum username length is 15 characters!
+                                        </ng-container>
+                                        <ng-container
                                                 *ngIf="registerForm.get('username').touched && registerForm.get('username').hasError('minlength')">
                                             Username must be at least 4 characters!
                                         </ng-container>
@@ -71,7 +75,8 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
                                         </div>
-                                        <input (keyup)="passwordCheck()" id="password" formControlName="password" class="form-control"
+                                        <input (keyup)="passwordCheck()" id="password" formControlName="password"
+                                               class="form-control"
                                                placeholder="Password" type="password">
                                     </div>
                                     <div class="invalid-feedback" style="display: block">
@@ -86,12 +91,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <app-file-upload formControlName="image" id="image"
+                                    <app-file-upload formControlName="image"
+                                                     [fileFormat]="fileFormat"
                                                      [progress]="progress"></app-file-upload>
                                     <div class="invalid-feedback" style="display: block">
                                         <ng-container
-                                                *ngIf="registerForm.get('image').touched && registerForm.get('image').hasError('required')">
+                                                *ngIf="registerForm.get('image').dirty && registerForm.get('image').hasError('required')">
                                             Image is required!
+                                        </ng-container>
+                                        <ng-container
+                                                *ngIf="registerForm.get('image').dirty && registerForm.get('image').hasError('requiredFileType')">
+                                            Image must be in jpg, jpeg or png format!
                                         </ng-container>
                                     </div>
                                 </div>

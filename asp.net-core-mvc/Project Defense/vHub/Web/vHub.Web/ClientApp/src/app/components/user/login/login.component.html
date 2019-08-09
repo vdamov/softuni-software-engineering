@@ -38,6 +38,10 @@
                                             Username is required!
                                         </ng-container>
                                         <ng-container
+                                                *ngIf="loginForm.get('username').touched && loginForm.get('username').hasError('maxlength')">
+                                            The maximum username length is 15 characters!
+                                        </ng-container>
+                                        <ng-container
                                                 *ngIf="loginForm.get('username').touched && loginForm.get('username').hasError('minlength')">
                                             Username must be at least 4 characters!
                                         </ng-container>

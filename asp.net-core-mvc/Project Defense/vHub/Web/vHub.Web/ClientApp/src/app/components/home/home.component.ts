@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {VideoService} from '../../core/services/video.service';
 import {IVideo} from '../shared/interfaces/video.interface';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-home',
@@ -8,15 +9,26 @@ import {IVideo} from '../shared/interfaces/video.interface';
     styleUrls: ['./home.component.scss']
 })
 
-export class HomeComponent implements OnInit {
-    private videos: IVideo[];
+export class HomeComponent implements OnInit, OnDestroy {
+    private videos: IVideo[] = [];
+    private page = 0;
+    private subscription: Subscription = new Subscription();
 
     constructor(private videoService: VideoService) {
     }
-
     ngOnInit() {
-        this.videoService.getAll().subscribe((res: IVideo[]) => {
-            this.videos = res;
-        });
+        this.getVideos();
+    }
+
+    getVideos() {
+        this.subscription.add(this.videoService.get18(this.page).subscribe((res: IVideo[]) => {
+                this.videos = this.videos.concat(res);
+                ++this.page;
+            })
+        );
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {IUser} from '../../shared/interfaces/user.interface';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {AuthService} from '../../../core/services/auth.service';
 import {UserService} from '../../../core/services/user.service';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-profile',
@@ -11,9 +12,10 @@ import {UserService} from '../../../core/services/user.service';
     styleUrls: ['./profile.component.scss']
 })
 
-export class ProfileComponent implements OnInit {
+export class ProfileComponent implements OnInit, OnDestroy {
 
     private user: IUser;
+    private subscription: Subscription = new Subscription();
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -23,10 +25,10 @@ export class ProfileComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params.subscribe(() => {
-            this.user = this.route.snapshot.data.user;
-        });
-
+        this.subscription.add(this.route.params.subscribe(() => {
+                this.user = this.route.snapshot.data.user;
+            })
+        );
     }
 
     open(content) {
@@ -37,10 +39,15 @@ export class ProfileComponent implements OnInit {
 
     banUser(close: Function) {
         if (this.authService.isAdmin) {
-            this.userService.banByUsername(this.user.username).subscribe(() => {
-                close();
-                this.router.navigate(['/home']);
-            });
+            this.subscription.add(this.userService.banByUsername(this.user.username).subscribe(() => {
+                    close();
+                    this.router.navigate(['/home']);
+                })
+            );
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

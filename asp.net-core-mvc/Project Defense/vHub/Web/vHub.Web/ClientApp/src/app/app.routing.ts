@@ -13,21 +13,24 @@ import {UploadComponent} from './components/video/upload/upload.component';
 import {SingleVideoResolver} from './core/resolvers/single-video.resolver';
 import {SingleRateResolver} from './core/resolvers/single-rate.resolver';
 import {SingleUserResolver} from './core/resolvers/single-user.resolver';
-import {CategoryComponent} from './components/category/category.component';
+import {CategoryComponent} from './components/video/category/category.component';
 import {SearchComponent} from './components/video/search/search.component';
 import {AdminComponent} from './components/admin/admin.component';
+import {UserGuard} from './core/guards/user.guard';
+import {AdminGuard} from './core/guards/admin.guard';
 
 const routes: Routes = [
     {path: 'home', component: HomeComponent},
-    {path: 'admin', component: AdminComponent},
-    {path: 'user/profile/:username', component: ProfileComponent, resolve: {user: SingleUserResolver}},
-    {path: 'user/register', component: RegisterComponent},
-    {path: 'user/login', component: LoginComponent},
-    {path: 'category/:name', component: CategoryComponent},
     {path: 'watch/:id', component: WatchComponent, resolve: {video: SingleVideoResolver, rate: SingleRateResolver}},
-    {path: 'upload', component: UploadComponent},
+    {path: 'user/login', component: LoginComponent, canActivate: [UserGuard]},
+    {path: 'user/register', component: RegisterComponent, canActivate: [UserGuard]},
+    {path: 'user/profile/:username', component: ProfileComponent, resolve: {user: SingleUserResolver}},
     {path: 'search/:query', component: SearchComponent},
-    {path: '', redirectTo: 'home', pathMatch: 'full'}
+    {path: 'upload', component: UploadComponent, canActivate: [UserGuard]},
+    {path: 'category/:name', component: CategoryComponent},
+    {path: 'admin', component: AdminComponent, canActivate: [AdminGuard]},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
+    {path: '**', redirectTo: 'home', pathMatch: 'full'}
 ];
 
 @NgModule({

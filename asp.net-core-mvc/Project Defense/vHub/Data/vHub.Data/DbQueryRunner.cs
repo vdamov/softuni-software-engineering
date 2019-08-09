@@ -1,10 +1,8 @@
 ﻿namespace vHub.Data
 {
-    using System;
-
-    using vHub.Data.Common;
-
     using Microsoft.EntityFrameworkCore;
+    using System;
+    using vHub.Data.Common;
 
     public class DbQueryRunner : IDbQueryRunner
     {

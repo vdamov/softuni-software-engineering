@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using vHub.Common.Mapping;
+﻿using vHub.Common.Mapping;
 
 namespace vHub.Web.ViewModels.Category
 {
-    public class CategoryAllVideosViewModel: IMapFrom<Data.Models.Video>
+    public class CategoryAllVideosViewModel : IMapFrom<Data.Models.Video>
     {
         public string Id { get; set; }
         public string Title { get; set; }

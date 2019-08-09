@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {VideoService} from '../../../core/services/video.service';
 import {IVideo} from '../../shared/interfaces/video.interface';
 import {RateService} from '../../../core/services/rate.service';
 import {AuthService} from '../../../core/services/auth.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscription} from 'rxjs';
 import {IRate} from '../../shared/interfaces/rate.interface';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {CommentService} from '../../../core/services/comment.service';
@@ -14,13 +14,14 @@ import {CommentService} from '../../../core/services/comment.service';
     templateUrl: './watch.component.html',
     styleUrls: ['./watch.component.css']
 })
-export class WatchComponent implements OnInit {
+export class WatchComponent implements OnInit, OnDestroy {
     @ViewChild('videoplayer') private matVideo;
     private videoHTML: HTMLVideoElement;
     private video: IVideo;
     private rate: IRate;
     private checkIfVoted$: Observable<boolean>;
     private getVideoById$: Observable<IVideo>;
+    private subscription: Subscription = new Subscription();
 
     constructor(private route: ActivatedRoute,
                 private router: Router,
@@ -32,15 +33,17 @@ export class WatchComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.route.params
+        this.subscription.add(this.route.params
             .subscribe(() => {
                 this.matVideo.load();
                 this.loadPage();
-            });
+            })
+        );
         this.videoHTML = this.matVideo.getVideoTag();
         this.videoHTML.addEventListener('ended', () => {
-            this.videoService.addView(this.video.id)
-                .subscribe((res) => console.log('view increase'));
+            this.subscription.add(this.videoService.addView(this.video.id)
+                .subscribe()
+            );
         });
     }
 
@@ -61,10 +64,11 @@ export class WatchComponent implements OnInit {
 
     like() {
         if (this.authService.isAuthenticated()) {
-            this.rateService.add(this.video.id, 1).subscribe((res) => {
-                this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
-                this.rate.likes++;
-            });
+            this.subscription.add(this.rateService.add(this.video.id, 1).subscribe((res) => {
+                    this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
+                    this.rate.likes++;
+                })
+            );
         } else {
             this.router.navigate(['/user/login']);
         }
@@ -72,10 +76,11 @@ export class WatchComponent implements OnInit {
 
     dislike() {
         if (this.authService.isAuthenticated()) {
-            this.rateService.add(this.video.id, 2).subscribe((res) => {
-                this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
-                this.rate.dislikes++;
-            });
+            this.subscription.add(this.rateService.add(this.video.id, 2).subscribe((res) => {
+                    this.checkIfVoted$ = this.rateService.checkIfVoted(this.video.id);
+                    this.rate.dislikes++;
+                })
+            );
         } else {
             this.router.navigate(['/user/login']);
         }
@@ -83,17 +88,23 @@ export class WatchComponent implements OnInit {
 
     deleteVideo(c: Function) {
         if (this.authService.isAdmin) {
-            this.videoService.adminDeleteById(this.video.id)
+            this.subscription.add(this.videoService.adminDeleteById(this.video.id)
                 .subscribe((res) => {
                     c();
                     this.router.navigate(['/home']);
-                });
+                })
+            );
         } else if (this.authService.isAuthenticated()) {
-            this.videoService.deleteById(this.video.id)
+            this.subscription.add(this.videoService.deleteById(this.video.id)
                 .subscribe((res) => {
                     c();
                     this.router.navigate(['/home']);
-                });
+                })
+            );
         }
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }

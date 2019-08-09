@@ -1,13 +1,11 @@
 ﻿namespace vHub.Data.Seeding
 {
-    using System;
-    using System.Linq;
-
-    using vHub.Common;
-    using vHub.Data.Models;
-
     using Microsoft.AspNetCore.Identity;
     using Microsoft.Extensions.DependencyInjection;
+    using System;
+    using System.Linq;
+    using vHub.Common;
+    using vHub.Data.Models;
 
     public static class ApplicationDbContextSeeder
     {

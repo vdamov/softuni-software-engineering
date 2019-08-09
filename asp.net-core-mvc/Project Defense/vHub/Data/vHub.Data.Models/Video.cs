@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 using vHub.Data.Common.Models;
 
 namespace vHub.Data.Models
@@ -11,10 +10,12 @@ namespace vHub.Data.Models
     {
         public Video()
         {
+            Id = Guid.NewGuid().ToString();
             Ratings = new HashSet<Rate>();
             Comments = new HashSet<Comment>();
         }
         [Required]
+        [StringLength(30)]
         public string Title { get; set; }
         [Required]
         public string ThumbnailUrl { get; set; }

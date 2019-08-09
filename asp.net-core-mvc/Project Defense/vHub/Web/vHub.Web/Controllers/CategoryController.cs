@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using vHub.Services;
 using vHub.Web.ViewModels.Category;
@@ -24,11 +23,11 @@ namespace vHub.Web.Controllers
             Mapper.Map<List<CategoryGetAllViewModel>>(categories);
             return Json(categories);
         }
-        [HttpGet("api/{controller}/{action}/{name}")]
+        [HttpGet("api/{controller}/{action}/{page}/{name}")]
         [AllowAnonymous]
-        public async Task<IActionResult> AllVideos(string name)
+        public async Task<IActionResult> Get20(int page, string name)
         {
-            var videos = await categoryService.GetAllVideosByCategoryNameAsync(name);
+            var videos = await categoryService.Get20VideosByCategoryNameOrderByDescAsync(page, name);
             if (videos == null)
             {
                 return BadRequest();

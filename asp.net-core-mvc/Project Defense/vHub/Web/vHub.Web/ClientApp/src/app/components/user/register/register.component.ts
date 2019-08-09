@@ -1,20 +1,25 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {UserService} from '../../../core/services/user.service';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {requiredFileType} from '../../video/upload/upload.component';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-register',
     templateUrl: './regisiter.component.html',
     styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent implements OnInit, OnDestroy {
     private textClass: string;
     private passwordStrength: string;
     private readonly strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#\$%\^&\*])(?=.{8,})');
     private readonly mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[!_@#\$%\^&\*]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+    private fileFormat = '.jpg, .jpeg, .png';
+    private subscription: Subscription = new Subscription();
+
     public registerForm: FormGroup;
     progress = 0;
 
@@ -27,10 +32,10 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this.fb.group({
-            username: [null, [Validators.required, Validators.minLength(4)]],
+            username: [null, [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
             email: [null, [Validators.required, Validators.email]],
             password: [null, [Validators.required, Validators.minLength(6)]],
-            image: [null, [Validators.required]],
+            image: [null, [Validators.required, requiredFileType(['jpg', 'jpeg', 'png'])]],
             privacy: [false, [Validators.pattern('true')]],
         });
     }
@@ -41,7 +46,7 @@ export class RegisterComponent implements OnInit {
         profilePictureForm.append('file', this.registerForm.get('image').value);
         profilePictureForm.append('upload_preset', 'urcs4ru3');
         profilePictureForm.append('folder', 'profile-pictures');
-        this.userService.uploadProfilePicture(profilePictureForm)
+        this.subscription.add(this.userService.uploadProfilePicture(profilePictureForm)
             .subscribe((res) => {
                 const form = new FormData();
                 form.append('username', this.registerForm.get('username').value);
@@ -52,10 +57,12 @@ export class RegisterComponent implements OnInit {
                 const arr = imageUrl.split('/upload/');
                 imageUrl = arr[0] + '/upload/w_200,h_200/' + arr[1];
                 form.append('imageUrl', imageUrl);
-                this.authService.register(form).subscribe(() => {
-                    this.router.navigate(['/user/login']);
-                });
-            });
+                this.subscription.add(this.authService.register(form).subscribe(() => {
+                        this.router.navigate(['/user/login']);
+                    })
+                );
+            })
+        );
     }
 
     passwordCheck() {
@@ -84,6 +91,10 @@ export class RegisterComponent implements OnInit {
     close(c: Function) {
         this.registerForm.get('privacy').setValue(false);
         c();
+    }
+
+    ngOnDestroy() {
+        this.subscription.unsubscribe();
     }
 }
 

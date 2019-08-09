@@ -8,7 +8,7 @@ import {IVideo} from '../../components/shared/interfaces/video.interface';
 })
 export class CategoryService {
     private readonly getAllURL = '/api/category/all/';
-    private readonly allVideosURL = '/api/category/allvideos/';
+    private readonly get20URL = '/api/category/get20/';
 
     constructor(private http: HttpClient) {
     }
@@ -17,8 +17,8 @@ export class CategoryService {
         return this.http.get<ICategory[]>(this.getAllURL);
     }
 
-    allVideos(name: string) {
-        return this.http.get<IVideo[]>(this.allVideosURL + name);
+    get20(page: number, name: string) {
+        return this.http.get<IVideo[]>(this.get20URL + page + '/' + name);
     }
 
 }

@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using vHub.Common;
-using vHub.Data.Common.Repositories;
-using vHub.Data.Models;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using vHub.Services;
 using vHub.Web.Areas.Administration.ViewModels.Account;
 using vHub.Web.Infrastructure.Extensions;

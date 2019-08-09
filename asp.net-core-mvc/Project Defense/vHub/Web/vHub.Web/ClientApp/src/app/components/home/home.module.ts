@@ -10,12 +10,14 @@ import { HomeComponent } from './home.component';
 import { SectionsModule } from '../sections/sections.module';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatVideoModule} from 'mat-video';
+import {InfiniteScrollModule} from 'ngx-infinite-scroll';
 
 @NgModule({
     imports: [
         CommonModule,
         BrowserModule,
         BrowserAnimationsModule,
+        InfiniteScrollModule,
         MatVideoModule,
         FormsModule,
         RouterModule,

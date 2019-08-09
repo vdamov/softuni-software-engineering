@@ -1,10 +1,8 @@
 ﻿namespace vHub.Data
 {
-    using System.Linq;
-
-    using vHub.Data.Common.Models;
-
     using Microsoft.EntityFrameworkCore;
+    using System.Linq;
+    using vHub.Data.Common.Models;
 
     internal static class EntityIndexesConfiguration
     {

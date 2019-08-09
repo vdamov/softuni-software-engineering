@@ -7,5 +7,5 @@ namespace vHub.Web.Areas.Administration.Controllers
 {
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme, Roles = GlobalConstants.AdministratorRoleName)]
     [Route("api/admin/{controller}/{action}/{id?}")]
-    public class BaseController : Controller {}
+    public class BaseController : Controller { }
 }
