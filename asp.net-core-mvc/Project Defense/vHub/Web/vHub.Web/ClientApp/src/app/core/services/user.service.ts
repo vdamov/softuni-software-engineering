@@ -9,7 +9,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class UserService {
 
-    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/image/upload';
+    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/image/upload';
     private readonly getByUsernameURL: string = '/api/account/get/';
     private readonly banByUsernameURL: string = '/api/admin/account/ban/';
     private readonly allDeletedURL: string = '/api/admin/account/alldeleted/';

@@ -44,7 +44,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     register() {
         const profilePictureForm = new FormData();
         profilePictureForm.append('file', this.registerForm.get('image').value);
-        profilePictureForm.append('upload_preset', 'urcs4ru3');
+        profilePictureForm.append('upload_preset', 'tlccglyv');
         profilePictureForm.append('folder', 'profile-pictures');
         this.subscription.add(this.userService.uploadProfilePicture(profilePictureForm)
             .subscribe((res) => {

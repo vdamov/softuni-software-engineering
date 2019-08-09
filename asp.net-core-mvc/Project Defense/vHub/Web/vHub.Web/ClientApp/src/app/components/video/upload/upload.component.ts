@@ -42,7 +42,7 @@ export class UploadComponent implements OnInit, OnDestroy {
     submit() {
         const videoFormData: FormData = new FormData();
         videoFormData.append('file', this.uploadForm.get('video').value);
-        videoFormData.append('upload_preset', 'urcs4ru3');
+        videoFormData.append('upload_preset', 'tlccglyv');
         videoFormData.append('folder', 'videos');
         this.subscription.add(this.videoService.upload(videoFormData)
             .pipe(

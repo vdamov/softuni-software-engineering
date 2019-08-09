@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
 using System.Threading.Tasks;
+using vHub.Common;
 using vHub.Data.Models;
 using vHub.Services;
 using vHub.Web.Infrastructure.Extensions;
@@ -36,6 +38,10 @@ namespace vHub.Web.Controllers
 
             if (result.Succeeded)
             {
+                if (userManager.Users.Count() == 1)
+                {
+                    await userManager.AddToRoleAsync(user, GlobalConstants.AdministratorRoleName);
+                }
                 return Ok();
             }
 

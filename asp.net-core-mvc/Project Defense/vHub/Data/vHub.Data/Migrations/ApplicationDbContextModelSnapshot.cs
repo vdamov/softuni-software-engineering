@@ -227,56 +227,56 @@ namespace vHub.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "c2db6986-c168-4ebc-9160-9996da88d679",
+                            Id = "a390cedd-e7e6-4c81-ab1b-fa317423e439",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Music"
                         },
                         new
                         {
-                            Id = "eab57d8c-0f26-4370-9888-c8751242920c",
+                            Id = "8bd2b363-bfe6-4e0c-b6e9-8c20520e3172",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Product Review"
                         },
                         new
                         {
-                            Id = "67fb8be0-0d39-4037-864b-bc34ac1706c2",
+                            Id = "a60c6423-6406-4964-877a-049115bacff7",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "How-To"
                         },
                         new
                         {
-                            Id = "1ed088ba-64fe-4c5f-bedc-7714991ef6c1",
+                            Id = "75e2f75b-8eca-49a2-a31b-b9664705f31e",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Vlog"
                         },
                         new
                         {
-                            Id = "45694287-35eb-4c13-94fe-acf1cb962600",
+                            Id = "31160bec-112a-43ea-8ed8-b1aeff6daf92",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Gaming"
                         },
                         new
                         {
-                            Id = "2c505c33-1d90-4e1e-a868-90afc65520d6",
+                            Id = "fd92d891-40b1-4506-bbef-3f2004852b0c",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Comedy"
                         },
                         new
                         {
-                            Id = "4200a515-4d5a-4092-8268-5b5c669f2f2e",
+                            Id = "5d00a6fc-712f-4c7c-ac16-9a42a0709c20",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Educational"
                         },
                         new
                         {
-                            Id = "617a4549-fc33-422a-b21d-1231a8f46593",
+                            Id = "86f788ae-d4cc-4775-bac2-9bcbd3d8a3f3",
                             CreatedOn = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             IsDeleted = false,
                             Name = "Other"
@@ -365,7 +365,8 @@ namespace vHub.Data.Migrations
                         .IsRequired();
 
                     b.Property<string>("Title")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(30);
 
                     b.Property<string>("VideoUrl")
                         .IsRequired();

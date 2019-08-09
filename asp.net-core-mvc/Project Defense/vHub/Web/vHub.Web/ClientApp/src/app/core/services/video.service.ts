@@ -6,7 +6,7 @@ import {IVideo} from '../../components/shared/interfaces/video.interface';
     providedIn: 'root'
 })
 export class VideoService {
-    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/vhub/video/upload/';
+    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/video/upload/';
     private readonly createURL = '/api/video/upload/';
     private readonly getByIdURL = '/api/video/getbyid/';
     private readonly get20URL = '/api/video/get20/';

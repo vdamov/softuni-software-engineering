@@ -138,6 +138,8 @@
                 .HasForeignKey(e => e.UserId)
                 .IsRequired()
                 .OnDelete(DeleteBehavior.Restrict);
+
+           
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
