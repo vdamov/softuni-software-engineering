@@ -11,9 +11,9 @@ import {Subscription} from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
     public loginForm: FormGroup;
-    private subscription: Subscription = new Subscription();
+    public subscription: Subscription = new Subscription();
 
-    constructor(private  fb: FormBuilder, private router: Router, private authService: AuthService) {
+    constructor(public  fb: FormBuilder, public router: Router, public authService: AuthService) {
     }
 
     ngOnInit() {

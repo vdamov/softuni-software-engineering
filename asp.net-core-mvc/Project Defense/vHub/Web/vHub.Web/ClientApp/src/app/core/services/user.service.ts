@@ -9,14 +9,14 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 })
 export class UserService {
 
-    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/image/upload';
-    private readonly getByUsernameURL: string = '/api/account/get/';
-    private readonly banByUsernameURL: string = '/api/admin/account/ban/';
-    private readonly allDeletedURL: string = '/api/admin/account/alldeleted/';
-    private readonly unbanByUserIdURL: string = '/api/admin/account/unban/';
+    public readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/image/upload';
+    public readonly getByUsernameURL: string = '/api/account/get/';
+    public readonly banByUsernameURL: string = '/api/admin/account/ban/';
+    public readonly allDeletedURL: string = '/api/admin/account/alldeleted/';
+    public readonly unbanByUserIdURL: string = '/api/admin/account/unban/';
 
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     uploadProfilePicture(formData: FormData) {

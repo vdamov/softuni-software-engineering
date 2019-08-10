@@ -10,12 +10,12 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./category.component.css']
 })
 export class CategoryComponent implements OnInit, OnDestroy {
-    private categoryName: string;
-    private videos: IVideo[] = [];
-    private page = 0;
-    private subscription: Subscription = new Subscription();
+    public categoryName: string;
+    public videos: IVideo[] = [];
+    public page = 0;
+    public subscription: Subscription = new Subscription();
 
-    constructor(private route: ActivatedRoute, private  categoryService: CategoryService) {
+    constructor(public route: ActivatedRoute, public  categoryService: CategoryService) {
     }
 
     ngOnInit() {

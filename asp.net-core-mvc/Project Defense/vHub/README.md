@@ -1,5 +1,37 @@
-﻿## How to run the project
+﻿# vHub
 
-1. Open the project with Visual Studio 2017
-2. Restore npm packages
-3. Run gulp dev
+**vHub** is a video sharing website users can watch, upload, rate and comment videos.
+
+
+**Guest** access
+
+- Can access Watch Page;
+- Can access Profile Page;
+- Can access Home Page;
+- Can access Login/Register Page.
+
+**User** access
+
+- Can access Watch Page;
+- Can access Profile Page;
+- Can access Home Page;
+- Can access Upload Page and upload videos;
+- Can delete his own videos;
+- Can rate videos;
+- Can post comments under videos;
+- Can delete his own comments.
+
+**Admin** access
+
+- Can access Watch Page;
+- Can access Profile Page;
+- Can access Home Page;
+- Can access Upload Page and upload videos;
+- Can access Admin Page;
+- Can delete all videos;
+- Can rate videos;
+- Can post comments under videos;
+- Can delete all comments;
+- Can ban users;
+- Can restore videos,comments;
+- Can unban users;

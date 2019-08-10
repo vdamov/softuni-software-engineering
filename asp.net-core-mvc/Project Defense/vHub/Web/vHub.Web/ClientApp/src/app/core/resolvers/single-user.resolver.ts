@@ -8,7 +8,7 @@ import {UserService} from '../services/user.service';
     providedIn: 'root'
 })
 export class SingleUserResolver implements Resolve<IUser> {
-    constructor(private userService: UserService) {
+    constructor(public userService: UserService) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IUser> {

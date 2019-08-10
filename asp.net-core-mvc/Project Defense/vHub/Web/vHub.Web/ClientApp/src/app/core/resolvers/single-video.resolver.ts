@@ -8,7 +8,7 @@ import {Injectable} from '@angular/core';
     providedIn: 'root'
 })
 export class SingleVideoResolver implements Resolve<IVideo> {
-    constructor(private videoService: VideoService) {
+    constructor(public videoService: VideoService) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IVideo> {

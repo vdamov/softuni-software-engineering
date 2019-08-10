@@ -14,14 +14,14 @@ import {Subscription} from 'rxjs';
 
 export class ProfileComponent implements OnInit, OnDestroy {
 
-    private user: IUser;
-    private subscription: Subscription = new Subscription();
+    public user: IUser;
+    public subscription: Subscription = new Subscription();
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private modalService: NgbModal,
-                private authService: AuthService,
-                private userService: UserService) {
+    constructor(public route: ActivatedRoute,
+                public router: Router,
+                public modalService: NgbModal,
+                public authService: AuthService,
+                public userService: UserService) {
     }
 
     ngOnInit() {

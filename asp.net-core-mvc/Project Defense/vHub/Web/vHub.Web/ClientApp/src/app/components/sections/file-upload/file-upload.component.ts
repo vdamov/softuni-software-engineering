@@ -17,7 +17,7 @@ export class FileUploadComponent implements ControlValueAccessor {
     @Input() progress;
     @Input() fileFormat;
     onChange: Function;
-    private file: File | null = null;
+    public file: File | null = null;
 
     @HostListener('change', ['$event.target.files']) emitFiles(event: FileList) {
         const file = event && event.item(0);
@@ -25,7 +25,7 @@ export class FileUploadComponent implements ControlValueAccessor {
         this.file = file;
     }
 
-    constructor(private host: ElementRef<HTMLInputElement>) {
+    constructor(public host: ElementRef<HTMLInputElement>) {
     }
 
     writeValue(value: null) {

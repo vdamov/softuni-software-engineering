@@ -8,12 +8,12 @@ import {JwtHelperService} from '@auth0/angular-jwt';
     providedIn: 'root'
 })
 export class AuthService {
-    private readonly loginURL: string = '/api/account/login';
-    private readonly registerURL: string = '/api/account/register';
-    private authSubject: BehaviorSubject<any>;
-    private admin: boolean;
+    public readonly loginURL: string = '/api/account/login';
+    public readonly registerURL: string = '/api/account/register';
+    public authSubject: BehaviorSubject<any>;
+    public admin: boolean;
 
-    constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
+    constructor(public http: HttpClient, public jwtHelper: JwtHelperService) {
         this.authSubject = new BehaviorSubject(this.parseToken());
     }
 

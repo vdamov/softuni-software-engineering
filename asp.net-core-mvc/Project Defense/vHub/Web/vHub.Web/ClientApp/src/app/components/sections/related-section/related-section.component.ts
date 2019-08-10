@@ -12,10 +12,10 @@ export class RelatedSectionComponent implements OnInit, OnDestroy {
 
     @Input() categoryId: string;
     @Input() videoId: string;
-    private videos: IVideo[];
-    private subscription: Subscription = new Subscription();
+    public videos: IVideo[];
+    public subscription: Subscription = new Subscription();
 
-    constructor(private videoService: VideoService) {
+    constructor(public videoService: VideoService) {
     }
 
     ngOnInit() {

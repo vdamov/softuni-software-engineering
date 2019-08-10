@@ -13,15 +13,15 @@ import {Subscription} from 'rxjs';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
     public isCollapsed = true;
-    private lastPoppedUrl: string;
-    private yScrollStack: number[] = [];
-    private searchForm: FormGroup;
-    private subscription: Subscription = new Subscription();
+    public lastPoppedUrl: string;
+    public yScrollStack: number[] = [];
+    public searchForm: FormGroup;
+    public subscription: Subscription = new Subscription();
 
     constructor(public location: Location,
-                private router: Router,
-                private fb: FormBuilder,
-                private authService: AuthService) {
+                public router: Router,
+                public fb: FormBuilder,
+                public authService: AuthService) {
     }
 
     ngOnInit() {

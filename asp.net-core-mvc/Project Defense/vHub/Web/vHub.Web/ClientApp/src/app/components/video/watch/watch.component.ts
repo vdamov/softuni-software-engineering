@@ -15,21 +15,21 @@ import {CommentService} from '../../../core/services/comment.service';
     styleUrls: ['./watch.component.css']
 })
 export class WatchComponent implements OnInit, OnDestroy {
-    @ViewChild('videoplayer') private matVideo;
-    private videoHTML: HTMLVideoElement;
-    private video: IVideo;
-    private rate: IRate;
-    private checkIfVoted$: Observable<boolean>;
-    private getVideoById$: Observable<IVideo>;
-    private subscription: Subscription = new Subscription();
+    @ViewChild('videoplayer') public matVideo;
+    public videoHTML: HTMLVideoElement;
+    public video: IVideo;
+    public rate: IRate;
+    public checkIfVoted$: Observable<boolean>;
+    public getVideoById$: Observable<IVideo>;
+    public subscription: Subscription = new Subscription();
 
-    constructor(private route: ActivatedRoute,
-                private router: Router,
-                private videoService: VideoService,
-                private rateService: RateService,
-                private authService: AuthService,
-                private commentService: CommentService,
-                private modalService: NgbModal) {
+    constructor(public route: ActivatedRoute,
+                public router: Router,
+                public videoService: VideoService,
+                public rateService: RateService,
+                public authService: AuthService,
+                public commentService: CommentService,
+                public modalService: NgbModal) {
     }
 
     ngOnInit() {

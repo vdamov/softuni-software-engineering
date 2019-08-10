@@ -54,6 +54,6 @@ import { AdminComponent } from './components/admin/admin.component';
 export class AppModule {
 }
 
-function tokenGetter() {
+export function tokenGetter() {
     return localStorage.getItem('access_token');
 }

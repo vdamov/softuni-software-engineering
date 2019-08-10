@@ -13,18 +13,18 @@ import {Subscription} from 'rxjs';
 })
 export class CommentsSectionComponent implements OnInit, OnDestroy {
 
-    private comments: IComment[] = [];
-    private page = 0;
-    private addCommentForm: FormGroup;
-    private videoId: string;
-    private subscription: Subscription = new Subscription();
+    public comments: IComment[] = [];
+    public page = 0;
+    public addCommentForm: FormGroup;
+    public videoId: string;
+    public subscription: Subscription = new Subscription();
 
     constructor(
-        private router: Router,
-        private route: ActivatedRoute,
-        private fb: FormBuilder,
-        private commentService: CommentService,
-        private  authService: AuthService) {
+        public router: Router,
+        public route: ActivatedRoute,
+        public fb: FormBuilder,
+        public commentService: CommentService,
+        public  authService: AuthService) {
 
     }
 

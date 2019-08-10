@@ -6,14 +6,14 @@ import {IComment} from '../../components/shared/interfaces/comment.interface';
     providedIn: 'root'
 })
 export class CommentService {
-    private readonly get10ByVideoIdURL = '/api/comment/get10/';
-    private readonly addCommentURL = '/api/comment/add';
-    private readonly adminDeleteCommentURL = '/api/admin/comment/delete/';
-    private readonly allDeletedURL = '/api/admin/comment/alldeleted/';
-    private readonly deleteCommentURL = '/api/comment/delete/';
-    private readonly restoreByIdURL = '/api/admin/comment/restore/';
+    public readonly get10ByVideoIdURL = '/api/comment/get10/';
+    public readonly addCommentURL = '/api/comment/add';
+    public readonly adminDeleteCommentURL = '/api/admin/comment/delete/';
+    public readonly allDeletedURL = '/api/admin/comment/alldeleted/';
+    public readonly deleteCommentURL = '/api/comment/delete/';
+    public readonly restoreByIdURL = '/api/admin/comment/restore/';
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     get10ByVideoId(page: number, id: string) {

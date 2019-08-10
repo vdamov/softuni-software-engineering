@@ -7,10 +7,10 @@ import {IVideo} from '../../components/shared/interfaces/video.interface';
     providedIn: 'root'
 })
 export class CategoryService {
-    private readonly getAllURL = '/api/category/all/';
-    private readonly get20URL = '/api/category/get20/';
+    public readonly getAllURL = '/api/category/all/';
+    public readonly get20URL = '/api/category/get20/';
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     getAll() {

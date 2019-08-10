@@ -10,13 +10,13 @@ import {Observable, Subscription} from 'rxjs';
     styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit, OnDestroy {
-    private videos: IVideo[] = [];
-    private page = 0;
-    private query: string;
-    private subscription: Subscription = new Subscription();
+    public videos: IVideo[] = [];
+    public page = 0;
+    public query: string;
+    public subscription: Subscription = new Subscription();
 
-    constructor(private route: ActivatedRoute,
-                private videoService: VideoService) {
+    constructor(public route: ActivatedRoute,
+                public videoService: VideoService) {
     }
 
     ngOnInit() {

@@ -10,7 +10,7 @@ import {IRate} from '../../components/shared/interfaces/rate.interface';
     providedIn: 'root'
 })
 export class SingleRateResolver implements Resolve<IRate> {
-    constructor(private rateService: RateService) {
+    constructor(public rateService: RateService) {
     }
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IRate> {

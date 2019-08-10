@@ -6,12 +6,12 @@ import {IRate} from '../../components/shared/interfaces/rate.interface';
     providedIn: 'root'
 })
 export class RateService {
-    private readonly getAllRatesURL = '/api/rate/getall/';
-    private readonly addRateURL = '/api/rate/add/';
-    private readonly checkIfVotedURL = '/api/rate/checkifvoted/';
-    private readonly allDeletedURL = '/api/admin/rate/alldeleted/';
+    public readonly getAllRatesURL = '/api/rate/getall/';
+    public readonly addRateURL = '/api/rate/add/';
+    public readonly checkIfVotedURL = '/api/rate/checkifvoted/';
+    public readonly allDeletedURL = '/api/admin/rate/alldeleted/';
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     getAllByVideoId(id: string) {

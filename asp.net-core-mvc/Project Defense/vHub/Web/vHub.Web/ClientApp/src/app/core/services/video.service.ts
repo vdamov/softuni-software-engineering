@@ -6,19 +6,19 @@ import {IVideo} from '../../components/shared/interfaces/video.interface';
     providedIn: 'root'
 })
 export class VideoService {
-    private readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/video/upload/';
-    private readonly createURL = '/api/video/upload/';
-    private readonly getByIdURL = '/api/video/getbyid/';
-    private readonly get20URL = '/api/video/get20/';
-    private readonly take5URL = '/api/video/take5/';
-    private readonly addViewURL = '/api/video/addview/';
-    private readonly searchUrl = '/api/video/search/';
-    private readonly adminDeleteURL = '/api/admin/video/delete/';
-    private readonly deleteURL = '/api/video/delete/';
-    private readonly allDeletedURL = '/api/admin/video/alldeleted/';
-    private readonly restoreVideoURL = '/api/admin/video/restore/';
+    public readonly uploadURL = 'https://api.cloudinary.com/v1_1/dmwtou0gd/video/upload/';
+    public readonly createURL = '/api/video/upload/';
+    public readonly getByIdURL = '/api/video/getbyid/';
+    public readonly get20URL = '/api/video/get20/';
+    public readonly take5URL = '/api/video/take5/';
+    public readonly addViewURL = '/api/video/addview/';
+    public readonly searchUrl = '/api/video/search/';
+    public readonly adminDeleteURL = '/api/admin/video/delete/';
+    public readonly deleteURL = '/api/video/delete/';
+    public readonly allDeletedURL = '/api/admin/video/alldeleted/';
+    public readonly restoreVideoURL = '/api/admin/video/restore/';
 
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
     }
 
     create(formData: FormData) {

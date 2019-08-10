@@ -10,11 +10,11 @@ import {Subscription} from 'rxjs';
 })
 
 export class HomeComponent implements OnInit, OnDestroy {
-    private videos: IVideo[] = [];
-    private page = 0;
-    private subscription: Subscription = new Subscription();
+    public videos: IVideo[] = [];
+    public page = 0;
+    public subscription: Subscription = new Subscription();
 
-    constructor(private videoService: VideoService) {
+    constructor(public videoService: VideoService) {
     }
     ngOnInit() {
         this.getVideos();

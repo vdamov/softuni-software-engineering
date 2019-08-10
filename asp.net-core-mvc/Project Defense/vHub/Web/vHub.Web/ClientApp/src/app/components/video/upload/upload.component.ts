@@ -17,13 +17,13 @@ export class UploadComponent implements OnInit, OnDestroy {
     public progress = 0;
     public uploadForm: FormGroup;
     public categories: ICategory[];
-    private fileFormat = '.mp4';
-    private subscription: Subscription = new Subscription();
+    public fileFormat = '.mp4';
+    public subscription: Subscription = new Subscription();
 
-    constructor(private fb: FormBuilder,
-                private videoService: VideoService,
-                private categoryService: CategoryService,
-                private  router: Router) {
+    constructor(public fb: FormBuilder,
+                public videoService: VideoService,
+                public categoryService: CategoryService,
+                public  router: Router) {
     }
 
 

@@ -9,7 +9,7 @@ import {ToastrService} from 'ngx-toastr';
 })
 export class HandleErrorInterceptor implements HttpInterceptor {
 
-    constructor(private toastr: ToastrService) {
+    constructor(public toastr: ToastrService) {
     }
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

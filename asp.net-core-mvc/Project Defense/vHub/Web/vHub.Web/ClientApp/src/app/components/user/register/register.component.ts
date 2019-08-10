@@ -13,21 +13,21 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit, OnDestroy {
-    private textClass: string;
-    private passwordStrength: string;
-    private readonly strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#\$%\^&\*])(?=.{8,})');
-    private readonly mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[!_@#\$%\^&\*]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
-    private fileFormat = '.jpg, .jpeg, .png';
-    private subscription: Subscription = new Subscription();
+    public textClass: string;
+    public passwordStrength: string;
+    public readonly strongRegex = new RegExp('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!_@#\$%\^&\*])(?=.{8,})');
+    public readonly mediumRegex = new RegExp('^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[!_@#\$%\^&\*]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})');
+    public fileFormat = '.jpg, .jpeg, .png';
+    public subscription: Subscription = new Subscription();
 
     public registerForm: FormGroup;
     progress = 0;
 
-    constructor(private fb: FormBuilder,
-                private router: Router,
-                private authService: AuthService,
-                private userService: UserService,
-                private modalService: NgbModal) {
+    constructor(public fb: FormBuilder,
+                public router: Router,
+                public authService: AuthService,
+                public userService: UserService,
+                public modalService: NgbModal) {
     }
 
     ngOnInit() {

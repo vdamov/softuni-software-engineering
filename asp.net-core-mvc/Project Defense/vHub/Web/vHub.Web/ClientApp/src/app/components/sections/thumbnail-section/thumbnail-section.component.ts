@@ -7,8 +7,8 @@ import {IVideo} from '../../shared/interfaces/video.interface';
     styleUrls: ['./thumbnail-section.component.css']
 })
 export class ThumbnailSectionComponent implements OnInit {
-    @Input() private video: IVideo;
-    private shortenTitle: string;
+    @Input() public video: IVideo;
+    public shortenTitle: string;
 
     constructor() {
     }

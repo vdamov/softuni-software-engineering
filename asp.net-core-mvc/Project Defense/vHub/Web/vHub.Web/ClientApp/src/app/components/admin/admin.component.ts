@@ -14,15 +14,15 @@ import {Subscription} from 'rxjs';
     styleUrls: ['./admin.component.css']
 })
 export class AdminComponent implements OnInit, OnDestroy {
-    private users: IUser[];
-    private comments: IComment[];
-    private videos: IVideo[];
-    private subscription: Subscription = new Subscription();
+    public users: IUser[];
+    public comments: IComment[];
+    public videos: IVideo[];
+    public subscription: Subscription = new Subscription();
 
-    constructor(private router: Router,
-                private userService: UserService,
-                private commentService: CommentService,
-                private videoService: VideoService) {
+    constructor(public router: Router,
+                public userService: UserService,
+                public commentService: CommentService,
+                public videoService: VideoService) {
     }
 
     ngOnInit() {
