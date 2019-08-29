@@ -2,7 +2,7 @@
 
 **vHub** is a video sharing website users can watch, upload, rate and comment videos.
 
-[vHub Page Preview](https://imgur.com/a/u24deMC)
+[Page View](https://imgur.com/a/u24deMC)
 
 **Guest** access
 
