@@ -6,7 +6,7 @@
 <br/>
 <br/>
 
-|**Course**|**Certificates**|**Exams**|
+|**Course**|**Certificate**|**Exam**|
 |---|---|---|
 |<a href="https://softuni.bg/trainings/1772/programming-basics-with-java-october-2017" > Programming Basics with Java</a>   | <a href="https://softuni.bg/certificates/details/50222/8bd006f6" target="_blank" > Link</a> | <a href="#" >17 December 2017</a> |
 |<a href="https://softuni.bg/trainings/1786/programming-fundamentals-january-2018" target="_blank" > Programming Fundamentals  </a>| <a href="https://softuni.bg/certificates/details/51867/a3538ed8" target="_blank" > Link</a> | <a href="https://github.com/vdamov/softuni-software-engineering/tree/master/programming-fundamentals/Programming%20Fundamentals%20Exam%20-%20January%202018" >04 March 2018</a> |
